@@ -1143,11 +1143,11 @@ function setupLogin() {
 
                     /*
                        Changed only the destination:
-                       Login successful → Home page
+                       Login successful → Record page
                     */
 
                     window.location.href =
-                        "index.html";
+                        "record.html";
 
                 },
                 1500
