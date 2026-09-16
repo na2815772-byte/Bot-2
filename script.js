@@ -31,11 +31,16 @@ localStorage.getItem("answerLanguage") || "english";
 
 /* =========================================================
 VOICE GENDER SELECTION
-NEW LOGIC ONLY
 ========================================================= */
 
 let selectedVoiceGender =
 localStorage.getItem("neloy_voice_gender") || "female";
+
+/*
+   Store the currently selected actual browser voice.
+*/
+
+let selectedSpeechVoice = null;
 
 
 /* =========================================================
@@ -86,26 +91,37 @@ for (let i = 0; i < 45; i++) {
 
 
 /* =========================================================
-VOICE SELECTION LOGIC
-NEW
+VOICE LIST
 ========================================================= */
 
-function getVoiceForGender() {
+/*
+   Get all available browser voices.
+
+   Android/Chrome sometimes loads voices
+   a little later, so this function is kept
+   separate and can be called again.
+*/
+
+function getAvailableVoices() {
 
 if (!("speechSynthesis" in window)) {
-    return null;
+    return [];
 }
 
-const voices =
-    window.speechSynthesis.getVoices();
+return window.speechSynthesis.getVoices() || [];
+
+}
+
+
+/* =========================================================
+VOICE LANGUAGE MATCH
+========================================================= */
+
+function getLanguageVoices(voices) {
 
 if (!voices.length) {
-    return null;
+    return [];
 }
-
-/*
-   Current language
-*/
 
 const currentLanguage =
     answerLanguage === "bangla"
@@ -118,47 +134,121 @@ const languagePrefix =
         .toLowerCase();
 
 /*
-   First find voices matching
-   current language.
+   Exact language first.
+*/
+
+let exactVoices =
+    voices.filter(
+        voice => {
+
+            if (!voice.lang) {
+                return false;
+            }
+
+            return (
+                voice.lang
+                    .toLowerCase() ===
+                currentLanguage.toLowerCase()
+            );
+        }
+    );
+
+if (exactVoices.length) {
+    return exactVoices;
+}
+
+
+/*
+   Language prefix.
+
+   Example:
+   en-US → en
+   bn-BD → bn
 */
 
 let languageVoices =
     voices.filter(
-        voice =>
-            voice.lang &&
-            voice.lang
+        voice => {
+
+            if (!voice.lang) {
+                return false;
+            }
+
+            return voice.lang
                 .toLowerCase()
-                .startsWith(languagePrefix)
+                .startsWith(
+                    languagePrefix
+                );
+        }
     );
 
-/*
-   If current language voice is not
-   available, use English voices.
-*/
-
-if (!languageVoices.length) {
-
-    languageVoices =
-        voices.filter(
-            voice =>
-                voice.lang &&
-                voice.lang
-                    .toLowerCase()
-                    .startsWith("en")
-        );
-}
-
-/*
-   Final fallback.
-*/
-
-if (!languageVoices.length) {
-    languageVoices = voices;
+if (languageVoices.length) {
+    return languageVoices;
 }
 
 
 /*
-   Female voice name keywords.
+   If Bangla voice is unavailable,
+   English can be used as fallback.
+*/
+
+let englishVoices =
+    voices.filter(
+        voice => {
+
+            if (!voice.lang) {
+                return false;
+            }
+
+            return voice.lang
+                .toLowerCase()
+                .startsWith("en");
+        }
+    );
+
+if (englishVoices.length) {
+    return englishVoices;
+}
+
+
+/*
+   Final browser fallback.
+*/
+
+return voices;
+
+}
+
+
+/* =========================================================
+VOICE GENDER DETECTION
+========================================================= */
+
+function detectVoiceGender(voice) {
+
+if (!voice) {
+    return "unknown";
+}
+
+const name =
+    String(
+        voice.name || ""
+    ).toLowerCase();
+
+const uri =
+    String(
+        voice.voiceURI || ""
+    ).toLowerCase();
+
+const combined =
+    name + " " + uri;
+
+
+/*
+   Female voice keywords.
+
+   These cover many common browser,
+   Windows, Android and Google voice names.
 */
 
 const femaleKeywords = [
@@ -178,18 +268,37 @@ const femaleKeywords = [
     "aria",
     "jenny",
     "sara",
+    "sarah",
 
     "moira",
     "fiona",
     "hazel",
 
-    "siri"
+    "linda",
+    "emma",
+    "olivia",
+    "sophia",
+    "sofia",
+
+    "alice",
+    "amelia",
+    "nora",
+    "grace",
+    "chloe",
+
+    "google us english",
+    "google uk english female",
+
+    "en-us-x-sfg",
+    "en-us-x-tpc",
+    "en-gb-x-rjs",
+    "en-au-x-aud"
 
 ];
 
 
 /*
-   Male voice name keywords.
+   Male voice keywords.
 */
 
 const maleKeywords = [
@@ -212,55 +321,184 @@ const maleKeywords = [
     "arthur",
 
     "thomas",
-    "richard"
+    "richard",
+    "john",
+    "robert",
+    "william",
+
+    "charles",
+    "henry",
+    "edward",
+    "benjamin",
+    "samuel",
+
+    "google uk english male",
+
+    "en-us-x-tpf",
+    "en-us-x-tpd",
+    "en-gb-x-gbb",
+    "en-au-x-auc"
 
 ];
 
 
 /*
-   Select keywords according
-   to selected gender.
+   Check female names first.
 */
 
-const keywords =
-    selectedVoiceGender === "female"
-        ? femaleKeywords
-        : maleKeywords;
-
-
-/*
-   Find matching voice.
-*/
-
-const genderVoice =
-    languageVoices.find(
-        voice => {
-
-            const voiceName =
-                voice.name
-                    .toLowerCase();
-
-            return keywords.some(
-                keyword =>
-                    voiceName.includes(
-                        keyword
-                    )
-            );
-        }
+const isFemale =
+    femaleKeywords.some(
+        keyword =>
+            combined.includes(
+                keyword
+            )
     );
 
 
-if (genderVoice) {
+/*
+   Check male names.
+*/
 
-    return genderVoice;
+const isMale =
+    maleKeywords.some(
+        keyword =>
+            combined.includes(
+                keyword
+            )
+    );
+
+
+if (isFemale && !isMale) {
+    return "female";
+}
+
+if (isMale && !isFemale) {
+    return "male";
+}
+
+
+/*
+   Unknown.
+*/
+
+return "unknown";
+
+}
+
+
+/* =========================================================
+VOICE SELECTION LOGIC
+========================================================= */
+
+function getVoiceForGender() {
+
+if (!("speechSynthesis" in window)) {
+    return null;
+}
+
+const voices =
+    getAvailableVoices();
+
+if (!voices.length) {
+    return null;
+}
+
+
+/*
+   Get voices for current language.
+*/
+
+const languageVoices =
+    getLanguageVoices(
+        voices
+    );
+
+if (!languageVoices.length) {
+    return null;
+}
+
+
+/*
+   Selected gender.
+*/
+
+const targetGender =
+    selectedVoiceGender === "male"
+        ? "male"
+        : "female";
+
+
+/*
+   First priority:
+   exact gender-detected voice.
+*/
+
+const genderVoices =
+    languageVoices.filter(
+        voice =>
+            detectVoiceGender(
+                voice
+            ) === targetGender
+    );
+
+
+/*
+   If exact gender voice exists,
+   use the first one.
+*/
+
+if (genderVoices.length) {
+
+    return genderVoices[0];
 
 }
 
 
 /*
-   If browser does not expose gender
-   information/name, use available
-   voice as fallback.
+   Sometimes the browser exposes a voice
+   under a different language but with a
+   gender-identifiable name.
+
+   Search all voices before giving up.
+*/
+
+const allGenderVoices =
+    voices.filter(
+        voice =>
+            detectVoiceGender(
+                voice
+            ) === targetGender
+    );
+
+if (allGenderVoices.length) {
+
+    return allGenderVoices[0];
+
+}
+
+
+/*
+   If no gender-specific voice is exposed,
+   keep the previously selected voice if
+   it belongs to the requested gender.
+*/
+
+if (
+    selectedSpeechVoice &&
+    detectVoiceGender(
+        selectedSpeechVoice
+    ) === targetGender
+) {
+
+    return selectedSpeechVoice;
+
+}
+
+
+/*
+   No gender information available.
+
+   Return a language voice as final fallback.
 */
 
 return languageVoices[0] || null;
@@ -269,8 +507,111 @@ return languageVoices[0] || null;
 
 
 /* =========================================================
+LOAD / REFRESH VOICES
+========================================================= */
+
+function refreshSpeechVoices() {
+
+if (!("speechSynthesis" in window)) {
+    return;
+}
+
+const voices =
+    getAvailableVoices();
+
+if (!voices.length) {
+    return;
+}
+
+
+/*
+   Find the voice for the currently
+   selected gender.
+*/
+
+const voice =
+    getVoiceForGender();
+
+if (voice) {
+
+    selectedSpeechVoice =
+        voice;
+
+    console.log(
+        "Selected voice:",
+        voice.name,
+        "| URI:",
+        voice.voiceURI,
+        "| Language:",
+        voice.lang,
+        "| Gender:",
+        detectVoiceGender(
+            voice
+        )
+    );
+
+}
+
+}
+
+
+/* =========================================================
+WAIT FOR BROWSER VOICES
+========================================================= */
+
+function waitForSpeechVoices() {
+
+if (!("speechSynthesis" in window)) {
+    return;
+}
+
+
+/*
+   Try immediately.
+*/
+
+refreshSpeechVoices();
+
+
+/*
+   Android Chrome / browser may load
+   voices asynchronously.
+*/
+
+window.speechSynthesis.onvoiceschanged =
+    () => {
+
+        refreshSpeechVoices();
+
+    };
+
+
+/*
+   Extra attempts because some Android
+   browsers don't fire voiceschanged
+   consistently.
+*/
+
+setTimeout(
+    refreshSpeechVoices,
+    300
+);
+
+setTimeout(
+    refreshSpeechVoices,
+    1000
+);
+
+setTimeout(
+    refreshSpeechVoices,
+    2000
+);
+
+}
+
+
+/* =========================================================
 SET VOICE GENDER
-NEW
 ========================================================= */
 
 function setVoiceGender(gender) {
@@ -282,6 +623,11 @@ if (
     return;
 }
 
+
+/*
+   Save selection.
+*/
+
 selectedVoiceGender =
     gender;
 
@@ -292,22 +638,37 @@ localStorage.setItem(
 
 
 /*
-   Make sure browser loads
-   available voices.
+   Clear previously selected voice
+   so the new gender is searched again.
 */
 
-if (
-    "speechSynthesis" in window
-) {
-
-    window.speechSynthesis
-        .getVoices();
-
-}
+selectedSpeechVoice = null;
 
 
 /*
-   Confirmation voice.
+   Refresh available browser voices.
+*/
+
+refreshSpeechVoices();
+
+
+/*
+   Try again after browser has had
+   time to provide voices.
+*/
+
+setTimeout(
+    () => {
+
+        refreshSpeechVoices();
+
+    },
+    500
+);
+
+
+/*
+   Confirmation message.
 */
 
 const message =
@@ -315,14 +676,28 @@ const message =
         ? "Female voice selected."
         : "Male voice selected.";
 
-speak(message);
+
+/*
+   Speak confirmation.
+
+   A short delay allows the new voice
+   selection to be ready.
+*/
+
+setTimeout(
+    () => {
+
+        speak(message);
+
+    },
+    150
+);
 
 }
 
 
 /* =========================================================
 VOICE GENDER SETUP
-NEW
 ========================================================= */
 
 function setupVoiceGender() {
@@ -339,7 +714,7 @@ const male =
 
 
 /*
-   If the controls are not present,
+   If controls are not present,
    do nothing.
 */
 
@@ -353,18 +728,8 @@ if (!female && !male) {
 */
 
 if (
-    selectedVoiceGender === "female"
+    selectedVoiceGender === "male"
 ) {
-
-    if (female) {
-        female.checked = true;
-    }
-
-    if (male) {
-        male.checked = false;
-    }
-
-} else {
 
     if (female) {
         female.checked = false;
@@ -374,7 +739,32 @@ if (
         male.checked = true;
     }
 
+} else {
+
+    selectedVoiceGender =
+        "female";
+
+    localStorage.setItem(
+        "neloy_voice_gender",
+        "female"
+    );
+
+    if (female) {
+        female.checked = true;
+    }
+
+    if (male) {
+        male.checked = false;
+    }
+
 }
+
+
+/*
+   Load browser voices.
+*/
+
+waitForSpeechVoices();
 
 
 /*
@@ -396,6 +786,23 @@ if (female) {
                 setVoiceGender(
                     "female"
                 );
+
+            } else {
+
+                /*
+                   Keep one voice selected.
+                */
+
+                if (male) {
+
+                    male.checked =
+                        true;
+
+                    setVoiceGender(
+                        "male"
+                    );
+
+                }
 
             }
 
@@ -425,6 +832,23 @@ if (male) {
                     "male"
                 );
 
+            } else {
+
+                /*
+                   Keep one voice selected.
+                */
+
+                if (female) {
+
+                    female.checked =
+                        true;
+
+                    setVoiceGender(
+                        "female"
+                    );
+
+                }
+
             }
 
         }
@@ -445,52 +869,150 @@ if (!("speechSynthesis" in window)) {
     return;
 }
 
-window.speechSynthesis.cancel();
-
-const utterance =
-    new SpeechSynthesisUtterance(text);
-
-utterance.lang =
-    answerLanguage === "bangla"
-        ? BANGLA_LANGUAGE
-        : DEFAULT_LANGUAGE;
-
-
-/*
-   NEW:
-   Select Female / Male voice.
-*/
-
-const selectedVoice =
-    getVoiceForGender();
-
-if (selectedVoice) {
-
-    utterance.voice =
-        selectedVoice;
-
-    console.log(
-        "Speaking with voice:",
-        selectedVoice.name,
-        "| Gender:",
-        selectedVoiceGender,
-        "| Language:",
-        utterance.lang
-    );
-
+if (
+    !text ||
+    !String(text).trim()
+) {
+    return;
 }
 
 
-utterance.rate =
-    SPEECH_RATE;
+/*
+   Stop previous speech.
+*/
 
-utterance.pitch = 1;
+window.speechSynthesis.cancel();
 
-utterance.volume = 1;
 
-window.speechSynthesis.speak(
-    utterance
-);
+/*
+   Try to refresh the selected voice.
+*/
+
+refreshSpeechVoices();
+
+
+/*
+   If voice list was not ready yet,
+   wait briefly and try again.
+*/
+
+const speakNow =
+    () => {
+
+        const utterance =
+            new SpeechSynthesisUtterance(
+                String(text)
+            );
+
+
+        /*
+           Language.
+        */
+
+        utterance.lang =
+            answerLanguage === "bangla"
+                ? BANGLA_LANGUAGE
+                : DEFAULT_LANGUAGE;
+
+
+        /*
+           Select Female / Male voice.
+        */
+
+        const selectedVoice =
+            getVoiceForGender();
+
+
+        if (selectedVoice) {
+
+            utterance.voice =
+                selectedVoice;
+
+            selectedSpeechVoice =
+                selectedVoice;
+
+            console.log(
+                "Speaking with voice:",
+                selectedVoice.name,
+                "| Gender:",
+                detectVoiceGender(
+                    selectedVoice
+                ),
+                "| Selected:",
+                selectedVoiceGender,
+                "| Language:",
+                utterance.lang
+            );
+
+        } else {
+
+            console.log(
+                "No specific gender voice found.",
+                "Selected:",
+                selectedVoiceGender,
+                "Language:",
+                utterance.lang
+            );
+
+        }
+
+
+        /*
+           Keep your original speed.
+        */
+
+        utterance.rate =
+            SPEECH_RATE;
+
+        utterance.pitch =
+            1;
+
+        utterance.volume =
+            1;
+
+
+        /*
+           Speak.
+        */
+
+        window.speechSynthesis.speak(
+            utterance
+        );
+
+    };
+
+
+/*
+   If browser voices are available,
+   speak immediately.
+*/
+
+const voices =
+    getAvailableVoices();
+
+
+if (voices.length) {
+
+    speakNow();
+
+} else {
+
+    /*
+       Android browser may need a moment.
+    */
+
+    setTimeout(
+        () => {
+
+            refreshSpeechVoices();
+
+            speakNow();
+
+        },
+        300
+    );
+
+}
 
 }
 
@@ -2169,6 +2691,16 @@ if (language) {
         language
     );
 
+    /*
+       Language changed.
+       Refresh the voice because the browser
+       may have different voices for each language.
+    */
+
+    selectedSpeechVoice = null;
+
+    refreshSpeechVoices();
+
     const message =
         language === "bangla"
             ? "Okay, I will speak in Bangla."
@@ -2289,11 +2821,16 @@ async () => {
     setupAdvancedTextInput();
 
     /*
-       NEW:
        Setup Female / Male voice buttons.
     */
 
     setupVoiceGender();
+
+    /*
+       Load browser speech voices.
+    */
+
+    waitForSpeechVoices();
 
     checkLogin();
 
