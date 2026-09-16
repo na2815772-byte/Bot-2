@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Neloy AI - Text Assistant</title>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #062c4a,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            #26004d,
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #020712,
+            #041525,
+            #08021a
+        );
+
+    overflow-x: hidden;
+
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    top: -180px;
+    left: -150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 204, 255, 0.22),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation:
+        floatingGlow 7s ease-in-out infinite;
+
+    pointer-events: none;
+
+}
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    right: -180px;
+    bottom: -180px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(120, 0, 255, 0.20),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation:
+        floatingGlowTwo 8s ease-in-out infinite;
+
+    pointer-events: none;
+
+}
+
+
+@keyframes floatingGlow {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(80px, 60px);
+    }
+
+}
+
+
+@keyframes floatingGlowTwo {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-70px, -50px);
+    }
+
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.text-page {
+
+    width: 100%;
+    max-width: 650px;
+
+    padding: 30px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(4, 12, 25, 0.78);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        0 0 45px rgba(0, 180, 255, 0.08);
+
+    position: relative;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   TOP LINE EFFECT
+========================================================= */
+
+.text-page::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00d9ff,
+            #7a00ff,
+            transparent
+        );
+
+    animation:
+        topLine 4s linear infinite;
+
+}
+
+
+@keyframes topLine {
+
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.text-header {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.text-header .mini-label {
+
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    padding: 6px 13px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    background:
+        rgba(0, 210, 255, 0.10);
+
+    border:
+        1px solid rgba(0, 210, 255, 0.25);
+
+    color:
+        #8feaff;
+
+}
+
+
+.text-header h1 {
+
+    font-size: 32px;
+
+    letter-spacing: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #65eaff,
+            #b18cff,
+            #ffffff
+        );
+
+    background-size: 250% auto;
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color:
+        transparent;
+
+    animation:
+        titleColor 5s linear infinite;
+
+}
+
+
+@keyframes titleColor {
+
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 250% center;
+    }
+
+}
+
+
+.text-header p {
+
+    margin-top: 8px;
+
+    font-size: 13px;
+
+    opacity: 0.60;
+
+}
+
+
+/* =========================================================
+   TEXT AREA
+========================================================= */
+
+.input-section {
+
+    position: relative;
+
+}
+
+
+.section-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 9px;
+
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+
+    opacity: 0.75;
+
+}
+
+
+.word-counter {
+
+    font-size: 11px;
+
+    opacity: 0.65;
+
+}
+
+
+#textInput {
+
+    width: 100%;
+
+    min-height: 220px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    outline: none;
+
+    color: #ffffff;
+
+    background:
+        rgba(0, 0, 0, 0.30);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.13);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+#textInput::placeholder {
+
+    color:
+        rgba(255, 255, 255, 0.38);
+
+}
+
+
+#textInput:focus {
+
+    border-color:
+        rgba(0, 210, 255, 0.60);
+
+    box-shadow:
+        0 0 25px rgba(0, 190, 255, 0.10);
+
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+#submitButton {
+
+    width: 100%;
+
+    height: 58px;
+
+    margin-top: 18px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            110deg,
+            #004b70,
+            #006eff,
+            #7200ff,
+            #006eff,
+            #004b70
+        );
+
+    background-size: 300% 300%;
+
+    animation:
+        submitColor 5s ease infinite;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.30),
+        0 0 25px rgba(0, 180, 255, 0.12);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+@keyframes submitColor {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+
+#submitButton:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.40),
+        0 0 30px rgba(0, 200, 255, 0.25);
+
+}
+
+
+#submitButton:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* =========================================================
+   VOICE ASSISTANT
+========================================================= */
+
+.voice-card {
+
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.10);
+
+}
+
+
+.voice-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+.voice-icon {
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #006eff,
+            #7300ff
+        );
+
+    font-size: 18px;
+
+    box-shadow:
+        0 0 20px rgba(70, 100, 255, 0.25);
+
+}
+
+
+.voice-title {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.voice-title strong {
+
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.voice-title small {
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    opacity: 0.55;
+
+}
+
+
+/* =========================================================
+   VOICE OPTIONS
+========================================================= */
+
+.voice-options {
+
+    margin-top: 18px;
+
+}
+
+
+.voice-options label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.65;
+
+}
+
+
+#voiceSelect {
+
+    width: 100%;
+
+    height: 45px;
+
+    padding: 0 12px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    outline: none;
+
+    color: #ffffff;
+
+    background:
+        #071525;
+
+    cursor: pointer;
+
+}
+
+
+#voiceSelect option {
+
+    background:
+        #071525;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#voiceStatus {
+
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    opacity: 0.65;
+
+}
+
+
+/* =========================================================
+   SPEAKING ANIMATION
+========================================================= */
+
+.voice-waves {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 4px;
+
+    height: 30px;
+
+    margin-top: 10px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+
+}
+
+
+.voice-waves.active {
+
+    opacity: 1;
+
+}
+
+
+.voice-waves span {
+
+    width: 4px;
+
+    height: 10px;
+
+    border-radius: 10px;
+
+    background:
+        #55ddff;
+
+    animation:
+        voiceWave 0.8s ease-in-out infinite;
+
+}
+
+
+.voice-waves span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.voice-waves span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.voice-waves span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.voice-waves span:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+
+@keyframes voiceWave {
+
+    0%,
+    100% {
+        height: 8px;
+    }
+
+    50% {
+        height: 27px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .text-page {
+
+        padding: 22px;
+
+        border-radius: 23px;
+
+    }
+
+    .text-header h1 {
+
+        font-size: 27px;
+
+    }
+
+    #textInput {
+
+        min-height: 200px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="text-page">
+
+
+    <!-- HEADER -->
+
+    <div class="text-header">
+
+        <span class="mini-label">
+            NELOY AI
+        </span>
+
+        <h1>
+            TEXT
+        </h1>
+
+        <p>
+            Write your text and let AI Voice Assistant read it aloud.
+        </p>
+
+    </div>
+
+
+    <!-- TEXT INPUT -->
+
+    <div class="input-section">
+
+        <div class="section-label">
+
+            <span>
+                ENTER YOUR TEXT
+            </span>
+
+            <span
+                class="word-counter"
+                id="wordCounter"
+            >
+                0 / 500 words
+            </span>
+
+        </div>
+
+
+        <textarea
+            id="textInput"
+            maxlength="5000"
+            placeholder="Type your text here..."
+        ></textarea>
+
+
+        <button
+            id="submitButton"
+            type="button"
+        >
+            SUBMIT
+        </button>
+
+    </div>
+
+
+    <!-- AI VOICE ASSISTANT -->
+
+    <div class="voice-card">
+
+
+        <div class="voice-header">
+
+
+            <div class="voice-icon">
+                🔊
+            </div>
+
+
+            <div class="voice-title">
+
+                <strong>
+                    AI VOICE ASSISTANT
+                </strong>
+
+                <small>
+                    Browser Voice System
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- VOICE OPTIONS -->
+
+        <div class="voice-options">
+
+            <label for="voiceSelect">
+                VOICE OPTION
+            </label>
+
+
+            <select id="voiceSelect">
+
+                <option value="">
+                    Default Voice
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- SPEAKING WAVES -->
+
+        <div
+            class="voice-waves"
+            id="voiceWaves"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <div
+            id="voiceStatus"
+        >
+            Ready to speak
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const textInput =
+    document.getElementById(
+        "textInput"
+    );
+
+const wordCounter =
+    document.getElementById(
+        "wordCounter"
+    );
+
+const submitButton =
+    document.getElementById(
+        "submitButton"
+    );
+
+const voiceSelect =
+    document.getElementById(
+        "voiceSelect"
+    );
+
+const voiceStatus =
+    document.getElementById(
+        "voiceStatus"
+    );
+
+const voiceWaves =
+    document.getElementById(
+        "voiceWaves"
+    );
+
+
+/* =========================================================
+   MAX WORDS
+========================================================= */
+
+const MAX_WORDS = 500;
+
+
+/* =========================================================
+   COUNT WORDS
+========================================================= */
+
+function getWords(text) {
+
+    return text
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+}
+
+
+/* =========================================================
+   UPDATE WORD COUNTER
+========================================================= */
+
+function updateWordCounter() {
+
+    const words =
+        getWords(
+            textInput.value
+        );
+
+
+    if (
+        words.length >
+        MAX_WORDS
+    ) {
+
+        textInput.value =
+            words
+                .slice(
+                    0,
+                    MAX_WORDS
+                )
+                .join(" ");
+
+    }
+
+
+    const count =
+        getWords(
+            textInput.value
+        ).length;
+
+
+    wordCounter.textContent =
+        count +
+        " / " +
+        MAX_WORDS +
+        " words";
+
+}
+
+
+textInput.addEventListener(
+    "input",
+    updateWordCounter
+);
+
+
+/* =========================================================
+   LOAD BROWSER VOICES
+========================================================= */
+
+function loadVoices() {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        voiceStatus.textContent =
+            "Speech synthesis is not supported in this browser.";
+
+        return;
+
+    }
+
+
+    const voices =
+        speechSynthesis.getVoices();
+
+
+    voiceSelect.innerHTML =
+        "";
+
+
+    const defaultOption =
+        document.createElement(
+            "option"
+        );
+
+    defaultOption.value =
+        "";
+
+    defaultOption.textContent =
+        "Default Voice";
+
+    voiceSelect.appendChild(
+        defaultOption
+    );
+
+
+    voices.forEach(
+        (
+            voice,
+            index
+        ) => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                index;
+
+            option.textContent =
+                voice.name +
+                " — " +
+                voice.lang;
+
+            voiceSelect.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+loadVoices();
+
+
+if (
+    "speechSynthesis" in window
+) {
+
+    speechSynthesis.onvoiceschanged =
+        loadVoices;
+
+}
+
+
+/* =========================================================
+   SPEAK TEXT
+========================================================= */
+
+function speakText(text) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        voiceStatus.textContent =
+            "Voice playback is not supported.";
+
+        return;
+
+    }
+
+
+    speechSynthesis.cancel();
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(
+            text
+        );
+
+
+    utterance.rate =
+        1.2;
+
+
+    utterance.pitch =
+        1;
+
+
+    utterance.volume =
+        1;
+
+
+    const voices =
+        speechSynthesis.getVoices();
+
+
+    const selectedIndex =
+        voiceSelect.value;
+
+
+    if (
+        selectedIndex !== ""
+    ) {
+
+        const selectedVoice =
+            voices[
+                Number(
+                    selectedIndex
+                )
+            ];
+
+
+        if (
+            selectedVoice
+        ) {
+
+            utterance.voice =
+                selectedVoice;
+
+            utterance.lang =
+                selectedVoice.lang;
+
+        }
+
+    }
+    else {
+
+        utterance.lang =
+            "en-US";
+
+    }
+
+
+    utterance.onstart =
+        function() {
+
+            voiceStatus.textContent =
+                "AI Voice Assistant is speaking...";
+
+            voiceWaves.classList.add(
+                "active"
+            );
+
+        };
+
+
+    utterance.onend =
+        function() {
+
+            voiceStatus.textContent =
+                "Finished speaking.";
+
+            voiceWaves.classList.remove(
+                "active"
+            );
+
+        };
+
+
+    utterance.onerror =
+        function() {
+
+            voiceStatus.textContent =
+                "Unable to play the voice.";
+
+            voiceWaves.classList.remove(
+                "active"
+            );
+
+        };
+
+
+    speechSynthesis.speak(
+        utterance
+    );
+
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+submitButton.addEventListener(
+    "click",
+    function() {
+
+        const text =
+            textInput.value.trim();
+
+
+        if (!text) {
+
+            voiceStatus.textContent =
+                "Please enter some text first.";
+
+            textInput.focus();
+
+            return;
+
+        }
+
+
+        const words =
+            getWords(
+                text
+            );
+
+
+        if (
+            words.length >
+            MAX_WORDS
+        ) {
+
+            voiceStatus.textContent =
+                "Please keep your text within 500 words.";
+
+            return;
+
+        }
+
+
+        speakText(
+            text
+        );
+
+    }
+);
+
+
+/* =========================================================
+   STOP SPEAKING
+   DOUBLE CLICK SUBMIT
+========================================================= */
+
+submitButton.addEventListener(
+    "dblclick",
+    function() {
+
+        if (
+            "speechSynthesis" in window
+        ) {
+
+            speechSynthesis.cancel();
+
+            voiceWaves.classList.remove(
+                "active"
+            );
+
+            voiceStatus.textContent =
+                "Voice stopped.";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+updateWordCounter();
+
+
+</script>
+
+
+</body>
+</html>
