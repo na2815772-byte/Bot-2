@@ -13,7 +13,7 @@ const FALLBACK_ANSWER =
 const DEFAULT_LANGUAGE = "en-US";
 const BANGLA_LANGUAGE = "bn-BD";
 
-const SPEECH_RATE = 1.2;
+const SPEECH_RATE = 1.5;
 
 let questionDatabase = [];
 
@@ -236,6 +236,15 @@ function logout() {
         "neloy_current_user"
     );
 
+    /*
+       Remove pending welcome message
+       when user logs out.
+    */
+
+    localStorage.removeItem(
+        "neloy_home_welcome"
+    );
+
     speak(
         "You have been logged out."
     );
@@ -286,6 +295,66 @@ function setupHome() {
         document.getElementById(
             "createStart"
         );
+
+    /*
+       =====================================================
+       NEW:
+       Welcome voice after successful login
+       =====================================================
+    */
+
+    const welcomeAfterLogin =
+        localStorage.getItem(
+            "neloy_home_welcome"
+        );
+
+    if (
+        welcomeAfterLogin === "true"
+    ) {
+
+        /*
+           Remove the flag immediately
+           so the welcome message plays
+           only once.
+        */
+
+        localStorage.removeItem(
+            "neloy_home_welcome"
+        );
+
+        const welcomeMessage =
+            "Welcome to Neloy’s website. It’s a pleasure to have you here.";
+
+        /*
+           Small delay allows the Home page
+           to finish loading before speech starts.
+        */
+
+        setTimeout(
+            () => {
+
+                /*
+                   Make sure the response
+                   is spoken in English.
+                */
+
+                answerLanguage =
+                    "english";
+
+                localStorage.setItem(
+                    "answerLanguage",
+                    "english"
+                );
+
+                speak(
+                    welcomeMessage
+                );
+
+            },
+            500
+        );
+    }
+
 
     if (!button) return;
 
@@ -1046,6 +1115,18 @@ function setupLogin() {
                 )
             );
 
+            /*
+               =================================================
+               NEW:
+               Tell the Home page to play the welcome voice.
+               =================================================
+            */
+
+            localStorage.setItem(
+                "neloy_home_welcome",
+                "true"
+            );
+
             const message =
                 "Your login was successful.";
 
@@ -1060,8 +1141,13 @@ function setupLogin() {
             setTimeout(
                 () => {
 
+                    /*
+                       Changed only the destination:
+                       Login successful → Home page
+                    */
+
                     window.location.href =
-                        "record.html";
+                        "index.html";
 
                 },
                 1500
