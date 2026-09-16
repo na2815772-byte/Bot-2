@@ -271,6 +271,146 @@
 
 }
 
+
+/* =========================================================
+   MALE / FEMALE VOICE SELECTOR
+========================================================= */
+
+.voice-selector {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 38px;
+
+    margin: 16px auto 4px;
+
+}
+
+
+.voice-option {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        transform 0.25s ease,
+        text-shadow 0.25s ease;
+
+}
+
+
+.voice-option:hover {
+
+    transform: translateY(-2px);
+
+    text-shadow:
+        0 0 10px rgba(0, 174, 255, 0.9);
+
+}
+
+
+/* Hide original radio */
+
+.voice-option input {
+
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+/* Empty square */
+
+.voice-check {
+
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid #00bfff;
+
+    border-radius: 4px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(0, 100, 255, 0.10);
+
+    box-shadow:
+        0 0 8px rgba(0, 170, 255, 0.25);
+
+    transition:
+        all 0.25s ease;
+
+}
+
+
+/* Tick */
+
+.voice-option input:checked
++ .voice-check {
+
+    background:
+        linear-gradient(
+            135deg,
+            #007bff,
+            #00c6ff
+        );
+
+    border-color:
+        #00eaff;
+
+    box-shadow:
+        0 0 12px rgba(0, 200, 255, 0.85);
+
+}
+
+
+.voice-option input:checked
++ .voice-check::after {
+
+    content: "✓";
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+}
+
+
+.voice-option:active {
+
+    transform: scale(0.94);
+
+}
+
 </style>
 
 </head>
@@ -630,6 +770,50 @@
         ></div>
 
 
+        <!-- =================================================
+             MALE / FEMALE VOICE
+        ================================================== -->
+
+        <div class="voice-selector">
+
+            <label class="voice-option">
+
+                <input
+                    type="radio"
+                    name="voiceGender"
+                    value="female"
+                    id="femaleVoice"
+                >
+
+                <span class="voice-check"></span>
+
+                <span>
+                    Female
+                </span>
+
+            </label>
+
+
+            <label class="voice-option">
+
+                <input
+                    type="radio"
+                    name="voiceGender"
+                    value="male"
+                    id="maleVoice"
+                >
+
+                <span class="voice-check"></span>
+
+                <span>
+                    Male
+                </span>
+
+            </label>
+
+        </div>
+
+
         <!-- TEXT PAGE REDIRECT -->
 
         <a
@@ -668,6 +852,209 @@
 
 
 <script src="script.js"></script>
+
+
+<!-- =========================================================
+     MALE / FEMALE VOICE LOGIC
+========================================================= -->
+
+<script>
+
+let selectedVoiceGender =
+    localStorage.getItem(
+        "neloy_voice_gender"
+    ) || "female";
+
+
+/* Select saved option */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        const female =
+            document.getElementById(
+                "femaleVoice"
+            );
+
+        const male =
+            document.getElementById(
+                "maleVoice"
+            );
+
+
+        if (
+            selectedVoiceGender ===
+            "male"
+        ) {
+
+            male.checked = true;
+
+        } else {
+
+            female.checked = true;
+
+        }
+
+
+        if (female) {
+
+            female.addEventListener(
+                "change",
+                () => {
+
+                    if (female.checked) {
+
+                        selectedVoiceGender =
+                            "female";
+
+                        localStorage.setItem(
+                            "neloy_voice_gender",
+                            "female"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        if (male) {
+
+            male.addEventListener(
+                "change",
+                () => {
+
+                    if (male.checked) {
+
+                        selectedVoiceGender =
+                            "male";
+
+                        localStorage.setItem(
+                            "neloy_voice_gender",
+                            "male"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/*
+   Replace only the speech function.
+
+   The existing AI logic remains unchanged.
+*/
+
+function speak(text) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+        return;
+    }
+
+
+    window.speechSynthesis.cancel();
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(
+            text
+        );
+
+
+    utterance.lang =
+        answerLanguage === "bangla"
+            ? "bn-BD"
+            : "en-US";
+
+
+    utterance.rate = 1.2;
+
+    utterance.pitch =
+        selectedVoiceGender === "male"
+            ? 0.75
+            : 1.15;
+
+    utterance.volume = 1;
+
+
+    const voices =
+        window.speechSynthesis.getVoices();
+
+
+    const englishVoices =
+        voices.filter(
+            voice =>
+                voice.lang
+                    .toLowerCase()
+                    .startsWith("en")
+        );
+
+
+    if (
+        englishVoices.length
+    ) {
+
+        let selectedVoice;
+
+
+        if (
+            selectedVoiceGender ===
+            "male"
+        ) {
+
+            selectedVoice =
+                englishVoices.find(
+                    voice =>
+                        /male|david|mark|daniel|alex|fred|george/i
+                            .test(
+                                voice.name
+                            )
+                );
+
+        } else {
+
+            selectedVoice =
+                englishVoices.find(
+                    voice =>
+                        /female|samantha|victoria|karen|zira|susan|ava/i
+                            .test(
+                                voice.name
+                            )
+                );
+
+        }
+
+
+        if (
+            selectedVoice
+        ) {
+
+            utterance.voice =
+                selectedVoice;
+
+        }
+
+    }
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+
+}
+
+</script>
 
 </body>
 </html>
