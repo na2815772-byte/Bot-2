@@ -1,14 +1,14 @@
 /* =========================================================
-   NELOY AI VOICE ASSISTANT
-   No API
-   No Gemini
-   No Node.js
-   No Terminal
-   Local predefined Q&A system
+NELOY AI VOICE ASSISTANT
+No API
+No Gemini
+No Node.js
+No Terminal
+Local predefined Q&A system
 ========================================================= */
 
 const FALLBACK_ANSWER =
-    "Sorry, this question is not in my system.";
+"Sorry, this question is not in my system.";
 
 const DEFAULT_LANGUAGE = "en-US";
 const BANGLA_LANGUAGE = "bn-BD";
@@ -27,1481 +27,1789 @@ let isRecording = false;
 let recognizedText = "";
 
 let answerLanguage =
-    localStorage.getItem("answerLanguage") || "english";
+localStorage.getItem("answerLanguage") || "english";
+
+/* =========================================================
+VOICE GENDER SELECTION
+NEW LOGIC ONLY
+========================================================= */
+
+let selectedVoiceGender =
+localStorage.getItem("neloy_voice_gender") || "female";
 
 
 /* =========================================================
-   PARTICLES
+PARTICLES
 ========================================================= */
 
 function createParticles() {
 
-    const container =
-        document.getElementById("particles");
+const container =
+    document.getElementById("particles");
 
-    if (!container) return;
+if (!container) return;
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
-    for (let i = 0; i < 45; i++) {
+for (let i = 0; i < 45; i++) {
 
-        const particle =
-            document.createElement("div");
+    const particle =
+        document.createElement("div");
 
-        particle.className = "particle";
+    particle.className = "particle";
 
-        particle.style.left =
-            Math.random() * 100 + "%";
+    particle.style.left =
+        Math.random() * 100 + "%";
 
-        particle.style.animationDuration =
-            (5 + Math.random() * 12) + "s";
+    particle.style.animationDuration =
+        (5 + Math.random() * 12) + "s";
 
-        particle.style.animationDelay =
-            Math.random() * 10 + "s";
+    particle.style.animationDelay =
+        Math.random() * 10 + "s";
 
-        particle.style.opacity =
-            0.2 + Math.random() * 0.7;
+    particle.style.opacity =
+        0.2 + Math.random() * 0.7;
 
-        const size =
-            2 + Math.random() * 3;
+    const size =
+        2 + Math.random() * 3;
 
-        particle.style.width =
-            size + "px";
+    particle.style.width =
+        size + "px";
 
-        particle.style.height =
-            size + "px";
+    particle.style.height =
+        size + "px";
 
-        container.appendChild(particle);
-    }
+    container.appendChild(particle);
+}
+
 }
 
 
 /* =========================================================
-   SPEAK
+VOICE SELECTION LOGIC
+NEW
+========================================================= */
+
+function getVoiceForGender() {
+
+if (!("speechSynthesis" in window)) {
+    return null;
+}
+
+const voices =
+    window.speechSynthesis.getVoices();
+
+if (!voices.length) {
+    return null;
+}
+
+/*
+   Current language
+*/
+
+const currentLanguage =
+    answerLanguage === "bangla"
+        ? BANGLA_LANGUAGE
+        : DEFAULT_LANGUAGE;
+
+const languagePrefix =
+    currentLanguage
+        .split("-")[0]
+        .toLowerCase();
+
+/*
+   First find voices matching
+   current language.
+*/
+
+let languageVoices =
+    voices.filter(
+        voice =>
+            voice.lang &&
+            voice.lang
+                .toLowerCase()
+                .startsWith(languagePrefix)
+    );
+
+/*
+   If current language voice is not
+   available, use English voices.
+*/
+
+if (!languageVoices.length) {
+
+    languageVoices =
+        voices.filter(
+            voice =>
+                voice.lang &&
+                voice.lang
+                    .toLowerCase()
+                    .startsWith("en")
+        );
+}
+
+/*
+   Final fallback.
+*/
+
+if (!languageVoices.length) {
+    languageVoices = voices;
+}
+
+
+/*
+   Female voice name keywords.
+*/
+
+const femaleKeywords = [
+
+    "female",
+    "woman",
+    "girl",
+
+    "samantha",
+    "karen",
+    "zira",
+    "susan",
+    "victoria",
+
+    "ava",
+    "allison",
+    "aria",
+    "jenny",
+    "sara",
+
+    "moira",
+    "fiona",
+    "hazel",
+
+    "siri"
+
+];
+
+
+/*
+   Male voice name keywords.
+*/
+
+const maleKeywords = [
+
+    "male",
+    "man",
+    "boy",
+
+    "david",
+    "mark",
+    "daniel",
+    "alex",
+    "fred",
+    "george",
+
+    "james",
+    "guy",
+    "brian",
+    "michael",
+    "arthur",
+
+    "thomas",
+    "richard"
+
+];
+
+
+/*
+   Select keywords according
+   to selected gender.
+*/
+
+const keywords =
+    selectedVoiceGender === "female"
+        ? femaleKeywords
+        : maleKeywords;
+
+
+/*
+   Find matching voice.
+*/
+
+const genderVoice =
+    languageVoices.find(
+        voice => {
+
+            const voiceName =
+                voice.name
+                    .toLowerCase();
+
+            return keywords.some(
+                keyword =>
+                    voiceName.includes(
+                        keyword
+                    )
+            );
+        }
+    );
+
+
+if (genderVoice) {
+
+    return genderVoice;
+
+}
+
+
+/*
+   If browser does not expose gender
+   information/name, use available
+   voice as fallback.
+*/
+
+return languageVoices[0] || null;
+
+}
+
+
+/* =========================================================
+SET VOICE GENDER
+NEW
+========================================================= */
+
+function setVoiceGender(gender) {
+
+if (
+    gender !== "female" &&
+    gender !== "male"
+) {
+    return;
+}
+
+selectedVoiceGender =
+    gender;
+
+localStorage.setItem(
+    "neloy_voice_gender",
+    gender
+);
+
+
+/*
+   Make sure browser loads
+   available voices.
+*/
+
+if (
+    "speechSynthesis" in window
+) {
+
+    window.speechSynthesis
+        .getVoices();
+
+}
+
+
+/*
+   Confirmation voice.
+*/
+
+const message =
+    gender === "female"
+        ? "Female voice selected."
+        : "Male voice selected.";
+
+speak(message);
+
+}
+
+
+/* =========================================================
+VOICE GENDER SETUP
+NEW
+========================================================= */
+
+function setupVoiceGender() {
+
+const female =
+    document.getElementById(
+        "femaleVoice"
+    );
+
+const male =
+    document.getElementById(
+        "maleVoice"
+    );
+
+
+/*
+   If the controls are not present,
+   do nothing.
+*/
+
+if (!female && !male) {
+    return;
+}
+
+
+/*
+   Restore previous selection.
+*/
+
+if (
+    selectedVoiceGender === "female"
+) {
+
+    if (female) {
+        female.checked = true;
+    }
+
+    if (male) {
+        male.checked = false;
+    }
+
+} else {
+
+    if (female) {
+        female.checked = false;
+    }
+
+    if (male) {
+        male.checked = true;
+    }
+
+}
+
+
+/*
+   Female click.
+*/
+
+if (female) {
+
+    female.addEventListener(
+        "change",
+        () => {
+
+            if (female.checked) {
+
+                if (male) {
+                    male.checked = false;
+                }
+
+                setVoiceGender(
+                    "female"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/*
+   Male click.
+*/
+
+if (male) {
+
+    male.addEventListener(
+        "change",
+        () => {
+
+            if (male.checked) {
+
+                if (female) {
+                    female.checked = false;
+                }
+
+                setVoiceGender(
+                    "male"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+}
+
+
+/* =========================================================
+SPEAK
 ========================================================= */
 
 function speak(text) {
 
-    if (!("speechSynthesis" in window)) {
-        return;
-    }
+if (!("speechSynthesis" in window)) {
+    return;
+}
 
-    window.speechSynthesis.cancel();
+window.speechSynthesis.cancel();
 
-    const utterance =
-        new SpeechSynthesisUtterance(text);
+const utterance =
+    new SpeechSynthesisUtterance(text);
 
-    utterance.lang =
-        answerLanguage === "bangla"
-            ? BANGLA_LANGUAGE
-            : DEFAULT_LANGUAGE;
+utterance.lang =
+    answerLanguage === "bangla"
+        ? BANGLA_LANGUAGE
+        : DEFAULT_LANGUAGE;
 
-    utterance.rate =
-        SPEECH_RATE;
 
-    utterance.pitch = 1;
+/*
+   NEW:
+   Select Female / Male voice.
+*/
 
-    utterance.volume = 1;
+const selectedVoice =
+    getVoiceForGender();
 
-    window.speechSynthesis.speak(
-        utterance
+if (selectedVoice) {
+
+    utterance.voice =
+        selectedVoice;
+
+    console.log(
+        "Speaking with voice:",
+        selectedVoice.name,
+        "| Gender:",
+        selectedVoiceGender,
+        "| Language:",
+        utterance.lang
     );
+
+}
+
+
+utterance.rate =
+    SPEECH_RATE;
+
+utterance.pitch = 1;
+
+utterance.volume = 1;
+
+window.speechSynthesis.speak(
+    utterance
+);
+
 }
 
 
 /* =========================================================
-   SHOW MESSAGE
+SHOW MESSAGE
 ========================================================= */
 
 function showMessage(
-    elementId,
-    message,
-    type = "success"
+elementId,
+message,
+type = "success"
 ) {
 
-    const element =
-        document.getElementById(elementId);
+const element =
+    document.getElementById(elementId);
 
-    if (!element) return;
+if (!element) return;
 
-    element.textContent =
-        message;
+element.textContent =
+    message;
 
-    element.className =
-        `message-box show ${type}`;
+element.className =
+    `message-box show ${type}`;
+
 }
 
 
 /* =========================================================
-   HIDE MESSAGE
+HIDE MESSAGE
 ========================================================= */
 
 function hideMessage(elementId) {
 
-    const element =
-        document.getElementById(elementId);
+const element =
+    document.getElementById(elementId);
 
-    if (!element) return;
+if (!element) return;
 
-    element.className =
-        "message-box";
+element.className =
+    "message-box";
+
 }
 
 
 /* =========================================================
-   MENU
+MENU
 ========================================================= */
 
 function setupMenu() {
 
-    const button =
-        document.getElementById("menuButton");
+const button =
+    document.getElementById("menuButton");
 
-    const menu =
-        document.getElementById("sideMenu");
+const menu =
+    document.getElementById("sideMenu");
 
-    if (!button || !menu) return;
+if (!button || !menu) return;
 
-    button.addEventListener(
-        "click",
-        event => {
+button.addEventListener(
+    "click",
+    event => {
 
-            event.stopPropagation();
+        event.stopPropagation();
 
-            button.classList.toggle("active");
+        button.classList.toggle("active");
 
-            menu.classList.toggle("active");
+        menu.classList.toggle("active");
+    }
+);
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !menu.contains(event.target) &&
+            !button.contains(event.target)
+        ) {
+
+            button.classList.remove("active");
+
+            menu.classList.remove("active");
         }
-    );
+    }
+);
 
-    document.addEventListener(
-        "click",
-        event => {
-
-            if (
-                !menu.contains(event.target) &&
-                !button.contains(event.target)
-            ) {
-
-                button.classList.remove("active");
-
-                menu.classList.remove("active");
-            }
-        }
-    );
 }
 
 
 /* =========================================================
-   PLUS
+PLUS
 ========================================================= */
 
 function setupPlus() {
 
-    const button =
-        document.getElementById("plusButton");
+const button =
+    document.getElementById("plusButton");
 
-    if (!button) return;
+if (!button) return;
 
-    button.addEventListener(
-        "click",
-        () => {
+button.addEventListener(
+    "click",
+    () => {
 
-            const message =
-                "Plus features are coming soon.";
+        const message =
+            "Plus features are coming soon.";
 
-            speak(message);
+        speak(message);
 
-            alert(message);
-        }
-    );
+        alert(message);
+    }
+);
+
 }
 
 
 /* =========================================================
-   LOGOUT
+LOGOUT
 ========================================================= */
 
 function logout() {
 
-    localStorage.removeItem(
-        "neloy_logged_in"
+localStorage.removeItem(
+    "neloy_logged_in"
+);
+
+localStorage.removeItem(
+    "neloy_current_email"
+);
+
+localStorage.removeItem(
+    "neloy_current_user"
+);
+
+/*
+   Remove pending welcome message
+   when user logs out.
+*/
+
+localStorage.removeItem(
+    "neloy_home_welcome"
+);
+
+speak(
+    "You have been logged out."
+);
+
+setTimeout(
+    () => {
+        window.location.href =
+            "registration.html";
+    },
+    1000
+);
+
+}
+
+
+function setupLogout() {
+
+const button =
+    document.getElementById("logoutButton");
+
+const homeLogout =
+    document.getElementById(
+        "homeLogoutButton"
     );
 
-    localStorage.removeItem(
-        "neloy_current_email"
+if (button) {
+    button.addEventListener(
+        "click",
+        logout
+    );
+}
+
+if (homeLogout) {
+    homeLogout.addEventListener(
+        "click",
+        logout
+    );
+}
+
+}
+
+
+/* =========================================================
+HOME
+========================================================= */
+
+function setupHome() {
+
+const button =
+    document.getElementById(
+        "createStart"
     );
 
-    localStorage.removeItem(
-        "neloy_current_user"
+/*
+   =====================================================
+   NEW:
+   Welcome voice after successful login
+   =====================================================
+*/
+
+const welcomeAfterLogin =
+    localStorage.getItem(
+        "neloy_home_welcome"
     );
+
+if (
+    welcomeAfterLogin === "true"
+) {
 
     /*
-       Remove pending welcome message
-       when user logs out.
+       Remove the flag immediately
+       so the welcome message plays
+       only once.
     */
 
     localStorage.removeItem(
         "neloy_home_welcome"
     );
 
-    speak(
-        "You have been logged out."
-    );
+    const welcomeMessage =
+        "Welcome to Neloy’s website. It’s a pleasure to have you here.";
+
+    /*
+       Small delay allows the Home page
+       to finish loading before speech starts.
+    */
 
     setTimeout(
         () => {
-            window.location.href =
-                "registration.html";
+
+            /*
+               Make sure the response
+               is spoken in English.
+            */
+
+            answerLanguage =
+                "english";
+
+            localStorage.setItem(
+                "answerLanguage",
+                "english"
+            );
+
+            speak(
+                welcomeMessage
+            );
+
         },
-        1000
+        500
     );
 }
 
 
-function setupLogout() {
+if (!button) return;
 
-    const button =
-        document.getElementById("logoutButton");
+button.addEventListener(
+    "click",
+    () => {
 
-    const homeLogout =
-        document.getElementById(
-            "homeLogoutButton"
-        );
+        const message =
+            "Please complete your registration first, then come back and continue.";
 
-    if (button) {
-        button.addEventListener(
-            "click",
-            logout
-        );
-    }
-
-    if (homeLogout) {
-        homeLogout.addEventListener(
-            "click",
-            logout
-        );
-    }
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function setupHome() {
-
-    const button =
-        document.getElementById(
-            "createStart"
-        );
-
-    /*
-       =====================================================
-       NEW:
-       Welcome voice after successful login
-       =====================================================
-    */
-
-    const welcomeAfterLogin =
-        localStorage.getItem(
-            "neloy_home_welcome"
-        );
-
-    if (
-        welcomeAfterLogin === "true"
-    ) {
-
-        /*
-           Remove the flag immediately
-           so the welcome message plays
-           only once.
-        */
-
-        localStorage.removeItem(
-            "neloy_home_welcome"
-        );
-
-        const welcomeMessage =
-            "Welcome to Neloy’s website. It’s a pleasure to have you here.";
-
-        /*
-           Small delay allows the Home page
-           to finish loading before speech starts.
-        */
+        speak(message);
 
         setTimeout(
             () => {
-
-                /*
-                   Make sure the response
-                   is spoken in English.
-                */
-
-                answerLanguage =
-                    "english";
-
-                localStorage.setItem(
-                    "answerLanguage",
-                    "english"
-                );
-
-                speak(
-                    welcomeMessage
-                );
-
+                window.location.href =
+                    "registration.html";
             },
-            500
+            1800
         );
     }
+);
 
-
-    if (!button) return;
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            const message =
-                "Please complete your registration first, then come back and continue.";
-
-            speak(message);
-
-            setTimeout(
-                () => {
-                    window.location.href =
-                        "registration.html";
-                },
-                1800
-            );
-        }
-    );
 }
 
 
 /* =========================================================
-   LOAD QUESTIONS
+LOAD QUESTIONS
 ========================================================= */
 
 async function loadQuestions() {
 
-    try {
+try {
 
-        const response =
-            await fetch(
-                "questions.json",
-                {
-                    cache: "no-cache"
-                }
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                "Could not load questions.json"
-            );
-        }
-
-        questionDatabase =
-            await response.json();
-
-        console.log(
-            "Neloy AI database loaded:",
-            questionDatabase
+    const response =
+        await fetch(
+            "questions.json",
+            {
+                cache: "no-cache"
+            }
         );
 
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Database error:",
-            error
+    if (!response.ok) {
+        throw new Error(
+            "Could not load questions.json"
         );
-
-        questionDatabase = [];
-
-        return false;
     }
+
+    questionDatabase =
+        await response.json();
+
+    console.log(
+        "Neloy AI database loaded:",
+        questionDatabase
+    );
+
+    return true;
+
+} catch (error) {
+
+    console.error(
+        "Database error:",
+        error
+    );
+
+    questionDatabase = [];
+
+    return false;
+}
+
 }
 
 
 /* =========================================================
-   TEXT NORMALIZATION
+TEXT NORMALIZATION
 ========================================================= */
 
 function normalizeText(text) {
 
-    return String(text || "")
-        .toLowerCase()
-        .normalize("NFKC")
+return String(text || "")
+    .toLowerCase()
+    .normalize("NFKC")
 
-        .replace(
-            /[.,!?;:'"()[\]{}<>/\\|@#$%^&*_+=~`-]/g,
-            " "
-        )
+    .replace(
+        /[.,!?;:'"()[\]{}<>/\\|@#$%^&*_+=~`-]/g,
+        " "
+    )
 
-        .replace(
-            /\s+/g,
-            " "
-        )
+    .replace(
+        /\s+/g,
+        " "
+    )
 
-        .trim();
+    .trim();
+
 }
 
 
 /* =========================================================
-   WORDS
+WORDS
 ========================================================= */
 
 function getWords(text) {
 
-    return normalizeText(text)
-        .split(" ")
-        .filter(
-            word => word.length > 0
-        );
+return normalizeText(text)
+    .split(" ")
+    .filter(
+        word => word.length > 0
+    );
+
 }
 
 
 /* =========================================================
-   QUESTION SCORE
+QUESTION SCORE
 ========================================================= */
 
 function calculateScore(
-    userQuestion,
-    databaseQuestion
+userQuestion,
+databaseQuestion
 ) {
 
-    const input =
-        normalizeText(userQuestion);
+const input =
+    normalizeText(userQuestion);
 
-    const question =
-        normalizeText(databaseQuestion);
+const question =
+    normalizeText(databaseQuestion);
 
-    if (!input || !question) {
-        return 0;
-    }
+if (!input || !question) {
+    return 0;
+}
 
-    /* Exact */
+/* Exact */
 
-    if (input === question) {
-        return 1;
-    }
+if (input === question) {
+    return 1;
+}
 
-    /* Contains */
+/* Contains */
 
-    if (
-        input.includes(question) ||
-        question.includes(input)
-    ) {
-        return 0.94;
-    }
+if (
+    input.includes(question) ||
+    question.includes(input)
+) {
+    return 0.94;
+}
 
-    const inputWords =
-        getWords(input);
+const inputWords =
+    getWords(input);
 
-    const questionWords =
-        getWords(question);
+const questionWords =
+    getWords(question);
 
-    if (
-        !inputWords.length ||
-        !questionWords.length
-    ) {
-        return 0;
-    }
+if (
+    !inputWords.length ||
+    !questionWords.length
+) {
+    return 0;
+}
 
-    let matched = 0;
+let matched = 0;
 
-    inputWords.forEach(
-        word => {
+inputWords.forEach(
+    word => {
 
-            if (
-                questionWords.includes(word)
-            ) {
-                matched++;
-            }
-
+        if (
+            questionWords.includes(word)
+        ) {
+            matched++;
         }
-    );
 
-    const union =
-        new Set([
-            ...inputWords,
-            ...questionWords
-        ]).size;
-
-    if (!union) {
-        return 0;
     }
+);
 
-    return matched / union;
+const union =
+    new Set([
+        ...inputWords,
+        ...questionWords
+    ]).size;
+
+if (!union) {
+    return 0;
+}
+
+return matched / union;
+
 }
 
 
 /* =========================================================
-   SEARCH DATABASE
+SEARCH DATABASE
 ========================================================= */
 
 function findAnswer(
-    userQuestion
+userQuestion
 ) {
 
-    let bestMatch = null;
+let bestMatch = null;
 
-    let bestScore = 0;
+let bestScore = 0;
+
+for (
+    const category
+    of questionDatabase
+) {
+
+    if (
+        !Array.isArray(
+            category.entries
+        )
+    ) {
+        continue;
+    }
 
     for (
-        const category
-        of questionDatabase
+        const entry
+        of category.entries
     ) {
 
         if (
             !Array.isArray(
-                category.entries
+                entry.questions
             )
         ) {
             continue;
         }
 
         for (
-            const entry
-            of category.entries
+            const question
+            of entry.questions
         ) {
 
+            const score =
+                calculateScore(
+                    userQuestion,
+                    question
+                );
+
             if (
-                !Array.isArray(
-                    entry.questions
-                )
-            ) {
-                continue;
-            }
-
-            for (
-                const question
-                of entry.questions
+                score > bestScore
             ) {
 
-                const score =
-                    calculateScore(
-                        userQuestion,
-                        question
-                    );
+                bestScore =
+                    score;
 
-                if (
-                    score > bestScore
-                ) {
+                bestMatch = {
+                    category:
+                        category.category,
 
-                    bestScore =
-                        score;
-
-                    bestMatch = {
-                        category:
-                            category.category,
-
-                        answers:
-                            entry.answers || []
-                    };
-                }
+                    answers:
+                        entry.answers || []
+                };
             }
         }
     }
+}
 
-    /*
-       Threshold:
-       Question must have a reasonable match.
-    */
+/*
+   Threshold:
+   Question must have a reasonable match.
+*/
 
-    if (
-        !bestMatch ||
-        bestScore < 0.50
-    ) {
-
-        return {
-            matched: false,
-
-            answer:
-                FALLBACK_ANSWER
-        };
-    }
-
-    const answers =
-        bestMatch.answers;
-
-    if (!answers.length) {
-
-        return {
-            matched: false,
-
-            answer:
-                FALLBACK_ANSWER
-        };
-    }
-
-    const randomIndex =
-        Math.floor(
-            Math.random() *
-            answers.length
-        );
+if (
+    !bestMatch ||
+    bestScore < 0.50
+) {
 
     return {
-
-        matched: true,
-
-        category:
-            bestMatch.category,
-
-        score:
-            bestScore,
+        matched: false,
 
         answer:
-            answers[randomIndex]
+            FALLBACK_ANSWER
     };
 }
 
+const answers =
+    bestMatch.answers;
+
+if (!answers.length) {
+
+    return {
+        matched: false,
+
+        answer:
+            FALLBACK_ANSWER
+    };
+}
+
+const randomIndex =
+    Math.floor(
+        Math.random() *
+        answers.length
+    );
+
+return {
+
+    matched: true,
+
+    category:
+        bestMatch.category,
+
+    score:
+        bestScore,
+
+    answer:
+        answers[randomIndex]
+};
+
+}
+
 
 /* =========================================================
-   TYPE ANSWER
+TYPE ANSWER
 ========================================================= */
 
 function typeAnswer(
-    element,
-    text
+element,
+text
 ) {
 
-    element.textContent = "";
+element.textContent = "";
 
-    let index = 0;
+let index = 0;
 
-    const timer =
-        setInterval(
-            () => {
+const timer =
+    setInterval(
+        () => {
 
-                element.textContent +=
-                    text.charAt(index);
+            element.textContent +=
+                text.charAt(index);
 
-                index++;
+            index++;
 
-                if (
-                    index >=
-                    text.length
-                ) {
+            if (
+                index >=
+                text.length
+            ) {
 
-                    clearInterval(
-                        timer
-                    );
-                }
+                clearInterval(
+                    timer
+                );
+            }
 
-            },
-            15
-        );
+        },
+        15
+    );
+
 }
 
 
 /* =========================================================
-   ASK ASSISTANT
+ASK ASSISTANT
 ========================================================= */
 
 async function askAssistant(
-    question
+question
 ) {
 
-    const answerElement =
-        document.getElementById(
-            "aiAnswer"
-        );
+const answerElement =
+    document.getElementById(
+        "aiAnswer"
+    );
 
-    const loading =
-        document.getElementById(
-            "loading"
-        );
+const loading =
+    document.getElementById(
+        "loading"
+    );
 
-    const messageElement =
-        document.getElementById(
-            "assistantMessage"
-        );
+const messageElement =
+    document.getElementById(
+        "assistantMessage"
+    );
 
-    if (
-        !question ||
-        !question.trim()
-    ) {
+if (
+    !question ||
+    !question.trim()
+) {
 
-        const message =
-            "Please say or type a question.";
-
-        if (answerElement) {
-            answerElement.textContent =
-                message;
-        }
-
-        showMessage(
-            "assistantMessage",
-            message,
-            "error"
-        );
-
-        speak(message);
-
-        return;
-    }
-
-    if (
-        questionDatabase.length === 0
-    ) {
-
-        await loadQuestions();
-    }
-
-    if (loading) {
-        loading.classList.add(
-            "show"
-        );
-    }
-
-    if (messageElement) {
-        hideMessage(
-            "assistantMessage"
-        );
-    }
+    const message =
+        "Please say or type a question.";
 
     if (answerElement) {
         answerElement.textContent =
-            "Searching my system...";
+            message;
     }
 
-    /*
-       Small visual delay
-       for dynamic effect.
-    */
-
-    await new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                350
-            )
+    showMessage(
+        "assistantMessage",
+        message,
+        "error"
     );
 
-    const result =
-        findAnswer(question);
+    speak(message);
 
-    if (answerElement) {
+    return;
+}
 
-        typeAnswer(
-            answerElement,
-            result.answer
-        );
-    }
+if (
+    questionDatabase.length === 0
+) {
 
-    if (loading) {
-        loading.classList.remove(
-            "show"
-        );
-    }
+    await loadQuestions();
+}
 
-    /*
-       Always speak the selected answer.
-    */
+if (loading) {
+    loading.classList.add(
+        "show"
+    );
+}
 
-    speak(
+if (messageElement) {
+    hideMessage(
+        "assistantMessage"
+    );
+}
+
+if (answerElement) {
+    answerElement.textContent =
+        "Searching my system...";
+}
+
+/*
+   Small visual delay
+   for dynamic effect.
+*/
+
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            350
+        )
+);
+
+const result =
+    findAnswer(question);
+
+if (answerElement) {
+
+    typeAnswer(
+        answerElement,
         result.answer
     );
+}
 
-    console.log(
-        "Question:",
-        question
+if (loading) {
+    loading.classList.remove(
+        "show"
     );
+}
 
-    console.log(
-        "Result:",
-        result
-    );
+/*
+   Always speak the selected answer.
+*/
+
+speak(
+    result.answer
+);
+
+console.log(
+    "Question:",
+    question
+);
+
+console.log(
+    "Result:",
+    result
+);
+
 }
 
 
 /* =========================================================
-   REGISTRATION
+REGISTRATION
 ========================================================= */
 
 function isValidPassword(
-    password
+password
 ) {
 
-    return (
-        password.length >= 8 &&
-        /[A-Z]/.test(password) &&
-        /[a-z]/.test(password) &&
-        /[0-9]/.test(password) &&
-        /[^A-Za-z0-9]/.test(password)
-    );
+return (
+    password.length >= 8 &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[^A-Za-z0-9]/.test(password)
+);
+
 }
 
 
 function getUsers() {
 
-    try {
+try {
 
-        return JSON.parse(
-            localStorage.getItem(
-                "neloy_users"
-            )
-        ) || [];
+    return JSON.parse(
+        localStorage.getItem(
+            "neloy_users"
+        )
+    ) || [];
 
-    } catch {
+} catch {
 
-        return [];
-    }
+    return [];
+}
+
 }
 
 
 function saveUsers(users) {
 
-    localStorage.setItem(
-        "neloy_users",
-        JSON.stringify(users)
-    );
+localStorage.setItem(
+    "neloy_users",
+    JSON.stringify(users)
+);
+
 }
 
 
 function setupRegistration() {
 
-    const form =
-        document.getElementById(
-            "registrationForm"
-        );
+const form =
+    document.getElementById(
+        "registrationForm"
+    );
 
-    if (!form) return;
+if (!form) return;
 
-    form.addEventListener(
-        "submit",
-        event => {
+form.addEventListener(
+    "submit",
+    event => {
 
-            event.preventDefault();
+        event.preventDefault();
 
-            const firstName =
-                document
-                    .getElementById(
-                        "firstName"
-                    )
-                    .value
-                    .trim();
-
-            const lastName =
-                document
-                    .getElementById(
-                        "lastName"
-                    )
-                    .value
-                    .trim();
-
-            const email =
-                document
-                    .getElementById(
-                        "registerEmail"
-                    )
-                    .value
-                    .trim()
-                    .toLowerCase();
-
-            const password =
-                document
-                    .getElementById(
-                        "registerPassword"
-                    )
-                    .value;
-
-            const confirmPassword =
-                document
-                    .getElementById(
-                        "confirmPassword"
-                    )
-                    .value;
-
-            /* Password */
-
-            if (
-                !isValidPassword(
-                    password
+        const firstName =
+            document
+                .getElementById(
+                    "firstName"
                 )
-            ) {
+                .value
+                .trim();
 
-                const message =
-                    "Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.";
+        const lastName =
+            document
+                .getElementById(
+                    "lastName"
+                )
+                .value
+                .trim();
 
-                showMessage(
-                    "registerStatus",
-                    message,
-                    "error"
-                );
+        const email =
+            document
+                .getElementById(
+                    "registerEmail"
+                )
+                .value
+                .trim()
+                .toLowerCase();
 
-                speak(message);
+        const password =
+            document
+                .getElementById(
+                    "registerPassword"
+                )
+                .value;
 
-                return;
-            }
+        const confirmPassword =
+            document
+                .getElementById(
+                    "confirmPassword"
+                )
+                .value;
 
-            /* Confirm */
+        /* Password */
 
-            if (
-                password !==
-                confirmPassword
-            ) {
+        if (
+            !isValidPassword(
+                password
+            )
+        ) {
 
-                const message =
-                    "Your passwords do not match.";
-
-                showMessage(
-                    "registerStatus",
-                    message,
-                    "error"
-                );
-
-                speak(message);
-
-                return;
-            }
-
-            let users =
-                getUsers();
-
-            /* Duplicate email */
-
-            const exists =
-                users.some(
-                    user =>
-                        user.email ===
-                        email
-                );
-
-            if (exists) {
-
-                const message =
-                    "Sorry, this email is already registered.";
-
-                showMessage(
-                    "registerStatus",
-                    message,
-                    "error"
-                );
-
-                speak(message);
-
-                return;
-            }
-
-            /* Save */
-
-            users.push({
-
-                firstName:
-                    firstName,
-
-                lastName:
-                    lastName,
-
-                email:
-                    email,
-
-                password:
-                    password,
-
-                createdAt:
-                    new Date().toISOString()
-
-            });
-
-            saveUsers(users);
-
-            const success =
-                "Your registration was successful.";
+            const message =
+                "Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.";
 
             showMessage(
                 "registerStatus",
-                success,
-                "success"
-            );
-
-            speak(success);
-
-            setTimeout(
-                () => {
-
-                    window.location.href =
-                        "login.html";
-
-                },
-                1800
-            );
-        }
-    );
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-function setupLogin() {
-
-    const form =
-        document.getElementById(
-            "loginForm"
-        );
-
-    if (!form) return;
-
-    form.addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-            const email =
-                document
-                    .getElementById(
-                        "loginEmail"
-                    )
-                    .value
-                    .trim()
-                    .toLowerCase();
-
-            const password =
-                document
-                    .getElementById(
-                        "loginPassword"
-                    )
-                    .value;
-
-            const users =
-                getUsers();
-
-            const user =
-                users.find(
-                    item =>
-                        item.email ===
-                            email &&
-                        item.password ===
-                            password
-                );
-
-            if (!user) {
-
-                const message =
-                    "Sorry, your email or password is incorrect.";
-
-                showMessage(
-                    "loginStatus",
-                    message,
-                    "error"
-                );
-
-                speak(message);
-
-                return;
-            }
-
-            localStorage.setItem(
-                "neloy_logged_in",
-                "true"
-            );
-
-            localStorage.setItem(
-                "neloy_current_email",
-                user.email
-            );
-
-            localStorage.setItem(
-                "neloy_current_user",
-                JSON.stringify(
-                    user
-                )
-            );
-
-            /*
-               =================================================
-               NEW:
-               Tell the Home page to play the welcome voice.
-               =================================================
-            */
-
-            localStorage.setItem(
-                "neloy_home_welcome",
-                "true"
-            );
-
-            const message =
-                "Your login was successful.";
-
-            showMessage(
-                "loginStatus",
                 message,
-                "success"
+                "error"
             );
 
             speak(message);
 
-            setTimeout(
-                () => {
-
-                    /*
-                       Changed only the destination:
-                       Login successful → Record page
-                    */
-
-                    window.location.href =
-                        "record.html";
-
-                },
-                1500
-            );
+            return;
         }
-    );
+
+        /* Confirm */
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            const message =
+                "Your passwords do not match.";
+
+            showMessage(
+                "registerStatus",
+                message,
+                "error"
+            );
+
+            speak(message);
+
+            return;
+        }
+
+        let users =
+            getUsers();
+
+        /* Duplicate email */
+
+        const exists =
+            users.some(
+                user =>
+                    user.email ===
+                    email
+            );
+
+        if (exists) {
+
+            const message =
+                "Sorry, this email is already registered.";
+
+            showMessage(
+                "registerStatus",
+                message,
+                "error"
+            );
+
+            speak(message);
+
+            return;
+        }
+
+        /* Save */
+
+        users.push({
+
+            firstName:
+                firstName,
+
+            lastName:
+                lastName,
+
+            email:
+                email,
+
+            password:
+                password,
+
+            createdAt:
+                new Date().toISOString()
+
+        });
+
+        saveUsers(users);
+
+        const success =
+            "Your registration was successful.";
+
+        showMessage(
+            "registerStatus",
+            success,
+            "success"
+        );
+
+        speak(success);
+
+        setTimeout(
+            () => {
+
+                window.location.href =
+                    "login.html";
+
+            },
+            1800
+        );
+    }
+);
+
 }
 
 
 /* =========================================================
-   CHECK LOGIN
+LOGIN
+========================================================= */
+
+function setupLogin() {
+
+const form =
+    document.getElementById(
+        "loginForm"
+    );
+
+if (!form) return;
+
+form.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const email =
+            document
+                .getElementById(
+                    "loginEmail"
+                )
+                .value
+                .trim()
+                .toLowerCase();
+
+        const password =
+            document
+                .getElementById(
+                    "loginPassword"
+                )
+                .value;
+
+        const users =
+            getUsers();
+
+        const user =
+            users.find(
+                item =>
+                    item.email ===
+                        email &&
+                    item.password ===
+                        password
+            );
+
+        if (!user) {
+
+            const message =
+                "Sorry, your email or password is incorrect.";
+
+            showMessage(
+                "loginStatus",
+                message,
+                "error"
+            );
+
+            speak(message);
+
+            return;
+        }
+
+        localStorage.setItem(
+            "neloy_logged_in",
+            "true"
+        );
+
+        localStorage.setItem(
+            "neloy_current_email",
+            user.email
+        );
+
+        localStorage.setItem(
+            "neloy_current_user",
+            JSON.stringify(
+                user
+            )
+        );
+
+        /*
+           =================================================
+           NEW:
+           Tell the Home page to play the welcome voice.
+           =================================================
+        */
+
+        localStorage.setItem(
+            "neloy_home_welcome",
+            "true"
+        );
+
+        const message =
+            "Your login was successful.";
+
+        showMessage(
+            "loginStatus",
+            message,
+            "success"
+        );
+
+        speak(message);
+
+        setTimeout(
+            () => {
+
+                /*
+                   Changed only the destination:
+                   Login successful → Record page
+                */
+
+                window.location.href =
+                    "record.html";
+
+            },
+            1500
+        );
+    }
+);
+
+}
+
+
+/* =========================================================
+CHECK LOGIN
 ========================================================= */
 
 function checkLogin() {
 
-    const page =
-        document.body.dataset.page;
+const page =
+    document.body.dataset.page;
 
-    if (
-        page !== "record"
-    ) {
-        return;
-    }
+if (
+    page !== "record"
+) {
+    return;
+}
 
-    const loggedIn =
-        localStorage.getItem(
-            "neloy_logged_in"
-        );
+const loggedIn =
+    localStorage.getItem(
+        "neloy_logged_in"
+    );
 
-    if (
-        loggedIn !== "true"
-    ) {
+if (
+    loggedIn !== "true"
+) {
 
-        window.location.href =
-            "login.html";
-    }
+    window.location.href =
+        "login.html";
+}
+
 }
 
 
 /* =========================================================
-   SPEECH RECOGNITION
+SPEECH RECOGNITION
 ========================================================= */
 
 function createSpeechRecognition() {
 
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-    if (!SpeechRecognition) {
+if (!SpeechRecognition) {
 
-        console.warn(
-            "Speech Recognition is not supported."
-        );
+    console.warn(
+        "Speech Recognition is not supported."
+    );
 
-        return null;
-    }
-
-    const recognizer =
-        new SpeechRecognition();
-
-    recognizer.continuous = true;
-
-    recognizer.interimResults = true;
-
-    /*
-       Default recognition language.
-       User can speak English.
-    */
-
-    recognizer.lang =
-        DEFAULT_LANGUAGE;
-
-    recognizer.onresult =
-        event => {
-
-            let interim = "";
-
-            let finalText = "";
-
-            for (
-                let i =
-                    event.resultIndex;
-
-                i <
-                    event.results.length;
-
-                i++
-            ) {
-
-                const transcript =
-                    event.results[i][0]
-                        .transcript;
-
-                if (
-                    event.results[i]
-                        .isFinal
-                ) {
-
-                    finalText +=
-                        transcript;
-
-                } else {
-
-                    interim +=
-                        transcript;
-                }
-            }
-
-            if (
-                finalText.trim()
-            ) {
-
-                recognizedText +=
-                    " " +
-                    finalText;
-            }
-
-            const transcriptElement =
-                document.getElementById(
-                    "liveTranscript"
-                );
-
-            if (transcriptElement) {
-
-                transcriptElement.textContent =
-                    (
-                        recognizedText +
-                        " " +
-                        interim
-                    ).trim() ||
-                    "Listening...";
-            }
-        };
-
-    recognizer.onerror =
-        event => {
-
-            console.log(
-                "Recognition:",
-                event.error
-            );
-        };
-
-    recognizer.onend =
-        () => {
-
-            if (
-                isRecording
-            ) {
-
-                try {
-                    recognizer.start();
-                } catch {}
-            }
-        };
-
-    return recognizer;
+    return null;
 }
 
+const recognizer =
+    new SpeechRecognition();
 
-/* =========================================================
-   START RECORD
-========================================================= */
+recognizer.continuous = true;
 
-async function startRecording() {
+recognizer.interimResults = true;
 
-    if (isRecording) {
-        return;
-    }
+/*
+   Default recognition language.
+   User can speak English.
+*/
 
-    try {
+recognizer.lang =
+    DEFAULT_LANGUAGE;
 
-        const stream =
-            await navigator
-                .mediaDevices
-                .getUserMedia({
-                    audio: true
-                });
+recognizer.onresult =
+    event => {
 
-        recordedChunks = [];
+        let interim = "";
 
-        recordedBlob = null;
+        let finalText = "";
 
-        recognizedText = "";
+        for (
+            let i =
+                event.resultIndex;
 
-        mediaRecorder =
-            new MediaRecorder(
-                stream
-            );
+            i <
+                event.results.length;
 
-        mediaRecorder.ondataavailable =
-            event => {
+            i++
+        ) {
 
-                if (
-                    event.data.size > 0
-                ) {
+            const transcript =
+                event.results[i][0]
+                    .transcript;
 
-                    recordedChunks.push(
-                        event.data
-                    );
-                }
-            };
+            if (
+                event.results[i]
+                    .isFinal
+            ) {
 
-        mediaRecorder.onstop =
-            () => {
+                finalText +=
+                    transcript;
 
-                recordedBlob =
-                    new Blob(
-                        recordedChunks,
-                        {
-                            type:
-                                "audio/webm"
-                        }
-                    );
+            } else {
 
-                const audioURL =
-                    URL.createObjectURL(
-                        recordedBlob
-                    );
-
-                const audio =
-                    document.getElementById(
-                        "audioPlayer"
-                    );
-
-                const section =
-                    document.getElementById(
-                        "audioSection"
-                    );
-
-                if (audio) {
-
-                    audio.src =
-                        audioURL;
-                }
-
-                if (section) {
-
-                    section.classList.add(
-                        "show"
-                    );
-                }
-
-                stream
-                    .getTracks()
-                    .forEach(
-                        track =>
-                            track.stop()
-                    );
-            };
-
-        mediaRecorder.start();
-
-        isRecording = true;
-
-        const orb =
-            document.getElementById(
-                "voiceOrb"
-            );
-
-        const status =
-            document.getElementById(
-                "recordingStatus"
-            );
-
-        if (orb) {
-
-            orb.classList.add(
-                "recording"
-            );
+                interim +=
+                    transcript;
+            }
         }
 
-        if (status) {
+        if (
+            finalText.trim()
+        ) {
 
-            status.textContent =
-                "● Recording...";
+            recognizedText +=
+                " " +
+                finalText;
         }
 
-        /*
-           Start speech recognition.
-        */
-
-        if (!recognition) {
-
-            recognition =
-                createSpeechRecognition();
-        }
-
-        if (recognition) {
-
-            try {
-
-                recognition.start();
-
-            } catch {}
-        }
-
-        const transcript =
+        const transcriptElement =
             document.getElementById(
                 "liveTranscript"
             );
 
-        if (transcript) {
+        if (transcriptElement) {
 
-            transcript.textContent =
+            transcriptElement.textContent =
+                (
+                    recognizedText +
+                    " " +
+                    interim
+                ).trim() ||
                 "Listening...";
         }
+    };
 
-    } catch (error) {
+recognizer.onerror =
+    event => {
 
-        console.error(error);
-
-        const message =
-            "Microphone permission is required.";
-
-        showMessage(
-            "assistantMessage",
-            message,
-            "error"
+        console.log(
+            "Recognition:",
+            event.error
         );
+    };
 
-        speak(message);
-    }
+recognizer.onend =
+    () => {
+
+        if (
+            isRecording
+        ) {
+
+            try {
+                recognizer.start();
+            } catch {}
+        }
+    };
+
+return recognizer;
+
 }
 
 
 /* =========================================================
-   STOP RECORD
+START RECORD
 ========================================================= */
 
-function stopRecording() {
+async function startRecording() {
 
-    if (!isRecording) {
-        return;
-    }
+if (isRecording) {
+    return;
+}
 
-    isRecording = false;
+try {
 
-    if (
-        mediaRecorder &&
-        mediaRecorder.state !==
-            "inactive"
-    ) {
+    const stream =
+        await navigator
+            .mediaDevices
+            .getUserMedia({
+                audio: true
+            });
 
-        mediaRecorder.stop();
-    }
+    recordedChunks = [];
 
-    if (recognition) {
+    recordedBlob = null;
 
-        try {
-            recognition.stop();
-        } catch {}
-    }
+    recognizedText = "";
+
+    mediaRecorder =
+        new MediaRecorder(
+            stream
+        );
+
+    mediaRecorder.ondataavailable =
+        event => {
+
+            if (
+                event.data.size > 0
+            ) {
+
+                recordedChunks.push(
+                    event.data
+                );
+            }
+        };
+
+    mediaRecorder.onstop =
+        () => {
+
+            recordedBlob =
+                new Blob(
+                    recordedChunks,
+                    {
+                        type:
+                            "audio/webm"
+                    }
+                );
+
+            const audioURL =
+                URL.createObjectURL(
+                    recordedBlob
+                );
+
+            const audio =
+                document.getElementById(
+                    "audioPlayer"
+                );
+
+            const section =
+                document.getElementById(
+                    "audioSection"
+                );
+
+            if (audio) {
+
+                audio.src =
+                    audioURL;
+            }
+
+            if (section) {
+
+                section.classList.add(
+                    "show"
+                );
+            }
+
+            stream
+                .getTracks()
+                .forEach(
+                    track =>
+                        track.stop()
+                );
+        };
+
+    mediaRecorder.start();
+
+    isRecording = true;
 
     const orb =
         document.getElementById(
@@ -1515,7 +1823,7 @@ function stopRecording() {
 
     if (orb) {
 
-        orb.classList.remove(
+        orb.classList.add(
             "recording"
         );
     }
@@ -1523,7 +1831,26 @@ function stopRecording() {
     if (status) {
 
         status.textContent =
-            "Recording stopped.";
+            "● Recording...";
+    }
+
+    /*
+       Start speech recognition.
+    */
+
+    if (!recognition) {
+
+        recognition =
+            createSpeechRecognition();
+    }
+
+    if (recognition) {
+
+        try {
+
+            recognition.start();
+
+        } catch {}
     }
 
     const transcript =
@@ -1533,354 +1860,449 @@ function stopRecording() {
 
     if (transcript) {
 
-        if (
-            recognizedText.trim()
-        ) {
-
-            transcript.textContent =
-                recognizedText.trim();
-
-        } else {
-
-            transcript.textContent =
-                "No speech was recognized.";
-        }
+        transcript.textContent =
+            "Listening...";
     }
+
+} catch (error) {
+
+    console.error(error);
+
+    const message =
+        "Microphone permission is required.";
+
+    showMessage(
+        "assistantMessage",
+        message,
+        "error"
+    );
+
+    speak(message);
+}
+
 }
 
 
 /* =========================================================
-   RECORD BUTTON SETUP
+STOP RECORD
+========================================================= */
+
+function stopRecording() {
+
+if (!isRecording) {
+    return;
+}
+
+isRecording = false;
+
+if (
+    mediaRecorder &&
+    mediaRecorder.state !==
+        "inactive"
+) {
+
+    mediaRecorder.stop();
+}
+
+if (recognition) {
+
+    try {
+        recognition.stop();
+    } catch {}
+}
+
+const orb =
+    document.getElementById(
+        "voiceOrb"
+    );
+
+const status =
+    document.getElementById(
+        "recordingStatus"
+    );
+
+if (orb) {
+
+    orb.classList.remove(
+        "recording"
+    );
+}
+
+if (status) {
+
+    status.textContent =
+        "Recording stopped.";
+}
+
+const transcript =
+    document.getElementById(
+        "liveTranscript"
+    );
+
+if (transcript) {
+
+    if (
+        recognizedText.trim()
+    ) {
+
+        transcript.textContent =
+            recognizedText.trim();
+
+    } else {
+
+        transcript.textContent =
+            "No speech was recognized.";
+    }
+}
+
+}
+
+
+/* =========================================================
+RECORD BUTTON SETUP
 ========================================================= */
 
 function setupRecorder() {
 
-    const start =
-        document.getElementById(
-            "startRecord"
-        );
+const start =
+    document.getElementById(
+        "startRecord"
+    );
 
-    const stop =
-        document.getElementById(
-            "stopRecord"
-        );
+const stop =
+    document.getElementById(
+        "stopRecord"
+    );
 
-    const submit =
-        document.getElementById(
-            "submitRecord"
-        );
+const submit =
+    document.getElementById(
+        "submitRecord"
+    );
 
-    if (start) {
+if (start) {
 
-        start.addEventListener(
-            "click",
-            startRecording
-        );
-    }
+    start.addEventListener(
+        "click",
+        startRecording
+    );
+}
 
-    if (stop) {
+if (stop) {
 
-        stop.addEventListener(
-            "click",
-            stopRecording
-        );
-    }
+    stop.addEventListener(
+        "click",
+        stopRecording
+    );
+}
 
-    if (submit) {
+if (submit) {
 
-        submit.addEventListener(
-            "click",
-            () => {
+    submit.addEventListener(
+        "click",
+        () => {
 
-                if (
-                    !recognizedText.trim()
-                ) {
+            if (
+                !recognizedText.trim()
+            ) {
 
-                    const message =
-                        "I could not understand your recording.";
+                const message =
+                    "I could not understand your recording.";
 
-                    showMessage(
-                        "assistantMessage",
-                        message,
-                        "error"
-                    );
-
-                    speak(message);
-
-                    return;
-                }
-
-                askAssistant(
-                    recognizedText.trim()
+                showMessage(
+                    "assistantMessage",
+                    message,
+                    "error"
                 );
+
+                speak(message);
+
+                return;
             }
-        );
-    }
+
+            askAssistant(
+                recognizedText.trim()
+            );
+        }
+    );
+}
+
 }
 
 
 /* =========================================================
-   TEXT SUBMIT
+TEXT SUBMIT
 ========================================================= */
 
 function setupTextInput() {
 
-    const button =
-        document.getElementById(
-            "submitText"
-        );
+const button =
+    document.getElementById(
+        "submitText"
+    );
 
-    const textarea =
-        document.getElementById(
-            "textQuestion"
-        );
+const textarea =
+    document.getElementById(
+        "textQuestion"
+    );
 
-    if (!button || !textarea) {
-        return;
+if (!button || !textarea) {
+    return;
+}
+
+button.addEventListener(
+    "click",
+    () => {
+
+        askAssistant(
+            textarea.value
+        );
     }
+);
 
-    button.addEventListener(
-        "click",
-        () => {
+textarea.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
 
             askAssistant(
                 textarea.value
             );
         }
-    );
+    }
+);
 
-    textarea.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                askAssistant(
-                    textarea.value
-                );
-            }
-        }
-    );
 }
 
 
 /* =========================================================
-   LANGUAGE COMMAND
+LANGUAGE COMMAND
 ========================================================= */
 
 function detectLanguageCommand(
-    text
+text
 ) {
 
-    const normalized =
-        normalizeText(text);
+const normalized =
+    normalizeText(text);
 
-    const banglaCommands = [
+const banglaCommands = [
 
-        "বাংলায় বলো",
-        "বাংলাতে বলো",
-        "বাংলা ভাষায় বলো",
-        "বাংলায় কথা বলো",
-        "বাংলাতে কথা বলো"
+    "বাংলায় বলো",
+    "বাংলাতে বলো",
+    "বাংলা ভাষায় বলো",
+    "বাংলায় কথা বলো",
+    "বাংলাতে কথা বলো"
 
-    ];
+];
 
-    const englishCommands = [
+const englishCommands = [
 
-        "speak in english",
-        "speak english",
-        "answer in english",
-        "talk in english",
-        "english please"
+    "speak in english",
+    "speak english",
+    "answer in english",
+    "talk in english",
+    "english please"
 
-    ];
+];
 
-    for (
-        const command
-        of banglaCommands
+for (
+    const command
+    of banglaCommands
+) {
+
+    if (
+        normalized.includes(
+            normalizeText(command)
+        )
     ) {
 
-        if (
-            normalized.includes(
-                normalizeText(command)
-            )
-        ) {
-
-            return "bangla";
-        }
+        return "bangla";
     }
+}
 
-    for (
-        const command
-        of englishCommands
+for (
+    const command
+    of englishCommands
+) {
+
+    if (
+        normalized.includes(
+            normalizeText(command)
+        )
     ) {
 
-        if (
-            normalized.includes(
-                normalizeText(command)
-            )
-        ) {
-
-            return "english";
-        }
+        return "english";
     }
+}
 
-    return null;
+return null;
+
 }
 
 
 /* =========================================================
-   COMMAND-AWARE ASSISTANT
+COMMAND-AWARE ASSISTANT
 ========================================================= */
 
 async function processAssistantQuestion(
-    question
+question
 ) {
 
-    const language =
-        detectLanguageCommand(
-            question
-        );
-
-    if (language) {
-
-        answerLanguage =
-            language;
-
-        localStorage.setItem(
-            "answerLanguage",
-            language
-        );
-
-        const message =
-            language === "bangla"
-                ? "Okay, I will speak in Bangla."
-                : "Okay, I will speak in English.";
-
-        const answer =
-            document.getElementById(
-                "aiAnswer"
-            );
-
-        if (answer) {
-
-            answer.textContent =
-                message;
-        }
-
-        speak(message);
-
-        return;
-    }
-
-    await askAssistant(
+const language =
+    detectLanguageCommand(
         question
     );
+
+if (language) {
+
+    answerLanguage =
+        language;
+
+    localStorage.setItem(
+        "answerLanguage",
+        language
+    );
+
+    const message =
+        language === "bangla"
+            ? "Okay, I will speak in Bangla."
+            : "Okay, I will speak in English.";
+
+    const answer =
+        document.getElementById(
+            "aiAnswer"
+        );
+
+    if (answer) {
+
+        answer.textContent =
+            message;
+    }
+
+    speak(message);
+
+    return;
+}
+
+await askAssistant(
+    question
+);
+
 }
 
 
 /* =========================================================
-   OVERRIDE TEXT SUBMIT FOR LANGUAGE COMMAND
+OVERRIDE TEXT SUBMIT FOR LANGUAGE COMMAND
 ========================================================= */
 
 function setupAdvancedTextInput() {
 
-    const button =
-        document.getElementById(
-            "submitText"
-        );
-
-    const textarea =
-        document.getElementById(
-            "textQuestion"
-        );
-
-    if (!button || !textarea) {
-        return;
-    }
-
-    /*
-       Remove previous listener by cloning.
-    */
-
-    const newButton =
-        button.cloneNode(true);
-
-    button.parentNode.replaceChild(
-        newButton,
-        button
+const button =
+    document.getElementById(
+        "submitText"
     );
 
-    newButton.addEventListener(
-        "click",
-        () => {
+const textarea =
+    document.getElementById(
+        "textQuestion"
+    );
+
+if (!button || !textarea) {
+    return;
+}
+
+/*
+   Remove previous listener by cloning.
+*/
+
+const newButton =
+    button.cloneNode(true);
+
+button.parentNode.replaceChild(
+    newButton,
+    button
+);
+
+newButton.addEventListener(
+    "click",
+    () => {
+
+        processAssistantQuestion(
+            textarea.value
+        );
+    }
+);
+
+textarea.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
 
             processAssistantQuestion(
                 textarea.value
             );
         }
-    );
+    }
+);
 
-    textarea.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                processAssistantQuestion(
-                    textarea.value
-                );
-            }
-        }
-    );
 }
 
 
 /* =========================================================
-   INITIALIZE
+INITIALIZE
 ========================================================= */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+"DOMContentLoaded",
+async () => {
 
-        createParticles();
+    createParticles();
 
-        setupMenu();
+    setupMenu();
 
-        setupPlus();
+    setupPlus();
 
-        setupLogout();
+    setupLogout();
 
-        setupHome();
+    setupHome();
 
-        setupRegistration();
+    setupRegistration();
 
-        setupLogin();
+    setupLogin();
 
-        setupRecorder();
+    setupRecorder();
 
-        setupTextInput();
+    setupTextInput();
 
-        setupAdvancedTextInput();
+    setupAdvancedTextInput();
 
-        checkLogin();
+    /*
+       NEW:
+       Setup Female / Male voice buttons.
+    */
 
-        /*
-           Load predefined Q&A.
-        */
+    setupVoiceGender();
 
-        await loadQuestions();
+    checkLogin();
 
-    }
+    /*
+       Load predefined Q&A.
+    */
+
+    await loadQuestions();
+
+}
+
 );
