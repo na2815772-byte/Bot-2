@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Registration - Neloy AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body data-page="registration">
+
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+    <div id="particles"></div>
+
+    <main class="center-page">
+
+        <section class="glass-card form-card">
+
+            <div class="mini-logo">
+                N
+            </div>
+
+            <div class="form-heading">
+
+                <div class="status-badge">
+                    CREATE ACCOUNT
+                </div>
+
+                <h1>
+                    Registration
+                </h1>
+
+                <p>
+                    Create your account to continue.
+                </p>
+
+            </div>
+
+            <form id="registrationForm">
+
+                <div class="input-row">
+
+                    <div class="input-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            id="firstName"
+                            type="text"
+                            placeholder="Enter first name"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            id="lastName"
+                            type="text"
+                            placeholder="Enter last name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="registerEmail">
+                        Email
+                    </label>
+
+                    <input
+                        id="registerEmail"
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="registerPassword">
+                        Password
+                    </label>
+
+                    <input
+                        id="registerPassword"
+                        type="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                    <div class="password-requirements">
+
+                        Password must contain:
+
+                        <span>8+ characters</span>
+                        <span>Uppercase</span>
+                        <span>Lowercase</span>
+                        <span>Number</span>
+                        <span>Special character</span>
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+                <div
+                    id="registerStatus"
+                    class="message-box"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="main-button"
+                >
+                    <span>Create Account</span>
+                    <span>→</span>
+                </button>
+
+            </form>
+
+            <div class="form-footer">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+            <a
+                href="index.html"
+                class="back-link"
+            >
+                ← Back to Home
+            </a>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
