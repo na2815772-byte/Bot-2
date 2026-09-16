@@ -13,7 +13,7 @@ const FALLBACK_ANSWER =
 const DEFAULT_LANGUAGE = "en-US";
 const BANGLA_LANGUAGE = "bn-BD";
 
-const SPEECH_RATE = 1.5;
+const SPEECH_RATE = 1.2;
 
 let questionDatabase = [];
 
