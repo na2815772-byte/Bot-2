@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Neloy AI Voice Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body data-page="record">
+
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+    <div id="particles"></div>
+
+    <!-- Menu Button -->
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Open menu"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Menu -->
+
+    <div class="side-menu" id="sideMenu">
+
+        <div class="menu-header">
+
+            <div class="menu-logo">
+                N
+            </div>
+
+            <div>
+                <strong>Neloy AI</strong>
+                <small>Voice Assistant</small>
+            </div>
+
+        </div>
+
+        <a
+            href="help.html"
+            class="menu-item"
+        >
+            <span>❓</span>
+            <span>Help Center</span>
+        </a>
+
+        <button
+            class="menu-item"
+            id="plusButton"
+        >
+            <span>✨</span>
+            <span>Plus</span>
+        </button>
+
+        <button
+            class="menu-item"
+            id="logoutButton"
+        >
+            <span>🚪</span>
+            <span>Logout</span>
+        </button>
+
+    </div>
+
+    <main class="assistant-page">
+
+        <section class="assistant-card">
+
+            <!-- Header -->
+
+            <div class="assistant-header">
+
+                <div>
+
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+
+                    <h1>
+                        Neloy AI
+                    </h1>
+
+                    <p>
+                        Voice Assistant
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- AI Orb -->
+
+            <div
+                class="ai-orb assistant-orb"
+                id="voiceOrb"
+            >
+
+                <div class="orb-ring ring-one"></div>
+                <div class="orb-ring ring-two"></div>
+
+                <div class="orb-inner">
+                    AI
+                </div>
+
+            </div>
+
+            <div
+                class="recording-status"
+                id="recordingStatus"
+            >
+                Ready
+            </div>
+
+            <!-- Transcript -->
+
+            <div class="transcript-card">
+
+                <div class="section-label">
+                    USER INPUT
+                </div>
+
+                <div
+                    id="liveTranscript"
+                    class="transcript-text"
+                >
+                    Your voice transcript will appear here.
+                </div>
+
+            </div>
+
+            <!-- Record Buttons -->
+
+            <div class="record-controls">
+
+                <button
+                    id="startRecord"
+                    class="control-button start-button"
+                >
+                    <span class="control-icon">
+                        🎙
+                    </span>
+
+                    <span>
+                        START RECORD
+                    </span>
+                </button>
+
+                <button
+                    id="stopRecord"
+                    class="control-button stop-button"
+                >
+                    <span class="control-icon">
+                        ■
+                    </span>
+
+                    <span>
+                        STOP RECORD
+                    </span>
+                </button>
+
+            </div>
+
+            <!-- Audio -->
+
+            <div
+                class="audio-section"
+                id="audioSection"
+            >
+
+                <div class="section-label">
+                    RECORDING
+                </div>
+
+                <audio
+                    id="audioPlayer"
+                    controls
+                ></audio>
+
+                <button
+                    id="submitRecord"
+                    class="main-button"
+                >
+                    <span>SUBMIT RECORD</span>
+                    <span>🚀</span>
+                </button>
+
+            </div>
+
+            <!-- Divider -->
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <!-- Text -->
+
+            <div class="text-section">
+
+                <div class="section-label">
+                    TYPE YOUR QUESTION
+                </div>
+
+                <textarea
+                    id="textQuestion"
+                    placeholder="Type your question here..."
+                ></textarea>
+
+                <button
+                    id="submitText"
+                    class="main-button"
+                >
+                    <span>SUBMIT TEXT</span>
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- Loading -->
+
+            <div
+                id="loading"
+                class="loading"
+            >
+
+                <div></div>
+                <div></div>
+                <div></div>
+
+                <span>
+                    Searching my system...
+                </span>
+
+            </div>
+
+            <!-- AI Answer -->
+
+            <div class="answer-card">
+
+                <div class="answer-header">
+
+                    <div class="answer-icon">
+                        AI
+                    </div>
+
+                    <div>
+                        <strong>
+                            AI VOICE ASSISTANT
+                        </strong>
+
+                        <small>
+                            Predefined System
+                        </small>
+                    </div>
+
+                </div>
+
+                <div
+                    id="aiAnswer"
+                    class="ai-answer"
+                >
+                    Your answer will appear here.
+                </div>
+
+            </div>
+
+            <div
+                id="assistantMessage"
+                class="message-box"
+            ></div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
