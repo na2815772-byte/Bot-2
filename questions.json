@@ -1,0 +1,282 @@
+[
+    {
+        "category": "identity",
+        "entries": [
+            {
+                "questions": [
+                    "who are you",
+                    "what are you",
+                    "what is your name",
+                    "tell me about yourself",
+                    "introduce yourself",
+                    "who am i talking to",
+                    "what is your identity",
+                    "are you an ai",
+                    "are you artificial intelligence",
+                    "who created you",
+                    "who presented you",
+                    "তুমি কে",
+                    "তুমি কি",
+                    "তোমার নাম কি",
+                    "তোমার পরিচয় কি",
+                    "নিজের পরিচয় দাও",
+                    "তুমি কি এআই",
+                    "তুমি কি কৃত্রিম বুদ্ধিমত্তা",
+                    "কে তোমাকে তৈরি করেছে",
+                    "কে তোমাকে উপস্থাপন করেছে"
+                ],
+                "answers": [
+                    "I am AI, the artificial intelligence presented by Niloy."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "greetings",
+        "entries": [
+            {
+                "questions": [
+                    "hello",
+                    "hi",
+                    "hey",
+                    "hello there",
+                    "hey there",
+                    "good morning",
+                    "good afternoon",
+                    "good evening",
+                    "how are you",
+                    "how are you doing",
+                    "what is up",
+                    "what's up",
+                    "হ্যালো",
+                    "হাই",
+                    "হেই",
+                    "সুপ্রভাত",
+                    "শুভ সকাল",
+                    "কেমন আছো",
+                    "কি খবর"
+                ],
+                "answers": [
+                    "Hello! How can I help you?",
+                    "Hi! It is nice to hear from you.",
+                    "Hello! What would you like to ask me?",
+                    "Hey! I am ready to help."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "thanks",
+        "entries": [
+            {
+                "questions": [
+                    "thank you",
+                    "thanks",
+                    "thanks a lot",
+                    "thank you so much",
+                    "many thanks",
+                    "i appreciate it",
+                    "ধন্যবাদ",
+                    "অনেক ধন্যবাদ",
+                    "তোমাকে ধন্যবাদ",
+                    "অনেক অনেক ধন্যবাদ"
+                ],
+                "answers": [
+                    "You're welcome.",
+                    "You're very welcome.",
+                    "No problem. I am happy to help.",
+                    "It is my pleasure."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "goodbye",
+        "entries": [
+            {
+                "questions": [
+                    "bye",
+                    "goodbye",
+                    "see you",
+                    "see you later",
+                    "talk to you later",
+                    "i have to go",
+                    "good night",
+                    "বিদায়",
+                    "বাই",
+                    "পরে দেখা হবে",
+                    "পরে কথা হবে",
+                    "শুভ রাত্রি"
+                ],
+                "answers": [
+                    "Goodbye! Have a great day.",
+                    "See you later. Take care.",
+                    "Goodbye! I will be here when you return.",
+                    "Take care and see you again."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "internet",
+        "entries": [
+            {
+                "questions": [
+                    "what is the internet",
+                    "what is internet",
+                    "tell me about internet",
+                    "how does the internet work",
+                    "how internet works",
+                    "what does internet mean",
+                    "ইন্টারনেট কি",
+                    "ইন্টারনেট কী",
+                    "ইন্টারনেট কিভাবে কাজ করে",
+                    "ইন্টারনেট কীভাবে কাজ করে",
+                    "ইন্টারনেট সম্পর্কে বলো"
+                ],
+                "answers": [
+                    "The Internet is a global network that connects computers, phones, servers, and other devices so they can exchange information.",
+                    "The Internet connects devices around the world and allows people to communicate, access websites, share information, and use online services."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "computer",
+        "entries": [
+            {
+                "questions": [
+                    "what is a computer",
+                    "what is computer",
+                    "tell me about computer",
+                    "what does a computer do",
+                    "কম্পিউটার কি",
+                    "কম্পিউটার কী",
+                    "কম্পিউটার সম্পর্কে বলো",
+                    "কম্পিউটার দিয়ে কি করা যায়"
+                ],
+                "answers": [
+                    "A computer is an electronic device that processes data and performs tasks according to instructions.",
+                    "A computer can process information, run programs, store data, and perform many different tasks."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "science",
+        "entries": [
+            {
+                "questions": [
+                    "what is science",
+                    "define science",
+                    "tell me about science",
+                    "science meaning",
+                    "বিজ্ঞান কি",
+                    "বিজ্ঞান কী",
+                    "বিজ্ঞান সম্পর্কে বলো"
+                ],
+                "answers": [
+                    "Science is the systematic study of the natural world through observation, testing, and evidence.",
+                    "Science helps us understand how the natural world works by using observation, experiments, and evidence."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "technology",
+        "entries": [
+            {
+                "questions": [
+                    "what is technology",
+                    "define technology",
+                    "tell me about technology",
+                    "what does technology mean",
+                    "প্রযুক্তি কি",
+                    "প্রযুক্তি কী",
+                    "প্রযুক্তি সম্পর্কে বলো"
+                ],
+                "answers": [
+                    "Technology is the use of knowledge, tools, and techniques to solve problems and perform useful tasks.",
+                    "Technology helps people create tools and systems that make many tasks easier and more efficient."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "space",
+        "entries": [
+            {
+                "questions": [
+                    "what is space",
+                    "what is outer space",
+                    "tell me about space",
+                    "what is the solar system",
+                    "মহাকাশ কি",
+                    "মহাকাশ কী",
+                    "মহাকাশ সম্পর্কে বলো",
+                    "সৌরজগত কি",
+                    "সৌরজগত কী"
+                ],
+                "answers": [
+                    "Outer space is the vast region beyond Earth's atmosphere containing stars, planets, galaxies, and other objects.",
+                    "The Solar System is the system centered on the Sun and includes planets, moons, asteroids, comets, and other objects."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "weather",
+        "entries": [
+            {
+                "questions": [
+                    "what is weather",
+                    "define weather",
+                    "tell me about weather",
+                    "what does weather mean",
+                    "আবহাওয়া কি",
+                    "আবহাওয়া কী",
+                    "আবহাওয়া সম্পর্কে বলো"
+                ],
+                "answers": [
+                    "Weather describes the conditions of the atmosphere at a particular place and time, such as temperature, rain, wind, and clouds.",
+                    "Weather can include temperature, rainfall, humidity, wind, cloud cover, and other atmospheric conditions."
+                ]
+            }
+        ]
+    },
+
+    {
+        "category": "daily_conversation",
+        "entries": [
+            {
+                "questions": [
+                    "what are you doing",
+                    "what are you up to",
+                    "are you busy",
+                    "can you help me",
+                    "can you help",
+                    "i need help",
+                    "তুমি কি করছো",
+                    "তুমি কি করছ",
+                    "তুমি ব্যস্ত",
+                    "তুমি কি আমাকে সাহায্য করতে পারো",
+                    "আমার সাহায্য দরকার"
+                ],
+                "answers": [
+                    "I am here and ready to help you.",
+                    "I am ready. Tell me what you would like to know.",
+                    "Of course. Please tell me what you need."
+                ]
+            }
+        ]
+    }
+]
