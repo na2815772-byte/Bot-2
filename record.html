@@ -3,296 +3,671 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Neloy AI Voice Assistant</title>
+<title>Neloy AI Voice Assistant</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
+
+
+<!-- TEXT BUTTON STYLE -->
+
+<style>
+
+.text-page-button {
+
+    width: 60%;
+    max-width: 400px;
+    min-width: 250px;
+
+    height: 58px;
+
+    margin: 22px auto 0;
+
+    padding: 10px 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: #ffffff;
+
+    border: 1px solid rgba(0, 220, 255, 0.45);
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #071a2e,
+            #004b70,
+            #006eff,
+            #6500d4,
+            #071a2e
+        );
+
+    background-size: 300% 300%;
+
+    animation:
+        textButtonColor 6s ease infinite;
+
+    box-shadow:
+        0 7px 24px rgba(0, 0, 0, 0.30),
+        0 0 18px rgba(0, 200, 255, 0.15);
+
+    position: relative;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+
+}
+
+
+@keyframes textButtonColor {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+
+.text-page-button::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.28),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation:
+        textButtonShine 4s infinite;
+
+}
+
+
+@keyframes textButtonShine {
+
+    0% {
+        left: -120%;
+    }
+
+    45% {
+        left: 130%;
+    }
+
+    100% {
+        left: 130%;
+    }
+
+}
+
+
+.text-page-button:hover {
+
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(255,255,255,0.80);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.40),
+        0 0 25px rgba(0,200,255,0.25);
+
+}
+
+
+.text-page-button:active {
+
+    transform: scale(0.97);
+
+}
+
+
+.text-page-icon {
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,255,255,0.14);
+
+    font-size: 19px;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.text-page-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+    text-align: left;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.text-page-content strong {
+
+    font-size: 15px;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+.text-page-content small {
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    opacity: 0.70;
+
+}
+
+
+.text-page-arrow {
+
+    font-size: 23px;
+
+    opacity: 0.85;
+
+    position: relative;
+
+    z-index: 2;
+
+    transition:
+        transform 0.3s ease;
+
+}
+
+
+.text-page-button:hover
+.text-page-arrow {
+
+    transform:
+        translateX(6px);
+
+}
+
+
+@media (max-width: 600px) {
+
+    .text-page-button {
+
+        width: 70%;
+
+        min-width: 230px;
+
+        height: 55px;
+
+        padding: 9px 13px;
+
+    }
+
+    .text-page-icon {
+
+        width: 35px;
+        height: 35px;
+
+        font-size: 17px;
+
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body data-page="record">
 
-    <div class="background">
-        <div class="glow glow-one"></div>
-        <div class="glow glow-two"></div>
-        <div class="glow glow-three"></div>
+<div class="background">
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+    <div class="glow glow-three"></div>
+
+</div>
+
+<div id="particles"></div>
+
+
+<!-- Menu Button -->
+
+<button
+    class="menu-button"
+    id="menuButton"
+    aria-label="Open menu"
+>
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+</button>
+
+
+<!-- Menu -->
+
+<div class="side-menu" id="sideMenu">
+
+    <div class="menu-header">
+
+        <div class="menu-logo">
+            N
+        </div>
+
+        <div>
+
+            <strong>Neloy AI</strong>
+
+            <small>
+                Voice Assistant
+            </small>
+
+        </div>
+
     </div>
 
-    <div id="particles"></div>
 
-    <!-- Menu Button -->
+    <a
+        href="help.html"
+        class="menu-item"
+    >
+
+        <span>❓</span>
+
+        <span>
+            Help Center
+        </span>
+
+    </a>
+
 
     <button
-        class="menu-button"
-        id="menuButton"
-        aria-label="Open menu"
+        class="menu-item"
+        id="plusButton"
     >
-        <span></span>
-        <span></span>
-        <span></span>
+
+        <span>✨</span>
+
+        <span>
+            Plus
+        </span>
+
     </button>
 
-    <!-- Menu -->
 
-    <div class="side-menu" id="sideMenu">
+    <button
+        class="menu-item"
+        id="logoutButton"
+    >
 
-        <div class="menu-header">
+        <span>🚪</span>
 
-            <div class="menu-logo">
-                N
-            </div>
+        <span>
+            Logout
+        </span>
+
+    </button>
+
+</div>
+
+
+<main class="assistant-page">
+
+    <section class="assistant-card">
+
+
+        <!-- Header -->
+
+        <div class="assistant-header">
 
             <div>
-                <strong>Neloy AI</strong>
-                <small>Voice Assistant</small>
+
+                <div class="status-badge">
+
+                    <span class="status-dot"></span>
+
+                    ONLINE
+
+                </div>
+
+
+                <h1>
+                    Neloy AI
+                </h1>
+
+
+                <p>
+                    Voice Assistant
+                </p>
+
             </div>
 
         </div>
 
-        <a
-            href="help.html"
-            class="menu-item"
+
+        <!-- AI Orb -->
+
+        <div
+            class="ai-orb assistant-orb"
+            id="voiceOrb"
         >
-            <span>❓</span>
-            <span>Help Center</span>
-        </a>
 
-        <button
-            class="menu-item"
-            id="plusButton"
-        >
-            <span>✨</span>
-            <span>Plus</span>
-        </button>
+            <div class="orb-ring ring-one"></div>
 
-        <button
-            class="menu-item"
-            id="logoutButton"
-        >
-            <span>🚪</span>
-            <span>Logout</span>
-        </button>
+            <div class="orb-ring ring-two"></div>
 
-    </div>
 
-    <main class="assistant-page">
-
-        <section class="assistant-card">
-
-            <!-- Header -->
-
-            <div class="assistant-header">
-
-                <div>
-
-                    <div class="status-badge">
-                        <span class="status-dot"></span>
-                        ONLINE
-                    </div>
-
-                    <h1>
-                        Neloy AI
-                    </h1>
-
-                    <p>
-                        Voice Assistant
-                    </p>
-
-                </div>
-
+            <div class="orb-inner">
+                AI
             </div>
 
-            <!-- AI Orb -->
+        </div>
+
+
+        <div
+            class="recording-status"
+            id="recordingStatus"
+        >
+            Ready
+        </div>
+
+
+        <!-- Transcript -->
+
+        <div class="transcript-card">
+
+            <div class="section-label">
+                USER INPUT
+            </div>
+
 
             <div
-                class="ai-orb assistant-orb"
-                id="voiceOrb"
+                id="liveTranscript"
+                class="transcript-text"
+            >
+                Your voice transcript will appear here.
+            </div>
+
+        </div>
+
+
+        <!-- Record Buttons -->
+
+        <div class="record-controls">
+
+            <button
+                id="startRecord"
+                class="control-button start-button"
             >
 
-                <div class="orb-ring ring-one"></div>
-                <div class="orb-ring ring-two"></div>
+                <span class="control-icon">
+                    🎙
+                </span>
 
-                <div class="orb-inner">
+                <span>
+                    START RECORD
+                </span>
+
+            </button>
+
+
+            <button
+                id="stopRecord"
+                class="control-button stop-button"
+            >
+
+                <span class="control-icon">
+                    ■
+                </span>
+
+                <span>
+                    STOP RECORD
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- Audio -->
+
+        <div
+            class="audio-section"
+            id="audioSection"
+        >
+
+            <div class="section-label">
+                RECORDING
+            </div>
+
+
+            <audio
+                id="audioPlayer"
+                controls
+            ></audio>
+
+
+            <button
+                id="submitRecord"
+                class="main-button"
+            >
+
+                <span>
+                    SUBMIT RECORD
+                </span>
+
+                <span>
+                    🚀
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- Divider -->
+
+        <div class="divider">
+
+            <span>
+                OR
+            </span>
+
+        </div>
+
+
+        <!-- Text -->
+
+        <div class="text-section">
+
+            <div class="section-label">
+                TYPE YOUR QUESTION
+            </div>
+
+
+            <textarea
+                id="textQuestion"
+                placeholder="Type your question here..."
+            ></textarea>
+
+
+            <button
+                id="submitText"
+                class="main-button"
+            >
+
+                <span>
+                    SUBMIT TEXT
+                </span>
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <!-- Loading -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+
+            <div></div>
+            <div></div>
+            <div></div>
+
+
+            <span>
+                Searching my system...
+            </span>
+
+        </div>
+
+
+        <!-- AI Answer -->
+
+        <div class="answer-card">
+
+            <div class="answer-header">
+
+                <div class="answer-icon">
                     AI
                 </div>
 
+
+                <div>
+
+                    <strong>
+                        AI VOICE ASSISTANT
+                    </strong>
+
+                    <small>
+                        Predefined System
+                    </small>
+
+                </div>
+
             </div>
 
+
             <div
-                class="recording-status"
-                id="recordingStatus"
+                id="aiAnswer"
+                class="ai-answer"
             >
-                Ready
+                Your answer will appear here.
             </div>
 
-            <!-- Transcript -->
+        </div>
 
-            <div class="transcript-card">
 
-                <div class="section-label">
-                    USER INPUT
-                </div>
+        <div
+            id="assistantMessage"
+            class="message-box"
+        ></div>
 
-                <div
-                    id="liveTranscript"
-                    class="transcript-text"
-                >
-                    Your voice transcript will appear here.
-                </div>
 
-            </div>
+        <!-- TEXT PAGE REDIRECT -->
 
-            <!-- Record Buttons -->
+        <a
+            href="text.html"
+            class="text-page-button"
+        >
 
-            <div class="record-controls">
+            <span class="text-page-icon">
+                📝
+            </span>
 
-                <button
-                    id="startRecord"
-                    class="control-button start-button"
-                >
-                    <span class="control-icon">
-                        🎙
-                    </span>
 
-                    <span>
-                        START RECORD
-                    </span>
-                </button>
+            <span class="text-page-content">
 
-                <button
-                    id="stopRecord"
-                    class="control-button stop-button"
-                >
-                    <span class="control-icon">
-                        ■
-                    </span>
+                <strong>
+                    TEXT
+                </strong>
 
-                    <span>
-                        STOP RECORD
-                    </span>
-                </button>
+                <small>
+                    Open Text Assistant
+                </small>
 
-            </div>
+            </span>
 
-            <!-- Audio -->
 
-            <div
-                class="audio-section"
-                id="audioSection"
-            >
+            <span class="text-page-arrow">
+                →
+            </span>
 
-                <div class="section-label">
-                    RECORDING
-                </div>
+        </a>
 
-                <audio
-                    id="audioPlayer"
-                    controls
-                ></audio>
 
-                <button
-                    id="submitRecord"
-                    class="main-button"
-                >
-                    <span>SUBMIT RECORD</span>
-                    <span>🚀</span>
-                </button>
+    </section>
 
-            </div>
+</main>
 
-            <!-- Divider -->
 
-            <div class="divider">
-                <span>OR</span>
-            </div>
-
-            <!-- Text -->
-
-            <div class="text-section">
-
-                <div class="section-label">
-                    TYPE YOUR QUESTION
-                </div>
-
-                <textarea
-                    id="textQuestion"
-                    placeholder="Type your question here..."
-                ></textarea>
-
-                <button
-                    id="submitText"
-                    class="main-button"
-                >
-                    <span>SUBMIT TEXT</span>
-                    <span>→</span>
-                </button>
-
-            </div>
-
-            <!-- Loading -->
-
-            <div
-                id="loading"
-                class="loading"
-            >
-
-                <div></div>
-                <div></div>
-                <div></div>
-
-                <span>
-                    Searching my system...
-                </span>
-
-            </div>
-
-            <!-- AI Answer -->
-
-            <div class="answer-card">
-
-                <div class="answer-header">
-
-                    <div class="answer-icon">
-                        AI
-                    </div>
-
-                    <div>
-                        <strong>
-                            AI VOICE ASSISTANT
-                        </strong>
-
-                        <small>
-                            Predefined System
-                        </small>
-                    </div>
-
-                </div>
-
-                <div
-                    id="aiAnswer"
-                    class="ai-answer"
-                >
-                    Your answer will appear here.
-                </div>
-
-            </div>
-
-            <div
-                id="assistantMessage"
-                class="message-box"
-            ></div>
-
-        </section>
-
-    </main>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
