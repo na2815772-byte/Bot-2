@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Neloy AI - Welcome</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="home">
+
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+    </div>
+
+    <div id="particles"></div>
+
+    <!-- Menu -->
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Open menu"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="side-menu" id="sideMenu">
+
+        <div class="menu-header">
+            <div class="menu-logo">N</div>
+
+            <div>
+                <strong>Neloy AI</strong>
+                <small>Assistant</small>
+            </div>
+        </div>
+
+        <a href="help.html" class="menu-item">
+            <span>❓</span>
+            <span>Help Center</span>
+        </a>
+
+        <button
+            class="menu-item"
+            id="plusButton"
+        >
+            <span>✨</span>
+            <span>Plus</span>
+        </button>
+
+        <button
+            class="menu-item"
+            id="homeLogoutButton"
+        >
+            <span>🚪</span>
+            <span>Logout</span>
+        </button>
+
+    </div>
+
+    <!-- Main -->
+    <main class="center-page">
+
+        <section class="glass-card welcome-card">
+
+            <div class="ai-orb large-orb">
+                <div class="orb-inner">
+                    AI
+                </div>
+            </div>
+
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                SYSTEM READY
+            </div>
+
+            <h1>
+                Welcome to
+                <span>Neloy AI</span>
+            </h1>
+
+            <p class="subtitle">
+                Your personal predefined AI voice assistant.
+            </p>
+
+            <p class="description">
+                Ask questions using your voice or text.
+                The assistant will answer using its built-in
+                question and answer system.
+            </p>
+
+            <button
+                class="main-button"
+                id="createStart"
+            >
+                <span>Create Start</span>
+                <span class="button-arrow">→</span>
+            </button>
+
+            <div class="small-info">
+                No API • No External AI • Local Q&A System
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
