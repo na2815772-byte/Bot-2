@@ -1,0 +1,1314 @@
+{
+  "bot_name": "NELOY AI VOICE ASSISTANT",
+  "file_name": "Browser.json",
+  "version": "1.0",
+  "purpose": "Large predefined knowledge base about web browsers, websites, web services, web concepts and beginner web literacy.",
+  "languages": [
+    "Bangla",
+    "English",
+    "Bangla-English Mixed"
+  ],
+  "answer_style": "Detailed beginner-friendly answers with selective conversational follow-up questions.",
+  "fallback_answer": "Sorry, this question is not in my system.",
+  "conversation_behavior": {
+    "two_way": true,
+    "follow_up_is_selective": true,
+    "examples": [
+      "তুমি চাইলে আমি বিষয়টি আরও সহজভাবে ব্যাখ্যা করতে পারি।",
+      "এ বিষয়ে আর কোনো সাহায্য করতে পারি?",
+      "চাইলে আমরা এই বিষয়টি আরও বিস্তারিতভাবে জানতে পারি।",
+      "Would you like me to explain this in more detail?",
+      "Is there anything else I can help you with?",
+      "Would you like to learn more about this topic?"
+    ]
+  },
+  "categories": [
+    "browser_basics",
+    "specific_browsers",
+    "website_basics",
+    "web_address",
+    "search_engines",
+    "social_media",
+    "video",
+    "news",
+    "education",
+    "ecommerce",
+    "banking",
+    "jobs",
+    "maps",
+    "email",
+    "ai",
+    "cloud",
+    "developer",
+    "browser_features",
+    "mobile_browsing",
+    "responsive_web",
+    "web_app",
+    "domain_dns",
+    "security",
+    "mixed_language",
+    "general_web_use"
+  ],
+  "questions": [
+    {
+      "category": "browser_basics",
+      "question": "ব্রাউজার কী?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "ব্রাউজার বলতে কী বোঝায়?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "ওয়েব ব্রাউজার কী?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What is a browser?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What is a web browser?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What does a web browser do?",
+      "answer": "ব্রাউজার হলো এমন একটি সফটওয়্যার, যার মাধ্যমে ইন্টারনেটের ওয়েবসাইট ও ওয়েবপেজ দেখা এবং ব্যবহার করা যায়। Browser একটি website-এর server থেকে প্রয়োজনীয় তথ্য নিয়ে সেটিকে ব্যবহারকারীর স্ক্রিনে দেখায়। Google Chrome, Mozilla Firefox, Microsoft Edge, Safari এবং Opera হলো পরিচিত web browser। চাইলে আমি browser কীভাবে একটি website খুলে দেখায় সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "ব্রাউজার কীভাবে কাজ করে?",
+      "answer": "তুমি যখন browser-এ একটি website-এর address বা URL লিখে Enter চাপো, browser সেই address অনুযায়ী server-এর কাছে request পাঠায়। Server প্রয়োজনীয় webpage-এর data পাঠালে browser HTML, CSS, JavaScript, image এবং অন্যান্য resource প্রক্রিয়া করে স্ক্রিনে webpage দেখায়। চাইলে আমি এই পুরো প্রক্রিয়াটি ধাপে ধাপে আরও সহজ করে বলতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "একটি ব্রাউজার কীভাবে কাজ করে?",
+      "answer": "তুমি যখন browser-এ একটি website-এর address বা URL লিখে Enter চাপো, browser সেই address অনুযায়ী server-এর কাছে request পাঠায়। Server প্রয়োজনীয় webpage-এর data পাঠালে browser HTML, CSS, JavaScript, image এবং অন্যান্য resource প্রক্রিয়া করে স্ক্রিনে webpage দেখায়। চাইলে আমি এই পুরো প্রক্রিয়াটি ধাপে ধাপে আরও সহজ করে বলতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "How does a browser work?",
+      "answer": "তুমি যখন browser-এ একটি website-এর address বা URL লিখে Enter চাপো, browser সেই address অনুযায়ী server-এর কাছে request পাঠায়। Server প্রয়োজনীয় webpage-এর data পাঠালে browser HTML, CSS, JavaScript, image এবং অন্যান্য resource প্রক্রিয়া করে স্ক্রিনে webpage দেখায়। চাইলে আমি এই পুরো প্রক্রিয়াটি ধাপে ধাপে আরও সহজ করে বলতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "How does a web browser work?",
+      "answer": "তুমি যখন browser-এ একটি website-এর address বা URL লিখে Enter চাপো, browser সেই address অনুযায়ী server-এর কাছে request পাঠায়। Server প্রয়োজনীয় webpage-এর data পাঠালে browser HTML, CSS, JavaScript, image এবং অন্যান্য resource প্রক্রিয়া করে স্ক্রিনে webpage দেখায়। চাইলে আমি এই পুরো প্রক্রিয়াটি ধাপে ধাপে আরও সহজ করে বলতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "ব্রাউজার আর ইন্টারনেট কি একই?",
+      "answer": "না, browser এবং internet একই জিনিস নয়। Internet হলো বিশ্বজুড়ে সংযুক্ত network-এর বিশাল ব্যবস্থা, আর browser হলো সেই internet-এর মাধ্যমে website ও web content access করার একটি software। চাইলে Internet, browser এবং website-এর সম্পর্কটি একটি সহজ উদাহরণ দিয়ে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "ব্রাউজার এবং ইন্টারনেটের পার্থক্য কী?",
+      "answer": "না, browser এবং internet একই জিনিস নয়। Internet হলো বিশ্বজুড়ে সংযুক্ত network-এর বিশাল ব্যবস্থা, আর browser হলো সেই internet-এর মাধ্যমে website ও web content access করার একটি software। চাইলে Internet, browser এবং website-এর সম্পর্কটি একটি সহজ উদাহরণ দিয়ে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "Is a browser the same as the internet?",
+      "answer": "না, browser এবং internet একই জিনিস নয়। Internet হলো বিশ্বজুড়ে সংযুক্ত network-এর বিশাল ব্যবস্থা, আর browser হলো সেই internet-এর মাধ্যমে website ও web content access করার একটি software। চাইলে Internet, browser এবং website-এর সম্পর্কটি একটি সহজ উদাহরণ দিয়ে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What is the difference between a browser and the internet?",
+      "answer": "না, browser এবং internet একই জিনিস নয়। Internet হলো বিশ্বজুড়ে সংযুক্ত network-এর বিশাল ব্যবস্থা, আর browser হলো সেই internet-এর মাধ্যমে website ও web content access করার একটি software। চাইলে Internet, browser এবং website-এর সম্পর্কটি একটি সহজ উদাহরণ দিয়ে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "কোন কোন ব্রাউজার আছে?",
+      "answer": "জনপ্রিয় browser-এর মধ্যে Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Opera এবং Brave-এর মতো browser রয়েছে। প্রতিটির interface, privacy features, performance এবং supported features কিছুটা আলাদা হতে পারে। চাইলে আমি এগুলোর বৈশিষ্ট্য আলাদাভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "জনপ্রিয় ব্রাউজার কোনগুলো?",
+      "answer": "জনপ্রিয় browser-এর মধ্যে Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Opera এবং Brave-এর মতো browser রয়েছে। প্রতিটির interface, privacy features, performance এবং supported features কিছুটা আলাদা হতে পারে। চাইলে আমি এগুলোর বৈশিষ্ট্য আলাদাভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What browsers are available?",
+      "answer": "জনপ্রিয় browser-এর মধ্যে Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Opera এবং Brave-এর মতো browser রয়েছে। প্রতিটির interface, privacy features, performance এবং supported features কিছুটা আলাদা হতে পারে। চাইলে আমি এগুলোর বৈশিষ্ট্য আলাদাভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "browser_basics",
+      "question": "What are popular web browsers?",
+      "answer": "জনপ্রিয় browser-এর মধ্যে Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Opera এবং Brave-এর মতো browser রয়েছে। প্রতিটির interface, privacy features, performance এবং supported features কিছুটা আলাদা হতে পারে। চাইলে আমি এগুলোর বৈশিষ্ট্য আলাদাভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Google Chrome কী?",
+      "answer": "Google Chrome হলো Google-এর তৈরি একটি জনপ্রিয় web browser। এটি website browsing, tab management, bookmarks, downloads, extensions, password management এবং বিভিন্ন web application ব্যবহারের সুবিধা দেয়। Chrome-এর Android, Windows, macOS, Linux এবং অন্যান্য platform-এর version রয়েছে। চাইলে Chrome-এর গুরুত্বপূর্ণ settings ও features নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Chrome কী?",
+      "answer": "Google Chrome হলো Google-এর তৈরি একটি জনপ্রিয় web browser। এটি website browsing, tab management, bookmarks, downloads, extensions, password management এবং বিভিন্ন web application ব্যবহারের সুবিধা দেয়। Chrome-এর Android, Windows, macOS, Linux এবং অন্যান্য platform-এর version রয়েছে। চাইলে Chrome-এর গুরুত্বপূর্ণ settings ও features নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Google Chrome?",
+      "answer": "Google Chrome হলো Google-এর তৈরি একটি জনপ্রিয় web browser। এটি website browsing, tab management, bookmarks, downloads, extensions, password management এবং বিভিন্ন web application ব্যবহারের সুবিধা দেয়। Chrome-এর Android, Windows, macOS, Linux এবং অন্যান্য platform-এর version রয়েছে। চাইলে Chrome-এর গুরুত্বপূর্ণ settings ও features নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Chrome?",
+      "answer": "Google Chrome হলো Google-এর তৈরি একটি জনপ্রিয় web browser। এটি website browsing, tab management, bookmarks, downloads, extensions, password management এবং বিভিন্ন web application ব্যবহারের সুবিধা দেয়। Chrome-এর Android, Windows, macOS, Linux এবং অন্যান্য platform-এর version রয়েছে। চাইলে Chrome-এর গুরুত্বপূর্ণ settings ও features নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Firefox কী?",
+      "answer": "Mozilla Firefox হলো Mozilla Foundation-এর সঙ্গে সম্পর্কিত একটি open-source web browser। এটি browsing, tabs, bookmarks, extensions এবং privacy-related controls-এর জন্য পরিচিত। Firefox বিভিন্ন desktop এবং mobile platform-এ পাওয়া যায়। চাইলে Firefox-এর privacy ও customization features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Mozilla Firefox কী?",
+      "answer": "Mozilla Firefox হলো Mozilla Foundation-এর সঙ্গে সম্পর্কিত একটি open-source web browser। এটি browsing, tabs, bookmarks, extensions এবং privacy-related controls-এর জন্য পরিচিত। Firefox বিভিন্ন desktop এবং mobile platform-এ পাওয়া যায়। চাইলে Firefox-এর privacy ও customization features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Firefox?",
+      "answer": "Mozilla Firefox হলো Mozilla Foundation-এর সঙ্গে সম্পর্কিত একটি open-source web browser। এটি browsing, tabs, bookmarks, extensions এবং privacy-related controls-এর জন্য পরিচিত। Firefox বিভিন্ন desktop এবং mobile platform-এ পাওয়া যায়। চাইলে Firefox-এর privacy ও customization features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Mozilla Firefox?",
+      "answer": "Mozilla Firefox হলো Mozilla Foundation-এর সঙ্গে সম্পর্কিত একটি open-source web browser। এটি browsing, tabs, bookmarks, extensions এবং privacy-related controls-এর জন্য পরিচিত। Firefox বিভিন্ন desktop এবং mobile platform-এ পাওয়া যায়। চাইলে Firefox-এর privacy ও customization features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Microsoft Edge কী?",
+      "answer": "Microsoft Edge হলো Microsoft-এর web browser। এটি Windows-এর সঙ্গে ঘনিষ্ঠভাবে ব্যবহৃত হয় এবং Chromium-based browser engine ব্যবহার করে। Edge-এ tabs, collections, extensions, PDF viewing এবং বিভিন্ন Microsoft service integration-এর মতো সুবিধা রয়েছে। চাইলে Edge-এর settings বা features নিয়ে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Edge browser কী?",
+      "answer": "Microsoft Edge হলো Microsoft-এর web browser। এটি Windows-এর সঙ্গে ঘনিষ্ঠভাবে ব্যবহৃত হয় এবং Chromium-based browser engine ব্যবহার করে। Edge-এ tabs, collections, extensions, PDF viewing এবং বিভিন্ন Microsoft service integration-এর মতো সুবিধা রয়েছে। চাইলে Edge-এর settings বা features নিয়ে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Microsoft Edge?",
+      "answer": "Microsoft Edge হলো Microsoft-এর web browser। এটি Windows-এর সঙ্গে ঘনিষ্ঠভাবে ব্যবহৃত হয় এবং Chromium-based browser engine ব্যবহার করে। Edge-এ tabs, collections, extensions, PDF viewing এবং বিভিন্ন Microsoft service integration-এর মতো সুবিধা রয়েছে। চাইলে Edge-এর settings বা features নিয়ে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Edge browser?",
+      "answer": "Microsoft Edge হলো Microsoft-এর web browser। এটি Windows-এর সঙ্গে ঘনিষ্ঠভাবে ব্যবহৃত হয় এবং Chromium-based browser engine ব্যবহার করে। Edge-এ tabs, collections, extensions, PDF viewing এবং বিভিন্ন Microsoft service integration-এর মতো সুবিধা রয়েছে। চাইলে Edge-এর settings বা features নিয়ে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Safari কী?",
+      "answer": "Safari হলো Apple-এর তৈরি web browser, যা iPhone, iPad এবং Mac-এর মতো Apple device-এ ব্যবহৃত হয়। এটি Apple ecosystem-এর সঙ্গে integration, tab management, privacy controls এবং browsing features প্রদান করে। চাইলে Safari-এর গুরুত্বপূর্ণ সুবিধাগুলো সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Apple Safari কী?",
+      "answer": "Safari হলো Apple-এর তৈরি web browser, যা iPhone, iPad এবং Mac-এর মতো Apple device-এ ব্যবহৃত হয়। এটি Apple ecosystem-এর সঙ্গে integration, tab management, privacy controls এবং browsing features প্রদান করে। চাইলে Safari-এর গুরুত্বপূর্ণ সুবিধাগুলো সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Safari?",
+      "answer": "Safari হলো Apple-এর তৈরি web browser, যা iPhone, iPad এবং Mac-এর মতো Apple device-এ ব্যবহৃত হয়। এটি Apple ecosystem-এর সঙ্গে integration, tab management, privacy controls এবং browsing features প্রদান করে। চাইলে Safari-এর গুরুত্বপূর্ণ সুবিধাগুলো সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Apple Safari?",
+      "answer": "Safari হলো Apple-এর তৈরি web browser, যা iPhone, iPad এবং Mac-এর মতো Apple device-এ ব্যবহৃত হয়। এটি Apple ecosystem-এর সঙ্গে integration, tab management, privacy controls এবং browsing features প্রদান করে। চাইলে Safari-এর গুরুত্বপূর্ণ সুবিধাগুলো সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Opera browser কী?",
+      "answer": "Opera হলো একটি web browser যা browsing-এর পাশাপাশি বিভিন্ন built-in feature-এর জন্য পরিচিত। এর বিভিন্ন version-এ sidebar, tab tools, privacy features এবং customization options থাকতে পারে। চাইলে Opera-এর বিশেষ features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Opera কী?",
+      "answer": "Opera হলো একটি web browser যা browsing-এর পাশাপাশি বিভিন্ন built-in feature-এর জন্য পরিচিত। এর বিভিন্ন version-এ sidebar, tab tools, privacy features এবং customization options থাকতে পারে। চাইলে Opera-এর বিশেষ features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Opera browser?",
+      "answer": "Opera হলো একটি web browser যা browsing-এর পাশাপাশি বিভিন্ন built-in feature-এর জন্য পরিচিত। এর বিভিন্ন version-এ sidebar, tab tools, privacy features এবং customization options থাকতে পারে। চাইলে Opera-এর বিশেষ features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Opera?",
+      "answer": "Opera হলো একটি web browser যা browsing-এর পাশাপাশি বিভিন্ন built-in feature-এর জন্য পরিচিত। এর বিভিন্ন version-এ sidebar, tab tools, privacy features এবং customization options থাকতে পারে। চাইলে Opera-এর বিশেষ features সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Brave browser কী?",
+      "answer": "Brave হলো একটি Chromium-based web browser, যা privacy-focused browsing features-এর জন্য পরিচিত। এটি tracker ও advertising-related blocking-এর মতো privacy features দেয় এবং browsing experience customize করার সুযোগ রাখে। চাইলে Brave-এর privacy settings সম্পর্কে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "Brave কী?",
+      "answer": "Brave হলো একটি Chromium-based web browser, যা privacy-focused browsing features-এর জন্য পরিচিত। এটি tracker ও advertising-related blocking-এর মতো privacy features দেয় এবং browsing experience customize করার সুযোগ রাখে। চাইলে Brave-এর privacy settings সম্পর্কে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Brave browser?",
+      "answer": "Brave হলো একটি Chromium-based web browser, যা privacy-focused browsing features-এর জন্য পরিচিত। এটি tracker ও advertising-related blocking-এর মতো privacy features দেয় এবং browsing experience customize করার সুযোগ রাখে। চাইলে Brave-এর privacy settings সম্পর্কে আরও জানতে পারো।"
+    },
+    {
+      "category": "specific_browsers",
+      "question": "What is Brave?",
+      "answer": "Brave হলো একটি Chromium-based web browser, যা privacy-focused browsing features-এর জন্য পরিচিত। এটি tracker ও advertising-related blocking-এর মতো privacy features দেয় এবং browsing experience customize করার সুযোগ রাখে। চাইলে Brave-এর privacy settings সম্পর্কে আরও জানতে পারো।"
+    },
+    {
+      "category": "website_basics",
+      "question": "ওয়েবসাইট কী?",
+      "answer": "ওয়েবসাইট হলো ইন্টারনেটে প্রকাশিত এক বা একাধিক সম্পর্কিত webpage ও resource-এর সমষ্টি, যা সাধারণত একটি domain name বা web address-এর মাধ্যমে access করা যায়। Website-এ text, image, video, audio, forms এবং interactive features থাকতে পারে। চাইলে আমি website কীভাবে তৈরি ও internet-এ প্রকাশ করা হয় সেটাও ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "Website কী?",
+      "answer": "ওয়েবসাইট হলো ইন্টারনেটে প্রকাশিত এক বা একাধিক সম্পর্কিত webpage ও resource-এর সমষ্টি, যা সাধারণত একটি domain name বা web address-এর মাধ্যমে access করা যায়। Website-এ text, image, video, audio, forms এবং interactive features থাকতে পারে। চাইলে আমি website কীভাবে তৈরি ও internet-এ প্রকাশ করা হয় সেটাও ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "ওয়েবসাইট বলতে কী বোঝায়?",
+      "answer": "ওয়েবসাইট হলো ইন্টারনেটে প্রকাশিত এক বা একাধিক সম্পর্কিত webpage ও resource-এর সমষ্টি, যা সাধারণত একটি domain name বা web address-এর মাধ্যমে access করা যায়। Website-এ text, image, video, audio, forms এবং interactive features থাকতে পারে। চাইলে আমি website কীভাবে তৈরি ও internet-এ প্রকাশ করা হয় সেটাও ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What is a website?",
+      "answer": "ওয়েবসাইট হলো ইন্টারনেটে প্রকাশিত এক বা একাধিক সম্পর্কিত webpage ও resource-এর সমষ্টি, যা সাধারণত একটি domain name বা web address-এর মাধ্যমে access করা যায়। Website-এ text, image, video, audio, forms এবং interactive features থাকতে পারে। চাইলে আমি website কীভাবে তৈরি ও internet-এ প্রকাশ করা হয় সেটাও ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What does website mean?",
+      "answer": "ওয়েবসাইট হলো ইন্টারনেটে প্রকাশিত এক বা একাধিক সম্পর্কিত webpage ও resource-এর সমষ্টি, যা সাধারণত একটি domain name বা web address-এর মাধ্যমে access করা যায়। Website-এ text, image, video, audio, forms এবং interactive features থাকতে পারে। চাইলে আমি website কীভাবে তৈরি ও internet-এ প্রকাশ করা হয় সেটাও ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "ওয়েবপেজ কী?",
+      "answer": "Webpage হলো browser-এ দেখা একটি নির্দিষ্ট web document বা page। একটি website-এর মধ্যে একাধিক webpage থাকতে পারে, যেমন Home, About, Contact এবং Services page। সহজভাবে বললে website হলো পুরো জায়গাটি, আর webpage হলো সেই জায়গার একটি নির্দিষ্ট page। চাইলে URL ও webpage-এর সম্পর্কও বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "Webpage কী?",
+      "answer": "Webpage হলো browser-এ দেখা একটি নির্দিষ্ট web document বা page। একটি website-এর মধ্যে একাধিক webpage থাকতে পারে, যেমন Home, About, Contact এবং Services page। সহজভাবে বললে website হলো পুরো জায়গাটি, আর webpage হলো সেই জায়গার একটি নির্দিষ্ট page। চাইলে URL ও webpage-এর সম্পর্কও বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What is a webpage?",
+      "answer": "Webpage হলো browser-এ দেখা একটি নির্দিষ্ট web document বা page। একটি website-এর মধ্যে একাধিক webpage থাকতে পারে, যেমন Home, About, Contact এবং Services page। সহজভাবে বললে website হলো পুরো জায়গাটি, আর webpage হলো সেই জায়গার একটি নির্দিষ্ট page। চাইলে URL ও webpage-এর সম্পর্কও বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What is the difference between a website and a webpage?",
+      "answer": "Webpage হলো browser-এ দেখা একটি নির্দিষ্ট web document বা page। একটি website-এর মধ্যে একাধিক webpage থাকতে পারে, যেমন Home, About, Contact এবং Services page। সহজভাবে বললে website হলো পুরো জায়গাটি, আর webpage হলো সেই জায়গার একটি নির্দিষ্ট page। চাইলে URL ও webpage-এর সম্পর্কও বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "website_basics",
+      "question": "হোমপেজ কী?",
+      "answer": "Homepage হলো সাধারণত একটি website-এর প্রধান বা শুরু করার page। এখানে website-এর গুরুত্বপূর্ণ section, navigation এবং প্রয়োজনীয় information-এর link থাকতে পারে। তবে সব website-এর structure একই নয়। চাইলে website-এর navigation কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "website_basics",
+      "question": "Homepage কী?",
+      "answer": "Homepage হলো সাধারণত একটি website-এর প্রধান বা শুরু করার page। এখানে website-এর গুরুত্বপূর্ণ section, navigation এবং প্রয়োজনীয় information-এর link থাকতে পারে। তবে সব website-এর structure একই নয়। চাইলে website-এর navigation কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What is a homepage?",
+      "answer": "Homepage হলো সাধারণত একটি website-এর প্রধান বা শুরু করার page। এখানে website-এর গুরুত্বপূর্ণ section, navigation এবং প্রয়োজনীয় information-এর link থাকতে পারে। তবে সব website-এর structure একই নয়। চাইলে website-এর navigation কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "website_basics",
+      "question": "What is the home page of a website?",
+      "answer": "Homepage হলো সাধারণত একটি website-এর প্রধান বা শুরু করার page। এখানে website-এর গুরুত্বপূর্ণ section, navigation এবং প্রয়োজনীয় information-এর link থাকতে পারে। তবে সব website-এর structure একই নয়। চাইলে website-এর navigation কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "web_address",
+      "question": "URL কী?",
+      "answer": "URL-এর পূর্ণরূপ Uniform Resource Locator। এটি internet-এ কোনো নির্দিষ্ট resource বা webpage-এর address নির্দেশ করে। একটি URL-এ protocol, domain এবং কখনও path বা query-এর মতো অংশ থাকতে পারে। চাইলে আমি একটি URL-এর প্রতিটি অংশ আলাদা করে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "URL বলতে কী বোঝায়?",
+      "answer": "URL-এর পূর্ণরূপ Uniform Resource Locator। এটি internet-এ কোনো নির্দিষ্ট resource বা webpage-এর address নির্দেশ করে। একটি URL-এ protocol, domain এবং কখনও path বা query-এর মতো অংশ থাকতে পারে। চাইলে আমি একটি URL-এর প্রতিটি অংশ আলাদা করে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "What is a URL?",
+      "answer": "URL-এর পূর্ণরূপ Uniform Resource Locator। এটি internet-এ কোনো নির্দিষ্ট resource বা webpage-এর address নির্দেশ করে। একটি URL-এ protocol, domain এবং কখনও path বা query-এর মতো অংশ থাকতে পারে। চাইলে আমি একটি URL-এর প্রতিটি অংশ আলাদা করে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "What does URL mean?",
+      "answer": "URL-এর পূর্ণরূপ Uniform Resource Locator। এটি internet-এ কোনো নির্দিষ্ট resource বা webpage-এর address নির্দেশ করে। একটি URL-এ protocol, domain এবং কখনও path বা query-এর মতো অংশ থাকতে পারে। চাইলে আমি একটি URL-এর প্রতিটি অংশ আলাদা করে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "ডোমেইন কী?",
+      "answer": "Domain name হলো website-এর সহজে মনে রাখার মতো নাম বা address, যেমন example.com। Domain-এর মাধ্যমে মানুষ website-এর নির্দিষ্ট address মনে রাখা এবং ব্যবহার করা সহজ হয়। Domain-এর সঙ্গে DNS কীভাবে কাজ করে সেটিও চাইলে জানতে পারো।"
+    },
+    {
+      "category": "web_address",
+      "question": "Domain কী?",
+      "answer": "Domain name হলো website-এর সহজে মনে রাখার মতো নাম বা address, যেমন example.com। Domain-এর মাধ্যমে মানুষ website-এর নির্দিষ্ট address মনে রাখা এবং ব্যবহার করা সহজ হয়। Domain-এর সঙ্গে DNS কীভাবে কাজ করে সেটিও চাইলে জানতে পারো।"
+    },
+    {
+      "category": "web_address",
+      "question": "What is a domain name?",
+      "answer": "Domain name হলো website-এর সহজে মনে রাখার মতো নাম বা address, যেমন example.com। Domain-এর মাধ্যমে মানুষ website-এর নির্দিষ্ট address মনে রাখা এবং ব্যবহার করা সহজ হয়। Domain-এর সঙ্গে DNS কীভাবে কাজ করে সেটিও চাইলে জানতে পারো।"
+    },
+    {
+      "category": "web_address",
+      "question": "What is a domain?",
+      "answer": "Domain name হলো website-এর সহজে মনে রাখার মতো নাম বা address, যেমন example.com। Domain-এর মাধ্যমে মানুষ website-এর নির্দিষ্ট address মনে রাখা এবং ব্যবহার করা সহজ হয়। Domain-এর সঙ্গে DNS কীভাবে কাজ করে সেটিও চাইলে জানতে পারো।"
+    },
+    {
+      "category": "web_address",
+      "question": "HTTP কী?",
+      "answer": "HTTP হলো web communication-এর একটি protocol, আর HTTPS হলো HTTP-এর নিরাপদ সংস্করণ যেখানে connection encryption ব্যবহার করা হয়। HTTPS সাধারণত browser এবং website server-এর মধ্যে তথ্য আদান-প্রদানকে নিরাপদ রাখতে সাহায্য করে। তবে HTTPS থাকলেই website-এর প্রতিটি বিষয় বিশ্বাসযোগ্য—এমন নিশ্চয়তা পাওয়া যায় না। চাইলে browser-এর address bar-এ security indicators কী বোঝায় তা ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "HTTPS কী?",
+      "answer": "HTTP হলো web communication-এর একটি protocol, আর HTTPS হলো HTTP-এর নিরাপদ সংস্করণ যেখানে connection encryption ব্যবহার করা হয়। HTTPS সাধারণত browser এবং website server-এর মধ্যে তথ্য আদান-প্রদানকে নিরাপদ রাখতে সাহায্য করে। তবে HTTPS থাকলেই website-এর প্রতিটি বিষয় বিশ্বাসযোগ্য—এমন নিশ্চয়তা পাওয়া যায় না। চাইলে browser-এর address bar-এ security indicators কী বোঝায় তা ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "What is HTTP?",
+      "answer": "HTTP হলো web communication-এর একটি protocol, আর HTTPS হলো HTTP-এর নিরাপদ সংস্করণ যেখানে connection encryption ব্যবহার করা হয়। HTTPS সাধারণত browser এবং website server-এর মধ্যে তথ্য আদান-প্রদানকে নিরাপদ রাখতে সাহায্য করে। তবে HTTPS থাকলেই website-এর প্রতিটি বিষয় বিশ্বাসযোগ্য—এমন নিশ্চয়তা পাওয়া যায় না। চাইলে browser-এর address bar-এ security indicators কী বোঝায় তা ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "What is HTTPS?",
+      "answer": "HTTP হলো web communication-এর একটি protocol, আর HTTPS হলো HTTP-এর নিরাপদ সংস্করণ যেখানে connection encryption ব্যবহার করা হয়। HTTPS সাধারণত browser এবং website server-এর মধ্যে তথ্য আদান-প্রদানকে নিরাপদ রাখতে সাহায্য করে। তবে HTTPS থাকলেই website-এর প্রতিটি বিষয় বিশ্বাসযোগ্য—এমন নিশ্চয়তা পাওয়া যায় না। চাইলে browser-এর address bar-এ security indicators কী বোঝায় তা ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "web_address",
+      "question": "HTTP আর HTTPS-এর পার্থক্য কী?",
+      "answer": "HTTP হলো web communication-এর একটি protocol, আর HTTPS হলো HTTP-এর নিরাপদ সংস্করণ যেখানে connection encryption ব্যবহার করা হয়। HTTPS সাধারণত browser এবং website server-এর মধ্যে তথ্য আদান-প্রদানকে নিরাপদ রাখতে সাহায্য করে। তবে HTTPS থাকলেই website-এর প্রতিটি বিষয় বিশ্বাসযোগ্য—এমন নিশ্চয়তা পাওয়া যায় না। চাইলে browser-এর address bar-এ security indicators কী বোঝায় তা ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "search_engines",
+      "question": "সার্চ ইঞ্জিন কী?",
+      "answer": "Search engine হলো এমন online service যা internet-এর বিভিন্ন webpage বা information খুঁজে পেতে সাহায্য করে। ব্যবহারকারী keyword লিখলে search engine তার index ও অন্যান্য systems ব্যবহার করে relevant results দেখায়। উদাহরণ হিসেবে Google, Bing এবং DuckDuckGo-এর মতো search service রয়েছে। চাইলে search query আরও ভালোভাবে লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "search_engines",
+      "question": "Search engine কী?",
+      "answer": "Search engine হলো এমন online service যা internet-এর বিভিন্ন webpage বা information খুঁজে পেতে সাহায্য করে। ব্যবহারকারী keyword লিখলে search engine তার index ও অন্যান্য systems ব্যবহার করে relevant results দেখায়। উদাহরণ হিসেবে Google, Bing এবং DuckDuckGo-এর মতো search service রয়েছে। চাইলে search query আরও ভালোভাবে লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "search_engines",
+      "question": "What is a search engine?",
+      "answer": "Search engine হলো এমন online service যা internet-এর বিভিন্ন webpage বা information খুঁজে পেতে সাহায্য করে। ব্যবহারকারী keyword লিখলে search engine তার index ও অন্যান্য systems ব্যবহার করে relevant results দেখায়। উদাহরণ হিসেবে Google, Bing এবং DuckDuckGo-এর মতো search service রয়েছে। চাইলে search query আরও ভালোভাবে লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "social_media",
+      "question": "সোশ্যাল মিডিয়া ওয়েবসাইট কী?",
+      "answer": "Social media website হলো এমন online platform যেখানে মানুষ profile তৈরি, content share, message এবং অন্যদের সঙ্গে interaction করতে পারে। বিভিন্ন platform-এর features ও privacy settings আলাদা। কোনো account ব্যবহার করার সময় privacy এবং security settings বুঝে ব্যবহার করা ভালো। চাইলে social media account security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "social_media",
+      "question": "Social media website কী?",
+      "answer": "Social media website হলো এমন online platform যেখানে মানুষ profile তৈরি, content share, message এবং অন্যদের সঙ্গে interaction করতে পারে। বিভিন্ন platform-এর features ও privacy settings আলাদা। কোনো account ব্যবহার করার সময় privacy এবং security settings বুঝে ব্যবহার করা ভালো। চাইলে social media account security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "social_media",
+      "question": "What is a social media website?",
+      "answer": "Social media website হলো এমন online platform যেখানে মানুষ profile তৈরি, content share, message এবং অন্যদের সঙ্গে interaction করতে পারে। বিভিন্ন platform-এর features ও privacy settings আলাদা। কোনো account ব্যবহার করার সময় privacy এবং security settings বুঝে ব্যবহার করা ভালো। চাইলে social media account security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "video",
+      "question": "ভিডিও ওয়েবসাইট কী?",
+      "answer": "Video website হলো এমন website বা web platform যেখানে video দেখা, upload করা, share করা বা live content ব্যবহার করা যায়। Video service-এর ক্ষেত্রে streaming quality, internet speed, account settings এবং copyright rules গুরুত্বপূর্ণ হতে পারে। চাইলে video streaming কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "video",
+      "question": "Video website কী?",
+      "answer": "Video website হলো এমন website বা web platform যেখানে video দেখা, upload করা, share করা বা live content ব্যবহার করা যায়। Video service-এর ক্ষেত্রে streaming quality, internet speed, account settings এবং copyright rules গুরুত্বপূর্ণ হতে পারে। চাইলে video streaming কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "video",
+      "question": "What is a video website?",
+      "answer": "Video website হলো এমন website বা web platform যেখানে video দেখা, upload করা, share করা বা live content ব্যবহার করা যায়। Video service-এর ক্ষেত্রে streaming quality, internet speed, account settings এবং copyright rules গুরুত্বপূর্ণ হতে পারে। চাইলে video streaming কীভাবে কাজ করে সেটাও জানতে পারো।"
+    },
+    {
+      "category": "news",
+      "question": "নিউজ ওয়েবসাইট কী?",
+      "answer": "News website হলো online publication যেখানে বিভিন্ন ধরনের সংবাদ, report, article, photo বা video প্রকাশ করা হয়। খবর পড়ার সময় প্রকাশের তারিখ, source এবং report-এর context দেখা গুরুত্বপূর্ণ। চাইলে online news কীভাবে যাচাই করা যায় সে বিষয়ে সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "news",
+      "question": "News website কী?",
+      "answer": "News website হলো online publication যেখানে বিভিন্ন ধরনের সংবাদ, report, article, photo বা video প্রকাশ করা হয়। খবর পড়ার সময় প্রকাশের তারিখ, source এবং report-এর context দেখা গুরুত্বপূর্ণ। চাইলে online news কীভাবে যাচাই করা যায় সে বিষয়ে সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "news",
+      "question": "What is a news website?",
+      "answer": "News website হলো online publication যেখানে বিভিন্ন ধরনের সংবাদ, report, article, photo বা video প্রকাশ করা হয়। খবর পড়ার সময় প্রকাশের তারিখ, source এবং report-এর context দেখা গুরুত্বপূর্ণ। চাইলে online news কীভাবে যাচাই করা যায় সে বিষয়ে সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "education",
+      "question": "শিক্ষামূলক ওয়েবসাইট কী?",
+      "answer": "Educational website হলো এমন website যেখানে learning materials, courses, tutorials, articles, exercises বা educational resources পাওয়া যেতে পারে। কিছু resource free এবং কিছু paid হতে পারে। শেখার সময় source, course quality এবং প্রয়োজনীয় level বিবেচনা করা ভালো। চাইলে online learning-এর জন্য কীভাবে resource বেছে নিতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "education",
+      "question": "Educational website কী?",
+      "answer": "Educational website হলো এমন website যেখানে learning materials, courses, tutorials, articles, exercises বা educational resources পাওয়া যেতে পারে। কিছু resource free এবং কিছু paid হতে পারে। শেখার সময় source, course quality এবং প্রয়োজনীয় level বিবেচনা করা ভালো। চাইলে online learning-এর জন্য কীভাবে resource বেছে নিতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "education",
+      "question": "What is an educational website?",
+      "answer": "Educational website হলো এমন website যেখানে learning materials, courses, tutorials, articles, exercises বা educational resources পাওয়া যেতে পারে। কিছু resource free এবং কিছু paid হতে পারে। শেখার সময় source, course quality এবং প্রয়োজনীয় level বিবেচনা করা ভালো। চাইলে online learning-এর জন্য কীভাবে resource বেছে নিতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "ecommerce",
+      "question": "ই-কমার্স ওয়েবসাইট কী?",
+      "answer": "E-commerce website হলো online platform যেখানে পণ্য বা service দেখা, order করা এবং অনেক ক্ষেত্রে online payment বা delivery ব্যবস্থার মাধ্যমে কেনাকাটা করা যায়। কেনাকাটার আগে seller information, product details, return policy এবং payment security যাচাই করা ভালো। চাইলে online shopping নিরাপদ রাখার সাধারণ উপায় জানতে পারো।"
+    },
+    {
+      "category": "ecommerce",
+      "question": "E-commerce website কী?",
+      "answer": "E-commerce website হলো online platform যেখানে পণ্য বা service দেখা, order করা এবং অনেক ক্ষেত্রে online payment বা delivery ব্যবস্থার মাধ্যমে কেনাকাটা করা যায়। কেনাকাটার আগে seller information, product details, return policy এবং payment security যাচাই করা ভালো। চাইলে online shopping নিরাপদ রাখার সাধারণ উপায় জানতে পারো।"
+    },
+    {
+      "category": "ecommerce",
+      "question": "What is an e-commerce website?",
+      "answer": "E-commerce website হলো online platform যেখানে পণ্য বা service দেখা, order করা এবং অনেক ক্ষেত্রে online payment বা delivery ব্যবস্থার মাধ্যমে কেনাকাটা করা যায়। কেনাকাটার আগে seller information, product details, return policy এবং payment security যাচাই করা ভালো। চাইলে online shopping নিরাপদ রাখার সাধারণ উপায় জানতে পারো।"
+    },
+    {
+      "category": "banking",
+      "question": "অনলাইন ব্যাংকিং ওয়েবসাইট কী?",
+      "answer": "Online banking website হলো ব্যাংকের web service যেখানে account-related কিছু কাজ online করা যায়, যেমন balance দেখা, transaction information দেখা বা নির্দিষ্ট banking service ব্যবহার করা। Banking website ব্যবহার করার সময় official domain, HTTPS, strong password এবং multi-factor authentication-এর মতো security ব্যবস্থা গুরুত্বপূর্ণ। চাইলে online banking security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "banking",
+      "question": "Online banking website কী?",
+      "answer": "Online banking website হলো ব্যাংকের web service যেখানে account-related কিছু কাজ online করা যায়, যেমন balance দেখা, transaction information দেখা বা নির্দিষ্ট banking service ব্যবহার করা। Banking website ব্যবহার করার সময় official domain, HTTPS, strong password এবং multi-factor authentication-এর মতো security ব্যবস্থা গুরুত্বপূর্ণ। চাইলে online banking security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "banking",
+      "question": "What is online banking?",
+      "answer": "Online banking website হলো ব্যাংকের web service যেখানে account-related কিছু কাজ online করা যায়, যেমন balance দেখা, transaction information দেখা বা নির্দিষ্ট banking service ব্যবহার করা। Banking website ব্যবহার করার সময় official domain, HTTPS, strong password এবং multi-factor authentication-এর মতো security ব্যবস্থা গুরুত্বপূর্ণ। চাইলে online banking security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "jobs",
+      "question": "চাকরির ওয়েবসাইট কী?",
+      "answer": "Job website হলো এমন online platform যেখানে চাকরির vacancy, job description, qualification এবং application information পাওয়া যায়। আবেদন করার আগে company বা employer-এর তথ্য এবং job posting-এর authenticity যাচাই করা ভালো। চাইলে online job application কীভাবে সাজাতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "jobs",
+      "question": "Job website কী?",
+      "answer": "Job website হলো এমন online platform যেখানে চাকরির vacancy, job description, qualification এবং application information পাওয়া যায়। আবেদন করার আগে company বা employer-এর তথ্য এবং job posting-এর authenticity যাচাই করা ভালো। চাইলে online job application কীভাবে সাজাতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "jobs",
+      "question": "What is a job website?",
+      "answer": "Job website হলো এমন online platform যেখানে চাকরির vacancy, job description, qualification এবং application information পাওয়া যায়। আবেদন করার আগে company বা employer-এর তথ্য এবং job posting-এর authenticity যাচাই করা ভালো। চাইলে online job application কীভাবে সাজাতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "maps",
+      "question": "ম্যাপ ওয়েবসাইট কী?",
+      "answer": "Map website হলো online mapping service যা location, route, place এবং geographic information দেখাতে পারে। অনেক map service route planning, traffic বা place information-এর মতো features দেয়। চাইলে map website-এ route কীভাবে খুঁজতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "maps",
+      "question": "Map website কী?",
+      "answer": "Map website হলো online mapping service যা location, route, place এবং geographic information দেখাতে পারে। অনেক map service route planning, traffic বা place information-এর মতো features দেয়। চাইলে map website-এ route কীভাবে খুঁজতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "maps",
+      "question": "What is a map website?",
+      "answer": "Map website হলো online mapping service যা location, route, place এবং geographic information দেখাতে পারে। অনেক map service route planning, traffic বা place information-এর মতো features দেয়। চাইলে map website-এ route কীভাবে খুঁজতে হয় তা জানতে পারো।"
+    },
+    {
+      "category": "email",
+      "question": "ইমেইল ওয়েবসাইট কী?",
+      "answer": "Email website বা webmail service browser-এর মাধ্যমে email account ব্যবহার করতে দেয়। এর মাধ্যমে message পাঠানো, গ্রহণ করা, attachment ব্যবহার এবং inbox organize করা যায়। Email account নিরাপদ রাখতে strong password এবং multi-factor authentication ব্যবহার করা উপকারী। চাইলে email security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "email",
+      "question": "Email website কী?",
+      "answer": "Email website বা webmail service browser-এর মাধ্যমে email account ব্যবহার করতে দেয়। এর মাধ্যমে message পাঠানো, গ্রহণ করা, attachment ব্যবহার এবং inbox organize করা যায়। Email account নিরাপদ রাখতে strong password এবং multi-factor authentication ব্যবহার করা উপকারী। চাইলে email security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "email",
+      "question": "What is webmail?",
+      "answer": "Email website বা webmail service browser-এর মাধ্যমে email account ব্যবহার করতে দেয়। এর মাধ্যমে message পাঠানো, গ্রহণ করা, attachment ব্যবহার এবং inbox organize করা যায়। Email account নিরাপদ রাখতে strong password এবং multi-factor authentication ব্যবহার করা উপকারী। চাইলে email security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "ai",
+      "question": "AI ওয়েবসাইট কী?",
+      "answer": "AI website হলো এমন web service যেখানে artificial intelligence-based features ব্যবহার করা যায়, যেমন text generation, translation, image tools, coding assistance বা information processing। AI service ব্যবহারের সময় privacy policy এবং sensitive information sharing সম্পর্কে সতর্ক থাকা ভালো। চাইলে AI website কীভাবে কাজ করে তা সহজভাবে জানতে পারো।"
+    },
+    {
+      "category": "ai",
+      "question": "AI website কী?",
+      "answer": "AI website হলো এমন web service যেখানে artificial intelligence-based features ব্যবহার করা যায়, যেমন text generation, translation, image tools, coding assistance বা information processing। AI service ব্যবহারের সময় privacy policy এবং sensitive information sharing সম্পর্কে সতর্ক থাকা ভালো। চাইলে AI website কীভাবে কাজ করে তা সহজভাবে জানতে পারো।"
+    },
+    {
+      "category": "ai",
+      "question": "What is an AI website?",
+      "answer": "AI website হলো এমন web service যেখানে artificial intelligence-based features ব্যবহার করা যায়, যেমন text generation, translation, image tools, coding assistance বা information processing। AI service ব্যবহারের সময় privacy policy এবং sensitive information sharing সম্পর্কে সতর্ক থাকা ভালো। চাইলে AI website কীভাবে কাজ করে তা সহজভাবে জানতে পারো।"
+    },
+    {
+      "category": "cloud",
+      "question": "ক্লাউড ওয়েবসাইট কী?",
+      "answer": "Cloud web service browser-এর মাধ্যমে online storage, documents, collaboration বা অন্য cloud-based কাজ করার সুযোগ দিতে পারে। সাধারণত data remote servers-এ সংরক্ষিত থাকে এবং account-এর মাধ্যমে access করা হয়। চাইলে cloud storage এবং local storage-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "cloud",
+      "question": "Cloud website কী?",
+      "answer": "Cloud web service browser-এর মাধ্যমে online storage, documents, collaboration বা অন্য cloud-based কাজ করার সুযোগ দিতে পারে। সাধারণত data remote servers-এ সংরক্ষিত থাকে এবং account-এর মাধ্যমে access করা হয়। চাইলে cloud storage এবং local storage-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "cloud",
+      "question": "What is a cloud web service?",
+      "answer": "Cloud web service browser-এর মাধ্যমে online storage, documents, collaboration বা অন্য cloud-based কাজ করার সুযোগ দিতে পারে। সাধারণত data remote servers-এ সংরক্ষিত থাকে এবং account-এর মাধ্যমে access করা হয়। চাইলে cloud storage এবং local storage-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "developer",
+      "question": "ডেভেলপার ওয়েবসাইট কী?",
+      "answer": "Developer website হলো programming, documentation, APIs, tutorials, source code বা software development resources-এর জন্য ব্যবহৃত website বা platform। Developers এসব resource ব্যবহার করে software তৈরি, শেখা ও সমস্যা সমাধান করতে পারে। চাইলে web development-এর basic বিষয়গুলো জানতে পারো।"
+    },
+    {
+      "category": "developer",
+      "question": "Developer website কী?",
+      "answer": "Developer website হলো programming, documentation, APIs, tutorials, source code বা software development resources-এর জন্য ব্যবহৃত website বা platform। Developers এসব resource ব্যবহার করে software তৈরি, শেখা ও সমস্যা সমাধান করতে পারে। চাইলে web development-এর basic বিষয়গুলো জানতে পারো।"
+    },
+    {
+      "category": "developer",
+      "question": "What is a developer website?",
+      "answer": "Developer website হলো programming, documentation, APIs, tutorials, source code বা software development resources-এর জন্য ব্যবহৃত website বা platform। Developers এসব resource ব্যবহার করে software তৈরি, শেখা ও সমস্যা সমাধান করতে পারে। চাইলে web development-এর basic বিষয়গুলো জানতে পারো।"
+    },
+    {
+      "category": "tabs",
+      "question": "ব্রাউজার ট্যাব কী?",
+      "answer": "Browser tab হলো একই browser window-এর মধ্যে আলাদা webpage বা browsing session-এর মতো কাজ করার একটি section। একসঙ্গে অনেক website খোলা রাখতে tab ব্যবহার করা যায়। চাইলে tab management-এর shortcuts ও tips জানতে পারো।"
+    },
+    {
+      "category": "tabs",
+      "question": "Tab কী?",
+      "answer": "Browser tab হলো একই browser window-এর মধ্যে আলাদা webpage বা browsing session-এর মতো কাজ করার একটি section। একসঙ্গে অনেক website খোলা রাখতে tab ব্যবহার করা যায়। চাইলে tab management-এর shortcuts ও tips জানতে পারো।"
+    },
+    {
+      "category": "tabs",
+      "question": "What is a browser tab?",
+      "answer": "Browser tab হলো একই browser window-এর মধ্যে আলাদা webpage বা browsing session-এর মতো কাজ করার একটি section। একসঙ্গে অনেক website খোলা রাখতে tab ব্যবহার করা যায়। চাইলে tab management-এর shortcuts ও tips জানতে পারো।"
+    },
+    {
+      "category": "tabs",
+      "question": "What is a tab in a browser?",
+      "answer": "Browser tab হলো একই browser window-এর মধ্যে আলাদা webpage বা browsing session-এর মতো কাজ করার একটি section। একসঙ্গে অনেক website খোলা রাখতে tab ব্যবহার করা যায়। চাইলে tab management-এর shortcuts ও tips জানতে পারো।"
+    },
+    {
+      "category": "bookmark",
+      "question": "বুকমার্ক কী?",
+      "answer": "Bookmark হলো browser-এর এমন একটি সুবিধা যার মাধ্যমে কোনো webpage-এর address সংরক্ষণ করে পরে সহজে আবার খোলা যায়। গুরুত্বপূর্ণ website দ্রুত access করতে bookmark ব্যবহার করা যায়। চাইলে bookmark organize করার উপায় জানতে পারো।"
+    },
+    {
+      "category": "bookmark",
+      "question": "Bookmark কী?",
+      "answer": "Bookmark হলো browser-এর এমন একটি সুবিধা যার মাধ্যমে কোনো webpage-এর address সংরক্ষণ করে পরে সহজে আবার খোলা যায়। গুরুত্বপূর্ণ website দ্রুত access করতে bookmark ব্যবহার করা যায়। চাইলে bookmark organize করার উপায় জানতে পারো।"
+    },
+    {
+      "category": "bookmark",
+      "question": "What is a bookmark?",
+      "answer": "Bookmark হলো browser-এর এমন একটি সুবিধা যার মাধ্যমে কোনো webpage-এর address সংরক্ষণ করে পরে সহজে আবার খোলা যায়। গুরুত্বপূর্ণ website দ্রুত access করতে bookmark ব্যবহার করা যায়। চাইলে bookmark organize করার উপায় জানতে পারো।"
+    },
+    {
+      "category": "history",
+      "question": "ব্রাউজার হিস্ট্রি কী?",
+      "answer": "Browser history হলো browser-এ আগে visit করা webpage বা website-এর একটি তালিকা, যদি history সংরক্ষণ করা থাকে। Browser settings-এর মাধ্যমে history দেখা বা মুছে ফেলা যায়। চাইলে history এবং privacy-এর সম্পর্ক জানতে পারো।"
+    },
+    {
+      "category": "history",
+      "question": "History কী?",
+      "answer": "Browser history হলো browser-এ আগে visit করা webpage বা website-এর একটি তালিকা, যদি history সংরক্ষণ করা থাকে। Browser settings-এর মাধ্যমে history দেখা বা মুছে ফেলা যায়। চাইলে history এবং privacy-এর সম্পর্ক জানতে পারো।"
+    },
+    {
+      "category": "history",
+      "question": "What is browser history?",
+      "answer": "Browser history হলো browser-এ আগে visit করা webpage বা website-এর একটি তালিকা, যদি history সংরক্ষণ করা থাকে। Browser settings-এর মাধ্যমে history দেখা বা মুছে ফেলা যায়। চাইলে history এবং privacy-এর সম্পর্ক জানতে পারো।"
+    },
+    {
+      "category": "cache",
+      "question": "Browser cache কী?",
+      "answer": "Browser cache হলো locally stored কিছু web resource-এর temporary copy, যা পরবর্তী সময়ে কিছু content দ্রুত load করতে সাহায্য করতে পারে। পুরোনো বা সমস্যাযুক্ত cached data কখনও clear করার প্রয়োজন হতে পারে। চাইলে cache clear করলে কী হয় তা জানতে পারো।"
+    },
+    {
+      "category": "cache",
+      "question": "Cache কী?",
+      "answer": "Browser cache হলো locally stored কিছু web resource-এর temporary copy, যা পরবর্তী সময়ে কিছু content দ্রুত load করতে সাহায্য করতে পারে। পুরোনো বা সমস্যাযুক্ত cached data কখনও clear করার প্রয়োজন হতে পারে। চাইলে cache clear করলে কী হয় তা জানতে পারো।"
+    },
+    {
+      "category": "cache",
+      "question": "What is browser cache?",
+      "answer": "Browser cache হলো locally stored কিছু web resource-এর temporary copy, যা পরবর্তী সময়ে কিছু content দ্রুত load করতে সাহায্য করতে পারে। পুরোনো বা সমস্যাযুক্ত cached data কখনও clear করার প্রয়োজন হতে পারে। চাইলে cache clear করলে কী হয় তা জানতে পারো।"
+    },
+    {
+      "category": "cookies",
+      "question": "Browser cookies কী?",
+      "answer": "Cookies হলো website-এর সঙ্গে browser-এ সংরক্ষিত ছোট data, যা login state, preferences বা কিছু website functionality-তে ব্যবহৃত হতে পারে। সব cookie একই ধরনের নয়; কিছু প্রয়োজনীয় এবং কিছু tracking বা personalization-এর জন্য ব্যবহৃত হতে পারে। চাইলে cookie settings সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "cookies",
+      "question": "Cookies কী?",
+      "answer": "Cookies হলো website-এর সঙ্গে browser-এ সংরক্ষিত ছোট data, যা login state, preferences বা কিছু website functionality-তে ব্যবহৃত হতে পারে। সব cookie একই ধরনের নয়; কিছু প্রয়োজনীয় এবং কিছু tracking বা personalization-এর জন্য ব্যবহৃত হতে পারে। চাইলে cookie settings সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "cookies",
+      "question": "What are browser cookies?",
+      "answer": "Cookies হলো website-এর সঙ্গে browser-এ সংরক্ষিত ছোট data, যা login state, preferences বা কিছু website functionality-তে ব্যবহৃত হতে পারে। সব cookie একই ধরনের নয়; কিছু প্রয়োজনীয় এবং কিছু tracking বা personalization-এর জন্য ব্যবহৃত হতে পারে। চাইলে cookie settings সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "incognito",
+      "question": "Incognito mode কী?",
+      "answer": "Incognito বা private browsing mode browser-এর local browsing history বা কিছু local data সাধারণ browsing-এর মতো সংরক্ষণ না করার জন্য তৈরি। তবে এটি ব্যবহার করলে internet service provider, network administrator বা website-এর কাছ থেকে তোমার সব activity গোপন হয়ে যায় না। চাইলে private browsing-এর সীমাবদ্ধতাগুলো জানতে পারো।"
+    },
+    {
+      "category": "incognito",
+      "question": "Private browsing কী?",
+      "answer": "Incognito বা private browsing mode browser-এর local browsing history বা কিছু local data সাধারণ browsing-এর মতো সংরক্ষণ না করার জন্য তৈরি। তবে এটি ব্যবহার করলে internet service provider, network administrator বা website-এর কাছ থেকে তোমার সব activity গোপন হয়ে যায় না। চাইলে private browsing-এর সীমাবদ্ধতাগুলো জানতে পারো।"
+    },
+    {
+      "category": "incognito",
+      "question": "What is incognito mode?",
+      "answer": "Incognito বা private browsing mode browser-এর local browsing history বা কিছু local data সাধারণ browsing-এর মতো সংরক্ষণ না করার জন্য তৈরি। তবে এটি ব্যবহার করলে internet service provider, network administrator বা website-এর কাছ থেকে তোমার সব activity গোপন হয়ে যায় না। চাইলে private browsing-এর সীমাবদ্ধতাগুলো জানতে পারো।"
+    },
+    {
+      "category": "incognito",
+      "question": "What is private browsing?",
+      "answer": "Incognito বা private browsing mode browser-এর local browsing history বা কিছু local data সাধারণ browsing-এর মতো সংরক্ষণ না করার জন্য তৈরি। তবে এটি ব্যবহার করলে internet service provider, network administrator বা website-এর কাছ থেকে তোমার সব activity গোপন হয়ে যায় না। চাইলে private browsing-এর সীমাবদ্ধতাগুলো জানতে পারো।"
+    },
+    {
+      "category": "download",
+      "question": "ডাউনলোড কী?",
+      "answer": "Download হলো internet বা কোনো server থেকে file বা data নিজের device-এ নেওয়া। Download করা file সাধারণত device-এর নির্দিষ্ট folder-এ সংরক্ষিত হয়। অচেনা source থেকে file download করার সময় সতর্ক থাকা ভালো। চাইলে safe downloading-এর সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "download",
+      "question": "What is a download?",
+      "answer": "Download হলো internet বা কোনো server থেকে file বা data নিজের device-এ নেওয়া। Download করা file সাধারণত device-এর নির্দিষ্ট folder-এ সংরক্ষিত হয়। অচেনা source থেকে file download করার সময় সতর্ক থাকা ভালো। চাইলে safe downloading-এর সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "upload",
+      "question": "আপলোড কী?",
+      "answer": "Upload হলো নিজের device থেকে কোনো file বা data internet-এর website বা server-এ পাঠানো। যেমন profile picture upload, document submission বা video upload। Upload করার আগে sensitive information কোথায় যাচ্ছে তা বোঝা গুরুত্বপূর্ণ। চাইলে upload ও download-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "upload",
+      "question": "Upload কী?",
+      "answer": "Upload হলো নিজের device থেকে কোনো file বা data internet-এর website বা server-এ পাঠানো। যেমন profile picture upload, document submission বা video upload। Upload করার আগে sensitive information কোথায় যাচ্ছে তা বোঝা গুরুত্বপূর্ণ। চাইলে upload ও download-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "upload",
+      "question": "What is an upload?",
+      "answer": "Upload হলো নিজের device থেকে কোনো file বা data internet-এর website বা server-এ পাঠানো। যেমন profile picture upload, document submission বা video upload। Upload করার আগে sensitive information কোথায় যাচ্ছে তা বোঝা গুরুত্বপূর্ণ। চাইলে upload ও download-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "refresh",
+      "question": "Refresh কী?",
+      "answer": "Refresh বা reload browser-কে বর্তমান webpage-এর resource আবার request করতে নির্দেশ দেয়। Page ঠিকমতো load না হলে বা নতুন information দেখতে refresh ব্যবহার করা যায়। তবে website-এর নিজস্ব behavior-এর ওপর ফলাফল ভিন্ন হতে পারে।"
+    },
+    {
+      "category": "refresh",
+      "question": "Reload কী?",
+      "answer": "Refresh বা reload browser-কে বর্তমান webpage-এর resource আবার request করতে নির্দেশ দেয়। Page ঠিকমতো load না হলে বা নতুন information দেখতে refresh ব্যবহার করা যায়। তবে website-এর নিজস্ব behavior-এর ওপর ফলাফল ভিন্ন হতে পারে।"
+    },
+    {
+      "category": "refresh",
+      "question": "What does refresh do?",
+      "answer": "Refresh বা reload browser-কে বর্তমান webpage-এর resource আবার request করতে নির্দেশ দেয়। Page ঠিকমতো load না হলে বা নতুন information দেখতে refresh ব্যবহার করা যায়। তবে website-এর নিজস্ব behavior-এর ওপর ফলাফল ভিন্ন হতে পারে।"
+    },
+    {
+      "category": "refresh",
+      "question": "What does reload do?",
+      "answer": "Refresh বা reload browser-কে বর্তমান webpage-এর resource আবার request করতে নির্দেশ দেয়। Page ঠিকমতো load না হলে বা নতুন information দেখতে refresh ব্যবহার করা যায়। তবে website-এর নিজস্ব behavior-এর ওপর ফলাফল ভিন্ন হতে পারে।"
+    },
+    {
+      "category": "back_forward",
+      "question": "Back button কী?",
+      "answer": "Back button সাধারণত আগের browsing location-এ ফিরতে সাহায্য করে এবং Forward button পরের history entry-তে যেতে সাহায্য করে। Browser history-এর ওপর এগুলোর navigation নির্ভর করে। চাইলে browser navigation আরও সহজভাবে বুঝতে পারো।"
+    },
+    {
+      "category": "back_forward",
+      "question": "Forward button কী?",
+      "answer": "Back button সাধারণত আগের browsing location-এ ফিরতে সাহায্য করে এবং Forward button পরের history entry-তে যেতে সাহায্য করে। Browser history-এর ওপর এগুলোর navigation নির্ভর করে। চাইলে browser navigation আরও সহজভাবে বুঝতে পারো।"
+    },
+    {
+      "category": "back_forward",
+      "question": "What do back and forward buttons do?",
+      "answer": "Back button সাধারণত আগের browsing location-এ ফিরতে সাহায্য করে এবং Forward button পরের history entry-তে যেতে সাহায্য করে। Browser history-এর ওপর এগুলোর navigation নির্ভর করে। চাইলে browser navigation আরও সহজভাবে বুঝতে পারো।"
+    },
+    {
+      "category": "extensions",
+      "question": "ব্রাউজার extension কী?",
+      "answer": "Browser extension হলো browser-এর functionality বাড়ানোর জন্য ব্যবহৃত অতিরিক্ত software component। Extension দিয়ে productivity, accessibility, content handling বা অন্যান্য কাজের সুবিধা যোগ করা যায়। তবে extension install করার আগে publisher, permissions এবং প্রয়োজনীয়তা যাচাই করা ভালো। চাইলে extension security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "extensions",
+      "question": "Extension কী?",
+      "answer": "Browser extension হলো browser-এর functionality বাড়ানোর জন্য ব্যবহৃত অতিরিক্ত software component। Extension দিয়ে productivity, accessibility, content handling বা অন্যান্য কাজের সুবিধা যোগ করা যায়। তবে extension install করার আগে publisher, permissions এবং প্রয়োজনীয়তা যাচাই করা ভালো। চাইলে extension security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "extensions",
+      "question": "What is a browser extension?",
+      "answer": "Browser extension হলো browser-এর functionality বাড়ানোর জন্য ব্যবহৃত অতিরিক্ত software component। Extension দিয়ে productivity, accessibility, content handling বা অন্যান্য কাজের সুবিধা যোগ করা যায়। তবে extension install করার আগে publisher, permissions এবং প্রয়োজনীয়তা যাচাই করা ভালো। চাইলে extension security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "extensions",
+      "question": "What is an extension?",
+      "answer": "Browser extension হলো browser-এর functionality বাড়ানোর জন্য ব্যবহৃত অতিরিক্ত software component। Extension দিয়ে productivity, accessibility, content handling বা অন্যান্য কাজের সুবিধা যোগ করা যায়। তবে extension install করার আগে publisher, permissions এবং প্রয়োজনীয়তা যাচাই করা ভালো। চাইলে extension security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "search",
+      "question": "ব্রাউজারে কীভাবে সার্চ করব?",
+      "answer": "Browser-এর address bar-এ keyword লিখে Enter চাপলে browser সাধারণত configured search engine ব্যবহার করে search results দেখায়। নির্দিষ্ট ও পরিষ্কার keyword ব্যবহার করলে প্রয়োজনীয় ফলাফল খুঁজে পাওয়া সহজ হতে পারে। চাইলে effective search query লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "search",
+      "question": "How do I search in a browser?",
+      "answer": "Browser-এর address bar-এ keyword লিখে Enter চাপলে browser সাধারণত configured search engine ব্যবহার করে search results দেখায়। নির্দিষ্ট ও পরিষ্কার keyword ব্যবহার করলে প্রয়োজনীয় ফলাফল খুঁজে পাওয়া সহজ হতে পারে। চাইলে effective search query লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "search",
+      "question": "How can I search the web?",
+      "answer": "Browser-এর address bar-এ keyword লিখে Enter চাপলে browser সাধারণত configured search engine ব্যবহার করে search results দেখায়। নির্দিষ্ট ও পরিষ্কার keyword ব্যবহার করলে প্রয়োজনীয় ফলাফল খুঁজে পাওয়া সহজ হতে পারে। চাইলে effective search query লেখার কৌশল জানতে পারো।"
+    },
+    {
+      "category": "address_bar",
+      "question": "Address bar কী?",
+      "answer": "Address bar হলো browser-এর উপরের সেই জায়গা যেখানে website-এর URL লেখা যায় এবং অনেক browser-এ এখান থেকেই search করা যায়। এখানে একটি web address লিখে Enter করলে browser সেই address-এ যাওয়ার চেষ্টা করে। চাইলে URL-এর বিভিন্ন অংশ সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "address_bar",
+      "question": "URL bar কী?",
+      "answer": "Address bar হলো browser-এর উপরের সেই জায়গা যেখানে website-এর URL লেখা যায় এবং অনেক browser-এ এখান থেকেই search করা যায়। এখানে একটি web address লিখে Enter করলে browser সেই address-এ যাওয়ার চেষ্টা করে। চাইলে URL-এর বিভিন্ন অংশ সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "address_bar",
+      "question": "What is the address bar?",
+      "answer": "Address bar হলো browser-এর উপরের সেই জায়গা যেখানে website-এর URL লেখা যায় এবং অনেক browser-এ এখান থেকেই search করা যায়। এখানে একটি web address লিখে Enter করলে browser সেই address-এ যাওয়ার চেষ্টা করে। চাইলে URL-এর বিভিন্ন অংশ সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "address_bar",
+      "question": "What is the URL bar?",
+      "answer": "Address bar হলো browser-এর উপরের সেই জায়গা যেখানে website-এর URL লেখা যায় এবং অনেক browser-এ এখান থেকেই search করা যায়। এখানে একটি web address লিখে Enter করলে browser সেই address-এ যাওয়ার চেষ্টা করে। চাইলে URL-এর বিভিন্ন অংশ সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "phishing",
+      "question": "Phishing website কী?",
+      "answer": "Phishing website এমনভাবে তৈরি হতে পারে যাতে এটি কোনো পরিচিত website বা service-এর মতো দেখায় এবং ব্যবহারকারীর password, payment information বা অন্য sensitive data নেওয়ার চেষ্টা করে। সন্দেহজনক link, অস্বাভাবিক domain, জরুরি চাপ সৃষ্টি করা message এবং অপ্রত্যাশিত login request-এর ক্ষেত্রে সতর্ক থাকা উচিত। চাইলে phishing চেনার একটি beginner checklist দিতে পারি।"
+    },
+    {
+      "category": "phishing",
+      "question": "What is a phishing website?",
+      "answer": "Phishing website এমনভাবে তৈরি হতে পারে যাতে এটি কোনো পরিচিত website বা service-এর মতো দেখায় এবং ব্যবহারকারীর password, payment information বা অন্য sensitive data নেওয়ার চেষ্টা করে। সন্দেহজনক link, অস্বাভাবিক domain, জরুরি চাপ সৃষ্টি করা message এবং অপ্রত্যাশিত login request-এর ক্ষেত্রে সতর্ক থাকা উচিত। চাইলে phishing চেনার একটি beginner checklist দিতে পারি।"
+    },
+    {
+      "category": "phishing",
+      "question": "ফিশিং ওয়েবসাইট কীভাবে বুঝব?",
+      "answer": "Phishing website এমনভাবে তৈরি হতে পারে যাতে এটি কোনো পরিচিত website বা service-এর মতো দেখায় এবং ব্যবহারকারীর password, payment information বা অন্য sensitive data নেওয়ার চেষ্টা করে। সন্দেহজনক link, অস্বাভাবিক domain, জরুরি চাপ সৃষ্টি করা message এবং অপ্রত্যাশিত login request-এর ক্ষেত্রে সতর্ক থাকা উচিত। চাইলে phishing চেনার একটি beginner checklist দিতে পারি।"
+    },
+    {
+      "category": "fake_site",
+      "question": "নকল ওয়েবসাইট কী?",
+      "answer": "নকল website হলো এমন website যা কোনো ব্যক্তি, brand বা service-এর পরিচয় নকল করে ব্যবহারকারীকে বিভ্রান্ত করতে পারে। শুধু logo বা design দেখে website সত্যি কিনা নিশ্চিত করা যায় না। Domain, HTTPS, official source এবং website-এর contact information যাচাই করা ভালো। চাইলে একটি website যাচাই করার ধাপগুলো বলতে পারি।"
+    },
+    {
+      "category": "fake_site",
+      "question": "Fake website কী?",
+      "answer": "নকল website হলো এমন website যা কোনো ব্যক্তি, brand বা service-এর পরিচয় নকল করে ব্যবহারকারীকে বিভ্রান্ত করতে পারে। শুধু logo বা design দেখে website সত্যি কিনা নিশ্চিত করা যায় না। Domain, HTTPS, official source এবং website-এর contact information যাচাই করা ভালো। চাইলে একটি website যাচাই করার ধাপগুলো বলতে পারি।"
+    },
+    {
+      "category": "fake_site",
+      "question": "What is a fake website?",
+      "answer": "নকল website হলো এমন website যা কোনো ব্যক্তি, brand বা service-এর পরিচয় নকল করে ব্যবহারকারীকে বিভ্রান্ত করতে পারে। শুধু logo বা design দেখে website সত্যি কিনা নিশ্চিত করা যায় না। Domain, HTTPS, official source এবং website-এর contact information যাচাই করা ভালো। চাইলে একটি website যাচাই করার ধাপগুলো বলতে পারি।"
+    },
+    {
+      "category": "password",
+      "question": "ওয়েবসাইটের password কীভাবে নিরাপদ রাখব?",
+      "answer": "প্রতিটি গুরুত্বপূর্ণ account-এর জন্য আলাদা ও শক্তিশালী password ব্যবহার করা ভালো। Password manager এবং multi-factor authentication ব্যবহার করলে account security বাড়াতে সাহায্য করতে পারে। Password বা verification code অন্যের সঙ্গে share করা উচিত নয়। চাইলে account security-এর আরও সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "password",
+      "question": "How can I keep my website passwords secure?",
+      "answer": "প্রতিটি গুরুত্বপূর্ণ account-এর জন্য আলাদা ও শক্তিশালী password ব্যবহার করা ভালো। Password manager এবং multi-factor authentication ব্যবহার করলে account security বাড়াতে সাহায্য করতে পারে। Password বা verification code অন্যের সঙ্গে share করা উচিত নয়। চাইলে account security-এর আরও সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "password",
+      "question": "How should I protect my passwords?",
+      "answer": "প্রতিটি গুরুত্বপূর্ণ account-এর জন্য আলাদা ও শক্তিশালী password ব্যবহার করা ভালো। Password manager এবং multi-factor authentication ব্যবহার করলে account security বাড়াতে সাহায্য করতে পারে। Password বা verification code অন্যের সঙ্গে share করা উচিত নয়। চাইলে account security-এর আরও সাধারণ নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "https_security",
+      "question": "HTTPS থাকলেই কি website নিরাপদ?",
+      "answer": "HTTPS browser ও website server-এর মধ্যে connection encryption করতে সাহায্য করে, কিন্তু HTTPS থাকলেই website-এর উদ্দেশ্য বা content বিশ্বাসযোগ্য—এমন নিশ্চয়তা দেয় না। তাই domain name, source, page content এবং request-এর context-ও যাচাই করা উচিত। চাইলে HTTPS-এর কাজ আরও বিস্তারিতভাবে জানতে পারো।"
+    },
+    {
+      "category": "https_security",
+      "question": "Does HTTPS mean a website is completely safe?",
+      "answer": "HTTPS browser ও website server-এর মধ্যে connection encryption করতে সাহায্য করে, কিন্তু HTTPS থাকলেই website-এর উদ্দেশ্য বা content বিশ্বাসযোগ্য—এমন নিশ্চয়তা দেয় না। তাই domain name, source, page content এবং request-এর context-ও যাচাই করা উচিত। চাইলে HTTPS-এর কাজ আরও বিস্তারিতভাবে জানতে পারো।"
+    },
+    {
+      "category": "mobile_browsing",
+      "question": "মোবাইলে ব্রাউজার কী?",
+      "answer": "Mobile browser হলো smartphone বা tablet-এ website access করার জন্য তৈরি browser। Mobile browser সাধারণত touch controls, responsive websites এবং mobile-oriented interface support করে। চাইলে mobile browser-এ desktop site option কী কাজে লাগে তা জানতে পারো।"
+    },
+    {
+      "category": "mobile_browsing",
+      "question": "মোবাইল ব্রাউজার কী?",
+      "answer": "Mobile browser হলো smartphone বা tablet-এ website access করার জন্য তৈরি browser। Mobile browser সাধারণত touch controls, responsive websites এবং mobile-oriented interface support করে। চাইলে mobile browser-এ desktop site option কী কাজে লাগে তা জানতে পারো।"
+    },
+    {
+      "category": "mobile_browsing",
+      "question": "What is a mobile browser?",
+      "answer": "Mobile browser হলো smartphone বা tablet-এ website access করার জন্য তৈরি browser। Mobile browser সাধারণত touch controls, responsive websites এবং mobile-oriented interface support করে। চাইলে mobile browser-এ desktop site option কী কাজে লাগে তা জানতে পারো।"
+    },
+    {
+      "category": "mobile_browsing",
+      "question": "How does mobile browsing work?",
+      "answer": "Mobile browser হলো smartphone বা tablet-এ website access করার জন্য তৈরি browser। Mobile browser সাধারণত touch controls, responsive websites এবং mobile-oriented interface support করে। চাইলে mobile browser-এ desktop site option কী কাজে লাগে তা জানতে পারো।"
+    },
+    {
+      "category": "responsive_web",
+      "question": "Responsive website কী?",
+      "answer": "Responsive website এমনভাবে তৈরি করা হয় যাতে বিভিন্ন screen size ও device অনুযায়ী layout এবং content নিজেকে মানিয়ে নিতে পারে। ফলে mobile, tablet এবং desktop-এ website ব্যবহার করা সহজ হতে পারে। চাইলে responsive design কীভাবে কাজ করে তা জানতে পারো।"
+    },
+    {
+      "category": "responsive_web",
+      "question": "রেসপন্সিভ ওয়েবসাইট কী?",
+      "answer": "Responsive website এমনভাবে তৈরি করা হয় যাতে বিভিন্ন screen size ও device অনুযায়ী layout এবং content নিজেকে মানিয়ে নিতে পারে। ফলে mobile, tablet এবং desktop-এ website ব্যবহার করা সহজ হতে পারে। চাইলে responsive design কীভাবে কাজ করে তা জানতে পারো।"
+    },
+    {
+      "category": "responsive_web",
+      "question": "What is a responsive website?",
+      "answer": "Responsive website এমনভাবে তৈরি করা হয় যাতে বিভিন্ন screen size ও device অনুযায়ী layout এবং content নিজেকে মানিয়ে নিতে পারে। ফলে mobile, tablet এবং desktop-এ website ব্যবহার করা সহজ হতে পারে। চাইলে responsive design কীভাবে কাজ করে তা জানতে পারো।"
+    },
+    {
+      "category": "web_app",
+      "question": "Web app কী?",
+      "answer": "Web application বা web app হলো browser-এর মাধ্যমে ব্যবহার করা যায় এমন interactive software। সাধারণ webpage-এর তুলনায় web app-এ user input, account, data processing এবং application-like features বেশি থাকতে পারে। চাইলে website ও web app-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "web_app",
+      "question": "ওয়েব অ্যাপ কী?",
+      "answer": "Web application বা web app হলো browser-এর মাধ্যমে ব্যবহার করা যায় এমন interactive software। সাধারণ webpage-এর তুলনায় web app-এ user input, account, data processing এবং application-like features বেশি থাকতে পারে। চাইলে website ও web app-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "web_app",
+      "question": "What is a web app?",
+      "answer": "Web application বা web app হলো browser-এর মাধ্যমে ব্যবহার করা যায় এমন interactive software। সাধারণ webpage-এর তুলনায় web app-এ user input, account, data processing এবং application-like features বেশি থাকতে পারে। চাইলে website ও web app-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "web_app",
+      "question": "What is a web application?",
+      "answer": "Web application বা web app হলো browser-এর মাধ্যমে ব্যবহার করা যায় এমন interactive software। সাধারণ webpage-এর তুলনায় web app-এ user input, account, data processing এবং application-like features বেশি থাকতে পারে। চাইলে website ও web app-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "domain_dns",
+      "question": "DNS কী?",
+      "answer": "DNS বা Domain Name System domain name-কে সংশ্লিষ্ট network address, যেমন IP address-এর সঙ্গে resolve করতে সাহায্য করে। ফলে মানুষকে জটিল numeric address মনে না রেখে সহজ domain name ব্যবহার করা সম্ভব হয়। চাইলে DNS lookup-এর ধারণাটি ধাপে ধাপে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "domain_dns",
+      "question": "What is DNS?",
+      "answer": "DNS বা Domain Name System domain name-কে সংশ্লিষ্ট network address, যেমন IP address-এর সঙ্গে resolve করতে সাহায্য করে। ফলে মানুষকে জটিল numeric address মনে না রেখে সহজ domain name ব্যবহার করা সম্ভব হয়। চাইলে DNS lookup-এর ধারণাটি ধাপে ধাপে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "domain_dns",
+      "question": "ডোমেইন থেকে website কীভাবে খুঁজে পায়?",
+      "answer": "DNS বা Domain Name System domain name-কে সংশ্লিষ্ট network address, যেমন IP address-এর সঙ্গে resolve করতে সাহায্য করে। ফলে মানুষকে জটিল numeric address মনে না রেখে সহজ domain name ব্যবহার করা সম্ভব হয়। চাইলে DNS lookup-এর ধারণাটি ধাপে ধাপে বুঝিয়ে দিতে পারি।"
+    },
+    {
+      "category": "mixed_language",
+      "question": "Browser কী জিনিস?",
+      "answer": "Browser হলো website access করার software, আর website হলো internet-এ প্রকাশিত web content-এর একটি collection। Browser-এর address bar-এ website-এর URL লিখে Enter করলে website open করার চেষ্টা করা যায়। তুমি চাইলে browser ও website-এর পুরো বিষয়টি beginner level থেকে ধাপে ধাপে শিখতে পারো।"
+    },
+    {
+      "category": "mixed_language",
+      "question": "Website কী জিনিস?",
+      "answer": "Browser হলো website access করার software, আর website হলো internet-এ প্রকাশিত web content-এর একটি collection। Browser-এর address bar-এ website-এর URL লিখে Enter করলে website open করার চেষ্টা করা যায়। তুমি চাইলে browser ও website-এর পুরো বিষয়টি beginner level থেকে ধাপে ধাপে শিখতে পারো।"
+    },
+    {
+      "category": "mixed_language",
+      "question": "Browser দিয়ে website কীভাবে open করব?",
+      "answer": "Browser হলো website access করার software, আর website হলো internet-এ প্রকাশিত web content-এর একটি collection। Browser-এর address bar-এ website-এর URL লিখে Enter করলে website open করার চেষ্টা করা যায়। তুমি চাইলে browser ও website-এর পুরো বিষয়টি beginner level থেকে ধাপে ধাপে শিখতে পারো।"
+    },
+    {
+      "category": "mixed_language",
+      "question": "ওয়েবসাইটটা browser দিয়ে কীভাবে খুলব?",
+      "answer": "Browser হলো website access করার software, আর website হলো internet-এ প্রকাশিত web content-এর একটি collection। Browser-এর address bar-এ website-এর URL লিখে Enter করলে website open করার চেষ্টা করা যায়। তুমি চাইলে browser ও website-এর পুরো বিষয়টি beginner level থেকে ধাপে ধাপে শিখতে পারো।"
+    },
+    {
+      "category": "mixed_language",
+      "question": "Internet আর browser same নাকি?",
+      "answer": "Browser হলো website access করার software, আর website হলো internet-এ প্রকাশিত web content-এর একটি collection। Browser-এর address bar-এ website-এর URL লিখে Enter করলে website open করার চেষ্টা করা যায়। তুমি চাইলে browser ও website-এর পুরো বিষয়টি beginner level থেকে ধাপে ধাপে শিখতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "ল",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "ি",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "ং",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "ক",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": " ",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "ী",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "link",
+      "question": "?",
+      "answer": "Link বা hyperlink হলো এমন clickable element যা অন্য webpage, section, file বা resource-এ নিয়ে যেতে পারে। Website navigation-এর একটি গুরুত্বপূর্ণ অংশ হলো link। চাইলে internal এবং external link-এর পার্থক্য জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "W",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "e",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "b",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "s",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "i",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "t",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": " ",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "l",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "o",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "g",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "n",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "ক",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "ী",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "login",
+      "question": "?",
+      "answer": "Login হলো account-এর পরিচয় যাচাই করে website বা web service-এর ব্যক্তিগত অংশে প্রবেশ করার প্রক্রিয়া। সাধারণত username/email এবং password ব্যবহার করা হয়, আর কিছু service অতিরিক্ত verification চায়। চাইলে login security সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "S",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "i",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "g",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "n",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": " ",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "u",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "p",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "ক",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "ী",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "signup",
+      "question": "?",
+      "answer": "Sign up বা registration হলো একটি website বা service-এ নতুন account তৈরি করার প্রক্রিয়া। এতে সাধারণত প্রয়োজনীয় account information দিতে হয় এবং কখনও email বা phone verification করতে হয়। চাইলে নিরাপদ account registration-এর নিয়ম জানতে পারো।"
+    },
+    {
+      "category": "contact",
+      "question": "C",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "o",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "n",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "t",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "a",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": " ",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "p",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "g",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "e",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "ক",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "ী",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "contact",
+      "question": "?",
+      "answer": "Contact page হলো website-এর এমন একটি page যেখানে visitor সাধারণত business বা organization-এর সঙ্গে যোগাযোগের উপায়, form, email বা অন্যান্য contact information পেতে পারে। অচেনা website-এ personal information দেওয়ার আগে সতর্ক থাকা ভালো।"
+    },
+    {
+      "category": "404",
+      "question": "4",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "0",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": " ",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "e",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "r",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "o",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "ক",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "ী",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "404",
+      "question": "?",
+      "answer": "404 Not Found সাধারণত বোঝায় browser যে web resource বা page request করেছে, server সেটি খুঁজে পায়নি। ভুল URL, deleted page বা changed address-এর মতো কারণে এমন error দেখা যেতে পারে। চাইলে website-এর অন্যান্য common error সম্পর্কে জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "W",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "e",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "b",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "s",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "i",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "t",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": " ",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ধ",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ী",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "র",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ে",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "l",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "o",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "a",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "d",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "হ",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ল",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ক",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "ব",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    },
+    {
+      "category": "slow_site",
+      "question": "?",
+      "answer": "Website ধীরে load হওয়ার কারণ হতে পারে internet connection, server load, বড় media files, browser issues বা website-এর code। প্রথমে connection পরীক্ষা, page refresh এবং প্রয়োজন হলে অন্য network বা browser দিয়ে পরীক্ষা করা যায়। চাইলে website troubleshooting-এর ধাপগুলো জানতে পারো।"
+    }
+  ]
+    }
