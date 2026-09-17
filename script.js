@@ -1298,7 +1298,7 @@ button.addEventListener(
 
 
 /* =========================================================
-LOAD QUESTIONS (UPDATED TO SUPPORT BOTH ARRAY & OBJECT JSON)
+LOAD QUESTIONS (UPDATED TO SUPPORT BOT.JSON & BROWSER.JSON)
 ========================================================= */
 
 async function loadQuestions() {
@@ -1312,14 +1312,9 @@ for (const file of filesToLoad) {
         const response = await fetch(file, { cache: "no-cache" });
         if (response.ok) {
             const data = await response.json();
-            
             if (Array.isArray(data)) {
                 questionDatabase = questionDatabase.concat(data);
-            } else if (data && Array.isArray(data.questions)) {
-                // সাপোর্ট: Bot.json এবং Browser.json যেখানে { questions: [...] } স্ট্রাকচারে ডেটা আছে
-                questionDatabase.push(data);
             }
-            
             console.log(`Loaded ${file} successfully.`);
         }
     } catch (error) {
@@ -1451,14 +1446,14 @@ return matched / union;
 
 
 /* =========================================================
-SEARCH DATABASE (UPDATED TO SUPPORT FLAT QUESTIONS ARRAY)
+SEARCH DATABASE (UPDATED WITH URLBUILDER INTEGRATION)
 ========================================================= */
 
 function findAnswer(
 userQuestion
 ) {
 
-/* Check if URLBuilder can parse a direct URL request */
+/* NEW: Check if URLBuilder can parse a direct URL request */
 if (typeof parseURLRequest === "function") {
     const urlParsed = parseURLRequest(userQuestion);
     if (urlParsed && urlParsed.success) {
@@ -1474,40 +1469,59 @@ if (typeof parseURLRequest === "function") {
 }
 
 let bestMatch = null;
+
 let bestScore = 0;
 
-for (const item of questionDatabase) {
+for (
+    const category
+    of questionDatabase
+) {
 
-    // 1. স্ট্যান্ডার্ড ক্যাটাগরি স্ট্রাকচার (যেমন: questions.json)
-    if (item.entries && Array.isArray(item.entries)) {
-        for (const entry of item.entries) {
-            if (!Array.isArray(entry.questions)) continue;
+    if (
+        !Array.isArray(
+            category.entries
+        )
+    ) {
+        continue;
+    }
 
-            for (const question of entry.questions) {
-                const score = calculateScore(userQuestion, question);
+    for (
+        const entry
+        of category.entries
+    ) {
 
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMatch = {
-                        category: item.category || "General",
-                        answers: entry.answers || []
-                    };
-                }
-            }
+        if (
+            !Array.isArray(
+                entry.questions
+            )
+        ) {
+            continue;
         }
-    } 
-    // 2. ফ্ল্যাট প্রশ্ন স্ট্রাকচার (যেমন: Bot.json এবং Browser.json)
-    else if (item.questions && Array.isArray(item.questions)) {
-        for (const qObj of item.questions) {
-            if (!qObj.question) continue;
 
-            const score = calculateScore(userQuestion, qObj.question);
+        for (
+            const question
+            of entry.questions
+        ) {
 
-            if (score > bestScore) {
-                bestScore = score;
+            const score =
+                calculateScore(
+                    userQuestion,
+                    question
+                );
+
+            if (
+                score > bestScore
+            ) {
+
+                bestScore =
+                    score;
+
                 bestMatch = {
-                    category: qObj.category || "General",
-                    answers: qObj.answer ? [qObj.answer] : []
+                    category:
+                        category.category,
+
+                    answers:
+                        entry.answers || []
                 };
             }
         }
