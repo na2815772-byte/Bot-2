@@ -1298,34 +1298,84 @@ button.addEventListener(
 
 
 /* =========================================================
-LOAD QUESTIONS (UPDATED TO SUPPORT BOT.JSON & BROWSER.JSON)
+DYNAMICALLY LOAD URLBuilder.js
+========================================================= */
+
+function loadURLBuilder() {
+    return new Promise((resolve) => {
+        // Already loaded
+        if (typeof parseURLRequest === "function") {
+            console.log("URLBuilder.js already available.");
+            resolve(true);
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.src = "URLBuilder.js";
+        script.async = false;
+
+        script.onload = () => {
+            console.log("URLBuilder.js loaded successfully.");
+            resolve(true);
+        };
+
+        script.onerror = () => {
+            console.warn("URLBuilder.js could not be loaded. URL features will be disabled.");
+            resolve(false);
+        };
+
+        document.head.appendChild(script);
+    });
+}
+
+
+/* =========================================================
+LOAD QUESTIONS (UPDATED – FIXED CONNECTION FOR Bot.json + Browser.json)
 ========================================================= */
 
 async function loadQuestions() {
 
-const filesToLoad = ["questions.json", "Bot.json", "Browser.json"];
+    // Keep original list + make it more robust
+    const filesToLoad = [
+        "questions.json",
+        "Bot.json",
+        "Browser.json",
+        "bot.json",      // fallback for case-sensitive servers
+        "browser.json"   // fallback for case-sensitive servers
+    ];
 
-questionDatabase = [];
+    questionDatabase = [];
+    const loadedFiles = new Set();
 
-for (const file of filesToLoad) {
-    try {
-        const response = await fetch(file, { cache: "no-cache" });
-        if (response.ok) {
-            const data = await response.json();
-            if (Array.isArray(data)) {
-                questionDatabase = questionDatabase.concat(data);
+    for (const file of filesToLoad) {
+
+        // Skip if we already successfully loaded the same content under another name
+        const lowerName = file.toLowerCase();
+        if (loadedFiles.has(lowerName)) continue;
+
+        try {
+            const response = await fetch(file, { cache: "no-cache" });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                if (Array.isArray(data)) {
+                    questionDatabase = questionDatabase.concat(data);
+                    loadedFiles.add(lowerName);
+                    console.log(`Loaded \( {file} successfully ( \){data.length} categories).`);
+                } else {
+                    console.warn(`${file} is not an array. Skipped.`);
+                }
+            } else {
+                console.warn(`Could not load ${file}: HTTP ${response.status}`);
             }
-            console.log(`Loaded ${file} successfully.`);
+        } catch (error) {
+            console.warn(`Could not load ${file}:`, error.message || error);
         }
-    } catch (error) {
-        console.warn(`Could not load ${file}:`, error);
     }
-}
 
-console.log("Neloy AI combined database loaded:", questionDatabase);
-
-return questionDatabase.length > 0;
-
+    console.log("Neloy AI combined database loaded. Total categories:", questionDatabase.length);
+    return questionDatabase.length > 0;
 }
 
 
@@ -1340,7 +1390,7 @@ return String(text || "")
     .normalize("NFKC")
 
     .replace(
-        /[.,!?;:'"()[\]{}<>/\\|@#$%^&*_+=~`-]/g,
+        /[.,!?;:'"()[\]{}<>/\\|@#$%^&*_+=\~`-]/g,
         " "
     )
 
@@ -2845,9 +2895,14 @@ async () => {
     checkLogin();
 
     /*
+       IMPORTANT FIX:
+       First load URLBuilder.js, then load the Q&A databases.
+    */
+    await loadURLBuilder();
+
+    /*
        Load predefined Q&A from questions.json, Bot.json, and Browser.json.
     */
-
     await loadQuestions();
 
 }
