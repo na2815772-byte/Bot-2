@@ -899,9 +899,12 @@ refreshSpeechVoices();
 const speakNow =
     () => {
 
+        /* Clean HTML tags from speech text if present */
+        const cleanText = String(text).replace(/<[^>]*>?/gm, '');
+
         const utterance =
             new SpeechSynthesisUtterance(
-                String(text)
+                cleanText
             );
 
 
@@ -1295,48 +1298,33 @@ button.addEventListener(
 
 
 /* =========================================================
-LOAD QUESTIONS
+LOAD QUESTIONS (UPDATED TO SUPPORT BOT.JSON & BROWSER.JSON)
 ========================================================= */
 
 async function loadQuestions() {
 
-try {
+const filesToLoad = ["questions.json", "Bot.json", "Browser.json"];
 
-    const response =
-        await fetch(
-            "questions.json",
-            {
-                cache: "no-cache"
+questionDatabase = [];
+
+for (const file of filesToLoad) {
+    try {
+        const response = await fetch(file, { cache: "no-cache" });
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                questionDatabase = questionDatabase.concat(data);
             }
-        );
-
-    if (!response.ok) {
-        throw new Error(
-            "Could not load questions.json"
-        );
+            console.log(`Loaded ${file} successfully.`);
+        }
+    } catch (error) {
+        console.warn(`Could not load ${file}:`, error);
     }
-
-    questionDatabase =
-        await response.json();
-
-    console.log(
-        "Neloy AI database loaded:",
-        questionDatabase
-    );
-
-    return true;
-
-} catch (error) {
-
-    console.error(
-        "Database error:",
-        error
-    );
-
-    questionDatabase = [];
-
-    return false;
 }
+
+console.log("Neloy AI combined database loaded:", questionDatabase);
+
+return questionDatabase.length > 0;
 
 }
 
@@ -1458,12 +1446,27 @@ return matched / union;
 
 
 /* =========================================================
-SEARCH DATABASE
+SEARCH DATABASE (UPDATED WITH URLBUILDER INTEGRATION)
 ========================================================= */
 
 function findAnswer(
 userQuestion
 ) {
+
+/* NEW: Check if URLBuilder can parse a direct URL request */
+if (typeof parseURLRequest === "function") {
+    const urlParsed = parseURLRequest(userQuestion);
+    if (urlParsed && urlParsed.success) {
+        return {
+            matched: true,
+            category: "URL Builder",
+            score: 1.0,
+            answer: urlParsed.text,
+            html: urlParsed.html,
+            url: urlParsed.url
+        };
+    }
+}
 
 let bestMatch = null;
 
@@ -1580,15 +1583,21 @@ return {
 
 
 /* =========================================================
-TYPE ANSWER
+TYPE ANSWER (UPDATED TO SUPPORT HTML LINKS)
 ========================================================= */
 
 function typeAnswer(
 element,
-text
+text,
+html = null
 ) {
 
-element.textContent = "";
+element.innerHTML = "";
+
+if (html) {
+    element.innerHTML = html;
+    return;
+}
 
 let index = 0;
 
@@ -1619,7 +1628,7 @@ const timer =
 
 
 /* =========================================================
-ASK ASSISTANT
+ASK ASSISTANT (UPDATED WITH URLBUILDER RESPONSE SUPPORT)
 ========================================================= */
 
 async function askAssistant(
@@ -1709,7 +1718,8 @@ if (answerElement) {
 
     typeAnswer(
         answerElement,
-        result.answer
+        result.answer,
+        result.html || null
     );
 }
 
@@ -2541,7 +2551,7 @@ if (submit) {
                 return;
             }
 
-            askAssistant(
+            processAssistantQuestion(
                 recognizedText.trim()
             );
         }
@@ -2575,7 +2585,7 @@ button.addEventListener(
     "click",
     () => {
 
-        askAssistant(
+        processAssistantQuestion(
             textarea.value
         );
     }
@@ -2592,7 +2602,7 @@ textarea.addEventListener(
 
             event.preventDefault();
 
-            askAssistant(
+            processAssistantQuestion(
                 textarea.value
             );
         }
@@ -2835,7 +2845,7 @@ async () => {
     checkLogin();
 
     /*
-       Load predefined Q&A.
+       Load predefined Q&A from questions.json, Bot.json, and Browser.json.
     */
 
     await loadQuestions();
