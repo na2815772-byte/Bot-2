@@ -1,0 +1,1083 @@
+{
+  "bot_name": "NELOY AI VOICE ASSISTANT",
+  "file_name": "Bot.json",
+  "version": "2.0",
+  "system_type": "predefined_two_way_conversation",
+  "languages": [
+    "Bangla",
+    "English",
+    "Bangla-English Mixed"
+  ],
+  "default_answer_language": "English",
+  "fallback_answer": "Sorry, this question is not in my system.",
+  "conversation_behavior": {
+    "two_way": true,
+    "description": "The bot answers the user's question and, where natural, asks a short related question so the conversation can continue.",
+    "follow_up_policy": "Use follow-up questions selectively. Do not attach a follow-up to every answer.",
+    "follow_up_examples": [
+      "তুমি এখন কী করছো?",
+      "তোমার কী খবর?",
+      "আজকের দিন কেমন যাচ্ছে?",
+      "তুমি কোন বিষয় নিয়ে কথা বলতে চাও?",
+      "আপনাকে কি এ বিষয়ে আরও কোনো সাহায্য করতে পারি?",
+      "আপনাকে কি অন্য কোনো বিশেষ সাহায্য করতে পারি?",
+      "চাইলে আমরা এ বিষয়ে আরও কথা বলতে পারি।",
+      "এই বিষয়ে আপনার আর কোনো মত আছে?",
+      "Is there anything else I can help you with?",
+      "Would you like any further help?",
+      "Would you like to talk about something else?"
+    ]
+  },
+  "questions": [
+    {
+      "category": "casual_conversation",
+      "question": "কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন কি করছ?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছ?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ভালো আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কেমন আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছো তুমি?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার কী খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার কি খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী খবর তোমার?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী অবস্থা?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন কী চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী হচ্ছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি হচ্ছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ব্যস্ত আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ব্যস্ত?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন ব্যস্ত?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ফ্রি আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ফ্রি আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আড্ডা দেবে?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে আড্ডা দেবে?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "চলো আড্ডা দিই",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আড্ডা দিতে চাও?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে কথা বলবে?",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে কথা বলো",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটু কথা বলো",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কথা বলবে?",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "শুনছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার কথা শুনছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "শুনতে পাচ্ছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমাকে শুনতে পাচ্ছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কিছু বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমাকে কিছু বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটা কথা বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কথা বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ মন ভালো",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ আমার মন ভালো",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজকে ভালো লাগছে",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ খুব ভালো লাগছে",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ মন খারাপ",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার মন খারাপ",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "মনটা ভালো নেই",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ ভালো লাগছে না",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একা লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার একা লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একাকী লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে গল্প করবে?",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "গল্প করবে?",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটা গল্প বলো",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "চলো গল্প করি",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি বিরক্ত?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমাকে বিরক্ত করছি?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমি কি বিরক্ত করছি?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ঘুমাচ্ছ?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ঘুমাচ্ছ?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "জেগে আছো?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি জেগে আছো?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you doing?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you doing now?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What're you doing?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you up to?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you doing?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you today?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you doing okay?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What's up?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Whats up?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What's going on?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How's it going?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you busy?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you free?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you available?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can we talk?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can I talk to you?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Will you talk to me?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Let's talk.",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you listening?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can you hear me?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Do you hear me?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Tell me something.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Say something.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Talk to me.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Let's chat.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm feeling sad.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I feel lonely.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm not feeling good.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm happy today.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I feel good today.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Today is a good day.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "greeting",
+      "question": "হ্যালো",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হাই",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হ্যালো বট",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হাই বট",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "আসসালামু আলাইকুম",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hello",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hi",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hey",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hello bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hi bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hey bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ সকাল",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "সুপ্রভাত",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good morning",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ বিকাল",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ সন্ধ্যা",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good afternoon",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good evening",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ রাত্রি",
+      "answer": "শুভ রাত্রি! ভালোভাবে বিশ্রাম নাও। আবার কথা বলতে চাইলে আমি এখানেই থাকব।"
+    },
+    {
+      "category": "greeting",
+      "question": "Good night",
+      "answer": "শুভ রাত্রি! ভালোভাবে বিশ্রাম নাও। আবার কথা বলতে চাইলে আমি এখানেই থাকব।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি কে?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি কে",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তোমার পরিচয় কী?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তোমার পরিচয় কী?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি আসলে কে?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "Who are you?",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "What are you?",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "Tell me about yourself.",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "কে তোমাকে তৈরি করেছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "তোমাকে কে বানিয়েছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "তোমাকে কে তৈরি করেছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "Who created you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "identity",
+      "question": "Who made you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "identity",
+      "question": "Who presented you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "help",
+      "question": "আমাকে সাহায্য করবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "একটু সাহায্য করবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "আমাকে সাহায্য করো",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "সাহায্য করতে পারবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "Can you help me?",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "I need help.",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "Help me.",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "Could you help me?",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "thanks",
+      "question": "ধন্যবাদ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "অনেক ধন্যবাদ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "থ্যাংক ইউ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thanks",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thank you",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thanks a lot",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "সরি",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "দুঃখিত",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "Sorry",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "I am sorry",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "weather",
+      "question": "আজ আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "আজকের আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "How is the weather?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "এখন কয়টা বাজে?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "এখন কত বাজে?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "What time is it?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "What's the time?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "food",
+      "question": "খাবার কী?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "কি খাব?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "আজ কী খাব?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "What should I eat?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "What can I eat?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "study",
+      "question": "পড়াশোনা কীভাবে করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "কীভাবে পড়াশোনা করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "How should I study?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "How can I study better?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "কম্পিউটার কী?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "What is a computer?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "কম্পিউটার কীভাবে কাজ করে?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "ইন্টারনেট কী?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "Internet কী?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "What is the internet?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "How does the internet work?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "programming",
+      "question": "প্রোগ্রামিং কী?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "কোডিং কী?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "What is programming?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "What is coding?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "general_knowledge",
+      "question": "তুমি কি সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারো?",
+      "answer": "হ্যাঁ, আমার predefined system-এ থাকা সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারি। তুমি একটি প্রশ্ন করো, দেখি কীভাবে সাহায্য করতে পারি।"
+    },
+    {
+      "category": "general_knowledge",
+      "question": "Can you answer general knowledge questions?",
+      "answer": "হ্যাঁ, আমার predefined system-এ থাকা সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারি। তুমি একটি প্রশ্ন করো, দেখি কীভাবে সাহায্য করতে পারি।"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "এটা ভালো",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক আছে",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আচ্ছা",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "বুঝেছি",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক বলেছো",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক আছে বুঝেছি",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "তারপর?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "এরপর কী?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আর বলো",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আর কিছু বলো",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "Then what?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "What else?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "farewell",
+      "question": "বিদায়",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "পরে কথা হবে",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "আবার কথা হবে",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "যাই",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "আমি যাচ্ছি",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "Bye",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "Goodbye",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "See you later",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "I'm leaving",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কী নিয়ে ব্যস্ত?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার আজকের দিন কেমন?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার সব ঠিকঠাক?",
+      "answer": "হ্যাঁ, সব ঠিকঠাক। তোমার সবকিছু কেমন চলছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী নিয়ে কথা বলব?",
+      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আর কী করতে পারো?",
+      "answer": "আমি predefined system-এর মধ্যে থাকা বিভিন্ন প্রশ্নের উত্তর দিতে পারি। তুমি কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি কথা বলতে পারো?",
+      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি আমাকে বুঝতে পারো?",
+      "answer": "হ্যাঁ, তোমার প্রশ্ন যতটা পরিষ্কার হবে, বুঝতে তত সহজ হবে। তুমি কী বলতে চাও?"
+    }
+  ]
+    }
