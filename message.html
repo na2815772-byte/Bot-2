@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Messages</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;font-family:Arial,sans-serif;color:#f5fbff;overflow:hidden}
+:root{--a:#38bdf8;--b:#2563eb;--c:#7dd3fc}
+body{background:radial-gradient(circle at 10% 5%,#0ea5e933,transparent 30%),radial-gradient(circle at 90% 20%,#2563eb40,transparent 34%),linear-gradient(145deg,#020817,#071a38);display:flex;justify-content:center}
+body:before,body:after{content:"";position:fixed;width:260px;height:260px;border-radius:50%;filter:blur(70px);opacity:.3;pointer-events:none;animation:orb 9s ease-in-out infinite alternate}body:before{background:#0ea5e9;left:-100px;top:-80px}body:after{background:#1d4ed8;right:-100px;bottom:-100px;animation-delay:-4s}@keyframes orb{to{transform:translate(35px,25px) scale(1.18)}}
+button,input,textarea{font:inherit}.app{width:min(100%,620px);height:100%;position:relative;z-index:1;background:#020c1f55;backdrop-filter:blur(18px);display:flex;flex-direction:column}
+.top{padding:17px 14px 11px;border-bottom:1px solid #7dd3fc33;background:#061936cc}.title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.title h1{font-size:24px}.menu,.back,.close{border:1px solid #7dd3fc33;color:#fff;background:#38bdf812;border-radius:12px;cursor:pointer}.menu{width:40px;height:40px;font-size:22px}
+.searchbox{position:relative}.search{width:100%;height:54px;padding:0 16px 0 47px;border:1px solid #7dd3fc3d;border-radius:17px;outline:0;color:#fff;background:#ffffff0d;box-shadow:inset 0 1px #ffffff12,0 10px 28px #0003}.search:focus{border-color:#38bdf8aa;box-shadow:0 0 25px #38bdf81f}.si{position:absolute;left:17px;top:14px;color:var(--c);font-size:22px}
+main{flex:1;min-height:0}.view{height:100%;overflow:auto}.empty{height:100%;display:grid;place-items:center;text-align:center;padding:35px;color:#d9efff8f}.empty h2{color:#fff;margin:10px 0 7px}.empty p{font-size:13px;line-height:1.6}.ei{font-size:46px;color:var(--c);filter:drop-shadow(0 0 15px #38bdf866)}
+.results{padding:10px}.result{display:flex;gap:13px;align-items:center;padding:13px 12px;margin-bottom:8px;border:1px solid transparent;border-radius:17px;background:#ffffff09;cursor:pointer}.result:hover{border-color:#7dd3fc33;background:#38bdf812}.avatar{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:21px;background:linear-gradient(145deg,#38bdf855,#2563eb66);border:1px solid #7dd3fc44;box-shadow:0 0 18px #38bdf81f}.rname{font-weight:bold}.ruser{font-size:12px;color:#d9efff91;margin-top:4px}
+.chat{height:100%;display:flex;flex-direction:column}.head{min-height:70px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #7dd3fc33;background:#04132bcc}.back{width:38px;height:38px;font-size:23px}.cavatar{width:42px;height:42px;flex-basis:42px}.cname{font-size:16px;font-weight:bold}.status{font-size:11px;color:#6ee7b7;margin-top:3px}.offline{color:#d9efff91}
+.messages{flex:1;min-height:0;overflow:auto;padding:17px 12px}.day{text-align:center;color:#d9efff70;font-size:10px;margin:6px 0 14px}.row{display:flex;margin:7px 0;position:relative}.me{justify-content:flex-end}.bubble{max-width:82%;padding:10px 13px;border-radius:17px 17px 17px 5px;background:#ffffff0d;border:1px solid #7dd3fc1f;font-size:14px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;cursor:pointer;user-select:none}.me .bubble{border-radius:17px 17px 5px 17px;background:linear-gradient(135deg,#2563ebaa,#0ea5e97d);border-color:#7dd3fc44}.time{font-size:9px;color:#fff8;text-align:right;margin-top:4px}.reply-preview{font-size:11px;border-left:3px solid var(--c);padding:5px 7px;margin-bottom:7px;background:#ffffff0a;border-radius:7px;color:#dff7ffcc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.replybar{display:none;align-items:center;gap:8px;padding:8px 11px;border-top:1px solid #7dd3fc33;background:#061936ee}.replybar.show{display:flex}.replybar .rptext{flex:1;min-width:0;font-size:11px;color:#d9efff99;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.replybar button{border:0;background:transparent;color:#fff;font-size:20px;cursor:pointer}
+.composer{display:flex;gap:8px;padding:10px 10px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #7dd3fc33;background:#04132be8}.input{flex:1;min-width:0;max-height:140px;resize:none;padding:13px 14px;border:1px solid #7dd3fc33;border-radius:16px;outline:0;color:#fff;background:#ffffff0d}.send{width:50px;height:48px;border:0;border-radius:16px;color:#fff;background:linear-gradient(135deg,var(--b),#0ea5e9);font-size:21px;box-shadow:0 0 22px #2563eb55}.send:disabled{opacity:.35;cursor:not-allowed}
+.typing{height:18px;padding:0 15px;font-size:11px;color:var(--c);background:#04132be8}.dots i{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--c);margin-left:3px;animation:d .9s infinite}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}@keyframes d{50%{transform:translateY(-3px);opacity:.4}}
+.modal{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;padding:14px;background:#00091aaa;backdrop-filter:blur(12px)}.modal[hidden]{display:none}.panel{width:min(100%,520px);max-height:82vh;overflow:auto;padding:18px;border:1px solid #7dd3fc33;border-radius:24px;background:linear-gradient(145deg,#081f43f8,#030e22fa);box-shadow:0 25px 80px #0009,0 0 35px #38bdf81f}.ph{display:flex;justify-content:space-between;align-items:center}.close{width:36px;height:36px;border-radius:50%;font-size:21px}.label{font-size:11px;color:#d9efff91;text-transform:uppercase;letter-spacing:.8px;margin:17px 2px 8px}.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.theme,.mute{border:1px solid #ffffff22;border-radius:13px;color:#fff;cursor:pointer}.theme{height:48px;font-size:11px;font-weight:bold}.blue{background:linear-gradient(135deg,#2563eb,#0ea5e9)}.cyan{background:linear-gradient(135deg,#0891b2,#22d3ee)}.purple{background:linear-gradient(135deg,#7c3aed,#c026d3)}.green{background:linear-gradient(135deg,#047857,#22c55e)}.rose{background:linear-gradient(135deg,#be123c,#f43f5e)}.gold{background:linear-gradient(135deg,#a16207,#f59e0b)}.mutes{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mute{padding:12px;background:#ffffff09}.option{width:100%;padding:14px 12px;margin-top:8px;text-align:left;border:1px solid #7dd3fc1f;border-radius:14px;color:#fff;background:#ffffff09;cursor:pointer}.option small{display:block;color:#d9efff75;margin-top:4px}.danger{color:#fecaca;border-color:#f871713d}.setup{font-size:11px;color:#d9efff9a;line-height:1.55;margin-top:12px}.setup b{color:#fff}.toast{position:fixed;z-index:30;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;padding:11px 15px;border:1px solid #7dd3fc33;border-radius:13px;background:#04142cf5;transition:.25s;font-size:12px;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:430px){.top{padding:14px 12px 10px}.themes{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><div class="app">
+<header class="top"><div class="title"><h1>Messages</h1><button class="menu" id="menu">⋮</button></div><div class="searchbox"><span class="si">⌕</span><input id="search" class="search" placeholder="Search by username or phone number..." autocomplete="off"></div></header>
+<main>
+<section id="home" class="view"><div id="empty" class="empty"><div><div class="ei">✦</div><h2>Find someone to message</h2><p>Search by username or phone number and select an account to start chatting.</p></div></div><div id="results" class="results" hidden></div></section>
+<section id="chat" class="chat" hidden><div class="head"><button class="back" id="back">‹</button><div class="avatar cavatar" id="ca">U</div><div><div class="cname" id="cn">User</div><div id="st" class="status offline">Offline</div></div><button class="menu" id="chatmenu" style="margin-left:auto">⋮</button></div><div id="messages" class="messages"></div><div id="typing" class="typing" hidden></div><div id="replybar" class="replybar"><div class="rptext" id="rptext"></div><button id="cancelReply">×</button></div><form id="form" class="composer"><textarea id="input" class="input" rows="1" placeholder="Write a message..."></textarea><button id="send" class="send" type="submit">➤</button></form></section>
+</main></div>
+<div id="modal" class="modal" hidden><div class="panel"><div class="ph"><h3 id="pt">Conversation options</h3><button class="close" id="close">×</button></div>
+<div class="label">Theme</div><div class="themes"><button class="theme blue" data-t="blue">Blue</button><button class="theme cyan" data-t="cyan">Cyan</button><button class="theme purple" data-t="purple">Purple</button><button class="theme green" data-t="green">Green</button><button class="theme rose" data-t="rose">Rose</button><button class="theme gold" data-t="gold">Gold</button></div>
+<div class="label">Mute</div><div class="mutes"><button class="mute" data-m="15">15 minutes</button><button class="mute" data-m="60">1 hour</button><button class="mute" data-m="1440">24 hours</button><button class="mute" data-m="all">Always</button><button class="mute" data-m="none" style="grid-column:1/-1">None</button></div>
+<button class="option" id="disappear">Disappearing messages<small id="dstate">Off</small></button>
+<button class="option danger" id="block">Block<small id="bstate">Block this account from sending messages.</small></button>
+<p class="setup"><b>Backend connection:</b> cross-device messaging requires a shared backend/realtime data service; GitHub Pages only hosts this file. Put your project's URL and publishable key in the CONFIG section of this file. Do not put a secret/service-role key in browser code.</p>
+</div></div><div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  CROSS-DEVICE MESSAGE VERSION
+  - GitHub Pages hosts this file.
+  - Supabase stores profiles/messages and provides realtime updates.
+  - The registration/login system must create the same profile records in Supabase.
+  - Message history is server-backed, not localStorage-backed.
+  - Messages older than 15 days are deleted by the cleanup function below when chat is opened.
+  - For guaranteed server-side deletion even when nobody opens a chat, schedule the SQL cleanup function
+    with Supabase Cron/pg_cron in the project dashboard.
+*/
+const CONFIG={
+  SUPABASE_URL:"PASTE_YOUR_SUPABASE_PROJECT_URL_HERE",
+  SUPABASE_PUBLISHABLE_KEY:"PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE",
+  CURRENT_USER_ID:""
+};
+const READY=window.supabase&&CONFIG.SUPABASE_URL.startsWith("http")&&!CONFIG.SUPABASE_URL.includes("PASTE_")&&!CONFIG.SUPABASE_PUBLISHABLE_KEY.includes("PASTE_");
+const sb=READY?window.supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_PUBLISHABLE_KEY):null;
+const USERS_TABLE="profiles",MSG_TABLE="messages";
+let selected=null,currentUser=null,replyTo=null,channel=null,blockedByRecipient=false;
+const $=x=>document.getElementById(x),search=$("search"),results=$("results"),empty=$("empty");
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toast(s){$("toast").textContent=s;$("toast").classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>$("toast").classList.remove("show"),2400)}
+function localCurrentId(){return CONFIG.CURRENT_USER_ID||localStorage.getItem("current_user_id")||""}
+async function initUser(){
+  if(!READY){toast("Supabase is not connected yet — add your project URL/key.");return false}
+  const {data:{user}}=await sb.auth.getUser();
+  currentUser=user;
+  if(!currentUser){
+    const id=localCurrentId();
+    if(id){const {data}=await sb.from(USERS_TABLE).select("*").eq("id",id).maybeSingle();currentUser=data||null}
+  }
+  if(!currentUser){toast("Please sign in first.");return false}
+  return true;
+}
+async function findUsers(q){
+  q=q.trim();if(!q||!READY)return[];
+  const digits=q.replace(/\D/g,"");
+  let query=sb.from(USERS_TABLE).select("id,name,username,phone,online,last_seen").limit(20);
+  if(digits.length>=3) query=query.or(`username.ilike.%${q}%,phone.ilike.%${digits}%`); else query=query.ilike("username",`%${q}%`);
+  const {data,error}=await query;if(error){toast(error.message);return[]}
+  return (data||[]).filter(u=>String(u.id)!==String(currentUser?.id));
+}
+async function render(a){results.innerHTML="";if(!a.length){empty.hidden=false;results.hidden=true;return}empty.hidden=true;results.hidden=false;a.forEach(u=>{let e=document.createElement("div");e.className="result";e.innerHTML='<div class="avatar">'+esc((u.name||u.username||"U")[0].toUpperCase())+'</div><div><div class="rname">'+esc(u.name||u.username)+'</div><div class="ruser">@'+esc(u.username||"")+(u.phone?" · "+esc(u.phone):"")+'</div></div>';e.onclick=()=>openChat(u);results.appendChild(e)})}
+let searchTimer;search.oninput=()=>{clearTimeout(searchTimer);searchTimer=setTimeout(async()=>render(await findUsers(search.value)),250)};
+function pair(){let a=String(currentUser.id),b=String(selected.id);return [a,b].sort().join("_")}
+function fmt(t){return new Date(t).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}
+function status(u){if(u.online)return"Active now";if(!u.last_seen)return"Offline";let m=Math.floor((Date.now()-new Date(u.last_seen).getTime())/60000);return m<60?"Active "+Math.max(1,m)+" minutes ago":"Offline"}
+async function cleanup15(){
+  if(!READY)return;
+  const cutoff=new Date(Date.now()-15*24*60*60*1000).toISOString();
+  await sb.from(MSG_TABLE).delete().lt("created_at",cutoff).catch(()=>{});
+  await sb.rpc("cleanup_old_messages",{days_to_keep:15}).catch(()=>{});
+}
+async function loadMessages(){
+  await cleanup15();
+  const {data,error}=await sb.from(MSG_TABLE).select("id,sender_id,receiver_id,body,created_at,delivered_at,reply_to").eq("conversation_key",pair()).order("created_at",{ascending:true});
+  if(error){toast(error.message);return[]}
+  return data||[];
+}
+function setReply(m){replyTo=m;$('replybar').classList.add('show');$('rptext').textContent='↩ '+(m.body||'');$('input').focus()}
+function clearReply(){replyTo=null;$('replybar').classList.remove('show');$('rptext').textContent=''}
+function bubble(m){let r=document.createElement("div");r.className="row "+(String(m.sender_id)===String(currentUser.id)?"me":"");let b=document.createElement("div");b.className="bubble";if(m.reply_to){let rp=document.createElement("div");rp.className="reply-preview";rp.textContent="↩ Reply";b.appendChild(rp)}let tx=document.createElement("div");tx.textContent=m.body;b.appendChild(tx);let t=document.createElement("div");t.className="time";let mine=String(m.sender_id)===String(currentUser.id);t.textContent=fmt(m.created_at)+(mine?(m.delivered_at?" • Delivered":" • Sent"):"");b.appendChild(t);r.appendChild(b);
+  let hold; b.addEventListener("contextmenu",e=>{e.preventDefault();setReply(m)});b.addEventListener("pointerdown",()=>{hold=setTimeout(()=>setReply(m),550)});["pointerup","pointercancel","pointerleave"].forEach(x=>b.addEventListener(x,()=>clearTimeout(hold)));
+  let sx=null; b.addEventListener("touchstart",e=>{sx=e.changedTouches[0].clientX},{passive:true});b.addEventListener("touchend",e=>{if(sx!==null&&Math.abs(e.changedTouches[0].clientX-sx)>65)setReply(m);sx=null},{passive:true});
+  return r}
+async function renderMsgs(){let box=$("messages");box.innerHTML='<div class="day">Chat</div>';let arr=await loadMessages();arr.forEach(m=>box.appendChild(bubble(m)));box.scrollTop=box.scrollHeight}
+async function subscribe(){if(channel)await sb.removeChannel(channel);channel=sb.channel("conversation:"+pair()).on("postgres_changes",{event:"INSERT",schema:"public",table:MSG_TABLE,filter:"conversation_key=eq."+pair()},async payload=>{let m=payload.new;if(String(m.sender_id)===String(currentUser.id))return;$("messages").appendChild(bubble(m));$("messages").scrollTop=$("messages").scrollHeight}).subscribe()}
+async function refreshSendAccess(){
+  blockedByRecipient=false;
+  if(!selected||!currentUser||!READY){$("form").style.display="flex";return;}
+  const {data}=await sb.from("blocks").select("id").eq("blocker_id",selected.id).eq("blocked_id",currentUser.id).maybeSingle();
+  blockedByRecipient=!!data;
+  $("form").style.display=blockedByRecipient?"none":"flex";
+  $("typing").hidden=!blockedByRecipient;
+  if(blockedByRecipient) $("typing").innerHTML="You cannot send messages to this account.";
+}
+async function openChat(u){selected=u;clearReply();$("home").hidden=true;$("chat").hidden=false;$("ca").textContent=(u.name||u.username||"U")[0].toUpperCase();$("cn").textContent=u.name||u.username;$("st").textContent=status(u);$("st").classList.toggle("offline",!u.online);updateOptions();await refreshSendAccess();await renderMsgs();await subscribe();if(!blockedByRecipient)$("input").focus()}
+$("back").onclick=async()=>{$("chat").hidden=true;$('home').hidden=false;clearReply();if(channel){await sb.removeChannel(channel);channel=null}search.focus()}
+$("form").onsubmit=async e=>{e.preventDefault();if(!selected||!currentUser||!READY||blockedByRecipient)return;let text=$("input").value.trim();if(!text)return;let {data:blocked}=await sb.from("blocks").select("id").eq("blocker_id",selected.id).eq("blocked_id",currentUser.id).maybeSingle();if(blocked){toast("This account has blocked you.");return}
+  const row={conversation_key:pair(),sender_id:currentUser.id,receiver_id:selected.id,body:text,reply_to:replyTo?.id||null};const {error}=await sb.from(MSG_TABLE).insert(row);if(error){toast(error.message);return}$("input").value="";$("input").style.height="48px";clearReply();toast(selected.online?"Message delivered":"Message sent");if(selected.online){$("typing").hidden=false;$("typing").innerHTML=esc(selected.name||selected.username)+" is typing <span class=dots><i></i><i></i><i></i></span>";setTimeout(()=>$("typing").hidden=true,1200)}};
+$("input").oninput=()=>{$("input").style.height="48px";$('input').style.height=Math.min($('input').scrollHeight,140)+"px"};$("input").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("form").requestSubmit()}};$("cancelReply").onclick=clearReply;
+function options(){$("pt").textContent=selected?selected.name+" options":"Message options";$('modal').hidden=false;updateOptions()}
+function updateOptions(){if(!selected)return;sb.from("blocks").select("id").eq("blocker_id",currentUser?.id||"").eq("blocked_id",selected.id).maybeSingle().then(({data})=>{$('bstate').textContent=data?"Blocked — this account cannot message you.":"Block this account from sending messages."});sb.from("conversation_settings").select("disappearing,mute_until").eq("user_id",currentUser?.id||"").eq("conversation_key",pair()).maybeSingle().then(({data})=>{$('dstate').textContent=data?.disappearing?"On — clear after 24 hours":"Off"})}
+$("menu").onclick=options;$("chatmenu").onclick=options;$("close").onclick=()=>$('modal').hidden=true;$("modal").onclick=e=>{if(e.target===$('modal'))$('modal').hidden=true}
+const themes={blue:["#38bdf8","#2563eb","#7dd3fc"],cyan:["#22d3ee","#0891b2","#67e8f9"],purple:["#a78bfa","#7c3aed","#d8b4fe"],green:["#34d399","#059669","#86efac"],rose:["#fb7185","#e11d48","#fda4af"],gold:["#fbbf24","#d97706","#fde68a"]};
+document.querySelectorAll('.theme').forEach(b=>b.onclick=()=>{let t=themes[b.dataset.t];document.documentElement.style.setProperty('--a',t[0]);document.documentElement.style.setProperty('--b',t[1]);document.documentElement.style.setProperty('--c',t[2]);localStorage.setItem('msgTheme',b.dataset.t);toast('Theme changed')});let saved=localStorage.getItem('msgTheme');if(saved&&themes[saved]){let t=themes[saved];document.documentElement.style.setProperty('--a',t[0]);document.documentElement.style.setProperty('--b',t[1]);document.documentElement.style.setProperty('--c',t[2])}
+async function setSetting(fields){if(!currentUser||!selected)return;let row={user_id:currentUser.id,conversation_key:pair(),...fields};let {error}=await sb.from('conversation_settings').upsert(row,{onConflict:'user_id,conversation_key'});if(error)toast(error.message);else updateOptions()}
+document.querySelectorAll('.mute').forEach(b=>b.onclick=async()=>{let v=b.dataset.m==='none'?null:b.dataset.m==='all'?'infinity':new Date(Date.now()+Number(b.dataset.m)*60000).toISOString();await setSetting({mute_until:v});toast(b.dataset.m==='none'?'Mute off':'Muted');$('modal').hidden=true});
+$('disappear').onclick=async()=>{if(!selected)return;let {data}=await sb.from('conversation_settings').select('disappearing').eq('user_id',currentUser.id).eq('conversation_key',pair()).maybeSingle();let on=!data?.disappearing;await setSetting({disappearing:on});toast(on?'Disappearing messages on':'Disappearing messages off')};
+$('block').onclick=async()=>{if(!selected)return;let {data}=await sb.from('blocks').select('id').eq('blocker_id',currentUser.id).eq('blocked_id',selected.id).maybeSingle();if(data){await sb.from('blocks').delete().eq('id',data.id);toast('Account unblocked')}else{await sb.from('blocks').insert({blocker_id:currentUser.id,blocked_id:selected.id});toast('Account blocked');$('send').disabled=true}$('modal').hidden=true;updateOptions();refreshSendAccess()};
+(async()=>{if(!READY){return}let ok=await initUser();if(ok){await cleanup15();}})();
+</script></body></html>
