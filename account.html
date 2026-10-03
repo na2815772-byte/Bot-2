@@ -207,13 +207,13 @@ body:after{
  color:rgba(175,213,255,.68);
 }
 .active-status-button.off{
- border-color:rgba(125,145,177,.20);
- background:rgba(15,26,48,.58);
- box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
- color:rgba(169,184,211,.62);
+ border-color:rgba(90,100,120,.32);
+ background:#070a12;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 8px 20px rgba(0,0,0,.22);
+ color:rgba(175,184,201,.62);
 }
 .active-status-button.off .active-status-dot{
- background:#65738e;
+ background:#20242d;
  box-shadow:none;
 }
 .active-status-button.off .active-status-arrow{
@@ -617,6 +617,8 @@ button:focus,input:focus,select:focus{outline:none}
 .save-button:active,
 .cancel-button:active{transform:scale(.97)}
 
+.edit-panel[hidden]{display:none !important}
+
 .edit-panel{
  margin-top:15px;
  padding:17px;
@@ -625,6 +627,51 @@ button:focus,input:focus,select:focus{outline:none}
  background:linear-gradient(145deg,rgba(12,27,56,.76),rgba(5,15,34,.72));
  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 15px 35px rgba(0,0,0,.16);
 }
+
+.edit-panel-title{
+ font-size:13px;
+ font-weight:800;
+ letter-spacing:1.2px;
+ text-transform:uppercase;
+ color:rgba(190,211,246,.86);
+ margin-bottom:14px;
+}
+.edit-lock-note{
+ margin:5px 3px 0;
+ font-size:10px;
+ color:rgba(145,169,207,.50);
+ line-height:1.4;
+}
+.edit-sensitive-field{
+ position:relative;
+ width:100%;
+ min-height:52px;
+ display:flex;
+ align-items:center;
+ padding:0 16px;
+ overflow:hidden;
+ border:1px solid var(--line);
+ border-radius:16px;
+ color:#fff;
+ background:linear-gradient(145deg,rgba(15,30,61,.72),rgba(5,15,34,.76));
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 25px rgba(0,0,0,.18);
+ cursor:pointer;
+}
+.edit-sensitive-field .masked-text{
+ width:auto;
+ text-align:left;
+}
+.edit-sensitive-field .revealed-value{
+ width:auto;
+ text-align:left;
+}
+.edit-sensitive-field .ice-particles{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.edit-sensitive-field .ice-piece{position:absolute;top:-12px;width:4px;height:8px;border-radius:3px;background:rgba(235,252,255,.92);box-shadow:0 0 8px rgba(223,248,255,.95);opacity:0}
+.edit-sensitive-field.reveal .ice-piece{animation:iceFall .72s ease-out forwards}
+.edit-sensitive-field.is-revealed .masked-text{display:none}
+.edit-sensitive-field.is-revealed .revealed-value{display:block}
+.edit-sensitive-field.reveal{animation:iceShake .58s ease}
+.name-field:disabled{opacity:.55;cursor:not-allowed}
 
 .edit-row{margin-top:12px}
 .edit-row:first-child{margin-top:0}
@@ -898,6 +945,7 @@ input[type="date"]{color-scheme:dark}
 <button class="edit-button" id="editButton" type="button">Edit</button>
 
 <div class="edit-panel" id="editPanel" hidden>
+<div class="edit-panel-title">Edit Personal Details</div>
 
 <div class="edit-row">
 <label for="editName">Name</label>
@@ -906,13 +954,14 @@ input[type="date"]{color-scheme:dark}
 
 <div class="edit-row">
 <label for="editBio">Bio</label>
-<textarea id="editBio" class="bio-field-input" maxlength="50" placeholder="Write your bio (up to 50 words)"></textarea>
+<textarea id="editBio" class="bio-field-input" maxlength="500" placeholder="Write your bio (up to 50 words)"></textarea>
 <div class="bio-count" id="editBioCount">0 / 50 words</div>
 </div>
 
 <div class="edit-row">
 <label for="editDob">Date of Birth</label>
 <input id="editDob" class="name-field" type="date">
+<div class="edit-lock-note" id="dobEditHint"></div>
 </div>
 
 <div class="edit-row">
@@ -929,31 +978,41 @@ input[type="date"]{color-scheme:dark}
 </div>
 </div>
 
+<div class="edit-row">
+<label>Phone Number</label>
+<div class="edit-sensitive-field personal-sensitive-row" data-type="phone" tabindex="0" role="button" aria-label="Show phone number">
+<div class="masked-text" id="editMaskedPhone"></div>
+<div class="revealed-value" id="editPhoneValue"></div>
+<div class="ice-particles" aria-hidden="true">
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+</div>
+</div>
+<div class="edit-lock-note">Phone number cannot be changed.</div>
+</div>
+
+<div class="edit-row">
+<label>Email Address</label>
+<div class="edit-sensitive-field personal-sensitive-row" data-type="email" tabindex="0" role="button" aria-label="Show email address">
+<div class="masked-text" id="editMaskedEmail"></div>
+<div class="revealed-value" id="editEmailValue"></div>
+<div class="ice-particles" aria-hidden="true">
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+</div>
+</div>
+<div class="edit-lock-note">Email address cannot be changed.</div>
+</div>
+
 <div class="edit-actions">
 <button class="save-button" id="saveButton" type="button">Save Changes</button>
 <button class="cancel-button" id="cancelButton" type="button">Cancel</button>
 </div>
 <div class="edit-note">
-Name and bio can be changed anytime. Date of birth is locked for 3 months after a change.
-Username is locked for 14 days after a change. Phone and email cannot be changed.
+Name, bio and location can be changed anytime. Date of birth can be changed again after 3 months. Username can be changed again after 14 days. Phone and email cannot be changed.
 </div>
 </div>
 
-<div class="location-modal" id="locationModal" hidden>
-<div class="location-modal-card">
-<div class="location-modal-head">
-<strong>Select Location</strong>
-<button type="button" id="closeLocation">×</button>
-</div>
 
-<input id="locationSearch" class="name-field location-search" type="search"
-placeholder="Search country, city or location..." autocomplete="off">
-
-<div class="location-results" id="locationResults"></div>
-</div>
-</div>
-
-<button class="back-button" id="backButton" type="button">Go to back</button>
+<button class="back-button" id="backButton" type="button">Go Back</button>
 <div class="small-note">Account information</div>
 </section>
 </div>
@@ -1053,11 +1112,22 @@ function updateLockHints(){
  const usernameLock=getLockTime("accountUsernameChangedAt");
  const dobLocked=dobLock>Date.now();
  const usernameLocked=usernameLock>Date.now();
- if(editPanel && !editPanel.hidden){
-  editDob.disabled=dobLocked;
-  editUsername.disabled=usernameLocked;
-  editDob.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
-  editUsername.title=usernameLocked ? "Username can be changed again after 14 days." : "";
+ const panel=document.getElementById("editPanel");
+ const dobInput=document.getElementById("editDob");
+ const usernameInput=document.getElementById("editUsername");
+ const dobHint=document.getElementById("dobEditHint");
+ if(panel && !panel.hidden){
+  if(dobInput){
+   dobInput.disabled=dobLocked;
+   dobInput.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
+  }
+  if(usernameInput){
+   usernameInput.disabled=usernameLocked;
+   usernameInput.title=usernameLocked ? "Username can be changed again after 14 days." : "";
+  }
+ }
+ if(dobHint){
+  dobHint.textContent=dobLocked ? "Date of birth is locked until the 3-month period ends." : "You can change your date of birth now.";
  }
 }
 updateLockHints();
@@ -1099,6 +1169,15 @@ const editBioCount=document.getElementById("editBioCount");
 const editLocation=document.getElementById("editLocation");
 const usernameStatus=document.getElementById("usernameStatus");
 const locationResults=document.getElementById("locationResults");
+const editMaskedPhone=document.getElementById("editMaskedPhone");
+const editPhoneValue=document.getElementById("editPhoneValue");
+const editMaskedEmail=document.getElementById("editMaskedEmail");
+const editEmailValue=document.getElementById("editEmailValue");
+
+editMaskedPhone.textContent=maskPhone(storedPhone);
+editPhoneValue.textContent=storedPhone||"Phone number not available";
+editMaskedEmail.textContent=maskEmail(storedEmail);
+editEmailValue.textContent=storedEmail||"Email address not available";
 
 editButton.addEventListener("click",()=>{
  editPanel.hidden=!editPanel.hidden;
@@ -1108,7 +1187,7 @@ editButton.addEventListener("click",()=>{
   editUsername.value=storedUsername;
   editBio.value=storedBio;
   editLocation.value=storedLocation;
-  editBioCount.textContent=editBio.value.length;
+  editBioCount.textContent=countBioWords(editBio.value)+" / 50 words";
 
   const dobLocked=getLockTime("accountDobChangedAt")>Date.now();
   const usernameLocked=getLockTime("accountUsernameChangedAt")>Date.now();
@@ -1117,11 +1196,25 @@ editButton.addEventListener("click",()=>{
   editUsername.disabled=usernameLocked;
   editDob.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
   editUsername.title=usernameLocked ? "Username can be changed again after 14 days." : "";
+  const dobHint=document.getElementById("dobEditHint");
+  if(dobHint){
+   dobHint.textContent=dobLocked ? "Date of birth is locked until the 3-month period ends." : "You can change your date of birth now.";
+  }
  }
 });
 
+function countBioWords(value){
+ return value.trim() ? value.trim().split(/\s+/).length : 0;
+}
+
 editBio.addEventListener("input",()=>{
- editBioCount.textContent=editBio.value.length;
+ const count=countBioWords(editBio.value);
+ editBioCount.textContent=count+" / 50 words";
+ if(count>50){
+  editBioCount.style.color="#ff9a9a";
+ }else{
+  editBioCount.style.color="";
+ }
 });
 
 editUsername.addEventListener("input",()=>{
