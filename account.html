@@ -514,6 +514,77 @@ button:focus,input:focus,select:focus{outline:none}
  font-size:12px;
 }
 
+/* Personal details are intentionally shown as clean text rows, not boxes. */
+.personal-details{
+ margin-top:25px;
+ padding:0 4px;
+}
+.personal-details-title{
+ margin-bottom:10px;
+ font-size:13px;
+ font-weight:800;
+ color:rgba(190,211,246,.82);
+ text-transform:uppercase;
+ letter-spacing:1.4px;
+ text-align:left;
+}
+.personal-row{
+ position:relative;
+ min-height:50px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:18px;
+ padding:10px 2px;
+ border-bottom:1px solid rgba(105,154,226,.10);
+}
+.personal-row:last-child{border-bottom:0}
+.personal-label{
+ flex:0 0 auto;
+ font-size:11px;
+ font-weight:700;
+ color:rgba(153,179,220,.58);
+ text-transform:uppercase;
+ letter-spacing:.9px;
+}
+.personal-value{
+ min-width:0;
+ max-width:70%;
+ text-align:right;
+ font-size:15px;
+ font-weight:600;
+ color:rgba(222,236,255,.92);
+ line-height:1.35;
+ word-break:break-word;
+}
+.personal-sensitive-row{
+ cursor:pointer;
+ transition:opacity .2s ease,transform .2s ease;
+}
+.personal-sensitive-row:hover{transform:translateX(2px)}
+.personal-sensitive-value{
+ position:relative;
+ min-width:0;
+ max-width:70%;
+ min-height:28px;
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ overflow:hidden;
+}
+.personal-sensitive-value .masked-text,
+.personal-sensitive-value .revealed-value{
+ width:auto;
+ max-width:100%;
+ text-align:right;
+}
+.personal-sensitive-value .ice-glow{display:none}
+.personal-sensitive-value .ice-particles{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.personal-sensitive-value .ice-piece{position:absolute;top:-12px;width:4px;height:8px;border-radius:3px;background:rgba(235,252,255,.92);box-shadow:0 0 8px rgba(223,248,255,.95);opacity:0}
+.personal-sensitive-row.reveal .ice-piece{animation:iceFall .72s ease-out forwards}
+.personal-sensitive-row.is-revealed .masked-text{display:none}
+.personal-sensitive-row.is-revealed .revealed-value{display:block}
+
 .edit-button,
 .save-button,
 .cancel-button{
@@ -600,6 +671,8 @@ button:focus,input:focus,select:focus{outline:none}
 }
 
 input[type="date"]{color-scheme:dark}
+.name-field:disabled{opacity:.48;cursor:not-allowed}
+
 .sensitive-field.username-field{cursor:default}
 
 .bio-field-input{
@@ -774,37 +847,32 @@ input[type="date"]{color-scheme:dark}
 <div class="bio-display active-bio-display" id="bioDisplay">No bio added yet</div>
 </div>
 
-<div class="field">
-<label class="field-label" for="userName">Name</label>
-<input id="userName" class="name-field" type="text" placeholder="Enter your name" autocomplete="name" disabled>
+<div class="personal-details" aria-label="Personal Details">
+<div class="personal-details-title">Personal Details</div>
+
+<div class="personal-row">
+<span class="personal-label">Name</span>
+<strong class="personal-value" id="userName">—</strong>
 </div>
 
-<div class="field">
-<label class="field-label" for="userDob">Date of Birth</label>
-<input id="userDob" class="name-field" type="date" disabled>
-<div class="hint" id="dobLockHint"></div>
+<div class="personal-row">
+<span class="personal-label">Date of Birth</span>
+<strong class="personal-value" id="userDob">—</strong>
 </div>
 
-<div class="field">
-<label class="field-label" for="userUsername">Username</label>
-<div class="sensitive-field username-field" id="usernameBox" tabindex="0" role="button">
-<div class="ice-glow"></div>
-<div class="masked-text" id="usernameDisplay">@username</div>
-<div class="revealed-value" id="usernameValue"></div>
-</div>
-<div class="hint" id="usernameLockHint">Choose a unique username</div>
+<div class="personal-row">
+<span class="personal-label">Username</span>
+<strong class="personal-value" id="usernameDisplay">@username</strong>
 </div>
 
-<div class="field">
-<label class="field-label">Location</label>
-<div class="location-display" id="locationDisplay">No location selected</div>
-<div class="hint">Tap Edit to choose your location</div>
+<div class="personal-row">
+<span class="personal-label">Location</span>
+<strong class="personal-value" id="locationDisplay">No location selected</strong>
 </div>
 
-<div class="field">
-<label class="field-label">Phone Number</label>
-<div class="sensitive-field" data-type="phone" tabindex="0" role="button">
-<div class="ice-glow"></div>
+<div class="personal-row personal-sensitive-row" data-type="phone" tabindex="0" role="button" aria-label="Show phone number">
+<span class="personal-label">Phone Number</span>
+<div class="personal-sensitive-value">
 <div class="masked-text" id="maskedPhone">01••••••••••</div>
 <div class="revealed-value" id="phoneValue"></div>
 <div class="ice-particles" aria-hidden="true">
@@ -812,13 +880,11 @@ input[type="date"]{color-scheme:dark}
 <span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
 </div>
 </div>
-<div class="hint">Phone number cannot be changed</div>
 </div>
 
-<div class="field">
-<label class="field-label">Email Address</label>
-<div class="sensitive-field" data-type="email" tabindex="0" role="button">
-<div class="ice-glow"></div>
+<div class="personal-row personal-sensitive-row" data-type="email" tabindex="0" role="button" aria-label="Show email address">
+<span class="personal-label">Email Address</span>
+<div class="personal-sensitive-value">
 <div class="masked-text" id="maskedEmail">u••••••••@gmail.com</div>
 <div class="revealed-value" id="emailValue"></div>
 <div class="ice-particles" aria-hidden="true">
@@ -826,7 +892,7 @@ input[type="date"]{color-scheme:dark}
 <span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
 </div>
 </div>
-<div class="hint">Email address cannot be changed</div>
+</div>
 </div>
 
 <button class="edit-button" id="editButton" type="button">Edit</button>
@@ -868,8 +934,8 @@ input[type="date"]{color-scheme:dark}
 <button class="cancel-button" id="cancelButton" type="button">Cancel</button>
 </div>
 <div class="edit-note">
-Name and bio can be changed anytime. Date of birth can be changed again after 3 months.
-Username can be changed again after 14 days. Phone and email cannot be changed.
+Name and bio can be changed anytime. Date of birth is locked for 3 months after a change.
+Username is locked for 14 days after a change. Phone and email cannot be changed.
 </div>
 </div>
 
@@ -932,8 +998,8 @@ let storedUsername=readStoredValue(STORAGE_KEYS.username);
 let storedBio=readStoredValue(STORAGE_KEYS.bio);
 let storedLocation=readStoredValue(STORAGE_KEYS.location);
 
-if(storedName) userName.value=storedName;
-if(storedDob) userDob.value=storedDob;
+if(storedName) userName.textContent=storedName;
+if(storedDob) userDob.textContent=storedDob;
 
 function maskPhone(phone){
  const value=phone.trim();
@@ -985,16 +1051,14 @@ function getLockTime(key){
 function updateLockHints(){
  const dobLock=getLockTime("accountDobChangedAt");
  const usernameLock=getLockTime("accountUsernameChangedAt");
- const dobHint=document.getElementById("dobLockHint");
- const usernameHint=document.getElementById("usernameLockHint");
-
- dobHint.textContent=dobLock>Date.now()
-  ?"Change locked • "+formatRemaining(dobLock-Date.now())
-  :"Date of birth";
-
- usernameHint.textContent=usernameLock>Date.now()
-  ?"Username change locked • "+formatRemaining(usernameLock-Date.now())
-  :"Username can be changed again after 14 days";
+ const dobLocked=dobLock>Date.now();
+ const usernameLocked=usernameLock>Date.now();
+ if(editPanel && !editPanel.hidden){
+  editDob.disabled=dobLocked;
+  editUsername.disabled=usernameLocked;
+  editDob.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
+  editUsername.title=usernameLocked ? "Username can be changed again after 14 days." : "";
+ }
 }
 updateLockHints();
 setInterval(updateLockHints,60000);
@@ -1051,6 +1115,8 @@ editButton.addEventListener("click",()=>{
 
   editDob.disabled=dobLocked;
   editUsername.disabled=usernameLocked;
+  editDob.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
+  editUsername.title=usernameLocked ? "Username can be changed again after 14 days." : "";
  }
 });
 
@@ -1145,11 +1211,20 @@ document.getElementById("saveButton").addEventListener("click",()=>{
  }
 
  const now=Date.now();
+ const dobChanging=newDob!==storedDob;
+ const usernameChanging=newUsername.toLowerCase()!==storedUsername.toLowerCase();
+
+ if(dobChanging && getLockTime("accountDobChangedAt")>now){
+  alert("Date of birth can be changed again after 3 months.");return
+ }
+ if(usernameChanging && getLockTime("accountUsernameChangedAt")>now){
+  alert("Username can be changed again after 14 days.");return
+ }
 
  /* Name */
  storedName=newName;
  localStorage.setItem("userName",storedName);
- userName.value=storedName;
+ userName.textContent=storedName;
 
  /* Bio */
  storedBio=newBio;
@@ -1162,22 +1237,15 @@ document.getElementById("saveButton").addEventListener("click",()=>{
  renderLocation();
 
  /* DOB: 3-month lock */
- if(newDob!==storedDob){
-  if(getLockTime("accountDobChangedAt")>now){
-   alert("Date of birth can be changed again after 3 months.");return
-  }
+ if(dobChanging){
   storedDob=newDob;
   localStorage.setItem("dateOfBirth",storedDob);
   localStorage.setItem("accountDobChangedAt",String(now));
-  userDob.value=storedDob;
+  userDob.textContent=storedDob;
  }
 
  /* Username: 14-day lock */
- if(newUsername.toLowerCase()!==storedUsername.toLowerCase()){
-  if(getLockTime("accountUsernameChangedAt")>now){
-   alert("Username can be changed again after 14 days.");return
-  }
-
+ if(usernameChanging){
   const registry=usernameRegistry();
   if(storedUsername) delete registry[storedUsername.toLowerCase()];
   registry[newUsername.toLowerCase()]=true;
@@ -1199,7 +1267,7 @@ document.getElementById("cancelButton").addEventListener("click",()=>{
 });
 
 /* Phone and email reveal */
-document.querySelectorAll(".sensitive-field[data-type]").forEach(field=>{
+document.querySelectorAll(".personal-sensitive-row[data-type]").forEach(field=>{
  function reveal(){
   field.classList.remove("reveal");
   void field.offsetWidth;
