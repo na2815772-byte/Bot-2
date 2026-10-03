@@ -968,6 +968,7 @@ input[type="date"]{color-scheme:dark}
 <label for="editUsername">Username</label>
 <input id="editUsername" class="name-field" type="text" placeholder="YourName123" maxlength="30" autocomplete="username">
 <div class="username-status" id="usernameStatus"></div>
+<div class="edit-lock-note" id="usernameEditHint"></div>
 </div>
 
 <div class="edit-row">
@@ -1095,27 +1096,55 @@ renderBio();
 renderLocation();
 
 /* Age/date and username lock timers */
-const DOB_LOCK_MS=90*24*60*60*1000;
-const USERNAME_LOCK_MS=14*24*60*60*1000;
+const DOB_LOCK_MS=90*24*60*60*1000;       // 3 months
+const USERNAME_LOCK_MS=14*24*60*60*1000; // 14 days
 
 function formatRemaining(ms){
  if(ms<=0) return "";
  const days=Math.ceil(ms/(24*60*60*1000));
+ if(days===1) return "1 day remaining";
  return days+" days remaining";
 }
+
 function getLockTime(key){
  const value=Number(localStorage.getItem(key)||0);
  return Number.isFinite(value)?value:0;
 }
+
+/* Fixed lock check: changedAt + lockDuration > now */
+function isDobLocked(){
+ const changedAt=getLockTime("accountDobChangedAt");
+ if(changedAt<=0) return false; // never changed → not locked
+ return (changedAt + DOB_LOCK_MS) > Date.now();
+}
+
+function isUsernameLocked(){
+ const changedAt=getLockTime("accountUsernameChangedAt");
+ if(changedAt<=0) return false; // never changed → not locked
+ return (changedAt + USERNAME_LOCK_MS) > Date.now();
+}
+
+function getDobRemainingMs(){
+ const changedAt=getLockTime("accountDobChangedAt");
+ if(changedAt<=0) return 0;
+ return Math.max(0, (changedAt + DOB_LOCK_MS) - Date.now());
+}
+
+function getUsernameRemainingMs(){
+ const changedAt=getLockTime("accountUsernameChangedAt");
+ if(changedAt<=0) return 0;
+ return Math.max(0, (changedAt + USERNAME_LOCK_MS) - Date.now());
+}
+
 function updateLockHints(){
- const dobLock=getLockTime("accountDobChangedAt");
- const usernameLock=getLockTime("accountUsernameChangedAt");
- const dobLocked=dobLock>Date.now();
- const usernameLocked=usernameLock>Date.now();
+ const dobLocked=isDobLocked();
+ const usernameLocked=isUsernameLocked();
  const panel=document.getElementById("editPanel");
  const dobInput=document.getElementById("editDob");
  const usernameInput=document.getElementById("editUsername");
  const dobHint=document.getElementById("dobEditHint");
+ const usernameHint=document.getElementById("usernameEditHint");
+
  if(panel && !panel.hidden){
   if(dobInput){
    dobInput.disabled=dobLocked;
@@ -1126,8 +1155,23 @@ function updateLockHints(){
    usernameInput.title=usernameLocked ? "Username can be changed again after 14 days." : "";
   }
  }
+
  if(dobHint){
-  dobHint.textContent=dobLocked ? "Date of birth is locked until the 3-month period ends." : "You can change your date of birth now.";
+  if(dobLocked){
+   const rem=formatRemaining(getDobRemainingMs());
+   dobHint.textContent="Date of birth is locked. " + (rem ? rem + "." : "Wait until the 3-month period ends.");
+  }else{
+   dobHint.textContent="You can change your date of birth now.";
+  }
+ }
+
+ if(usernameHint){
+  if(usernameLocked){
+   const rem=formatRemaining(getUsernameRemainingMs());
+   usernameHint.textContent="Username is locked. " + (rem ? rem + "." : "Wait until the 14-day period ends.");
+  }else{
+   usernameHint.textContent="You can change your username now.";
+  }
  }
 }
 updateLockHints();
@@ -1189,17 +1233,16 @@ editButton.addEventListener("click",()=>{
   editLocation.value=storedLocation;
   editBioCount.textContent=countBioWords(editBio.value)+" / 50 words";
 
-  const dobLocked=getLockTime("accountDobChangedAt")>Date.now();
-  const usernameLocked=getLockTime("accountUsernameChangedAt")>Date.now();
+  // Apply lock state immediately when opening edit panel
+  const dobLocked=isDobLocked();
+  const usernameLocked=isUsernameLocked();
 
   editDob.disabled=dobLocked;
   editUsername.disabled=usernameLocked;
   editDob.title=dobLocked ? "Date of birth can be changed again after 3 months." : "";
   editUsername.title=usernameLocked ? "Username can be changed again after 14 days." : "";
-  const dobHint=document.getElementById("dobEditHint");
-  if(dobHint){
-   dobHint.textContent=dobLocked ? "Date of birth is locked until the 3-month period ends." : "You can change your date of birth now.";
-  }
+
+  updateLockHints();
  }
 });
 
@@ -1218,6 +1261,11 @@ editBio.addEventListener("input",()=>{
 });
 
 editUsername.addEventListener("input",()=>{
+ if(isUsernameLocked()){
+  usernameStatus.textContent="Username is currently locked.";
+  usernameStatus.style.color="#ff9a9a";
+  return;
+ }
  const value=editUsername.value.trim();
  if(!value){usernameStatus.textContent="";return}
  if(!validUsername(value)){
@@ -1307,11 +1355,14 @@ document.getElementById("saveButton").addEventListener("click",()=>{
  const dobChanging=newDob!==storedDob;
  const usernameChanging=newUsername.toLowerCase()!==storedUsername.toLowerCase();
 
- if(dobChanging && getLockTime("accountDobChangedAt")>now){
-  alert("Date of birth can be changed again after 3 months.");return
+ // Strict lock check before allowing change
+ if(dobChanging && isDobLocked()){
+  alert("Date of birth can be changed again after 3 months.\n" + (formatRemaining(getDobRemainingMs()) || ""));
+  return;
  }
- if(usernameChanging && getLockTime("accountUsernameChangedAt")>now){
-  alert("Username can be changed again after 14 days.");return
+ if(usernameChanging && isUsernameLocked()){
+  alert("Username can be changed again after 14 days.\n" + (formatRemaining(getUsernameRemainingMs()) || ""));
+  return;
  }
 
  /* Name */
@@ -1329,15 +1380,15 @@ document.getElementById("saveButton").addEventListener("click",()=>{
  localStorage.setItem("accountLocation",storedLocation);
  renderLocation();
 
- /* DOB: 3-month lock */
+ /* DOB: set change timestamp → locks for 3 months */
  if(dobChanging){
   storedDob=newDob;
   localStorage.setItem("dateOfBirth",storedDob);
-  localStorage.setItem("accountDobChangedAt",String(now));
+  localStorage.setItem("accountDobChangedAt",String(now)); // store change time
   userDob.textContent=storedDob;
  }
 
- /* Username: 14-day lock */
+ /* Username: set change timestamp → locks for 14 days */
  if(usernameChanging){
   const registry=usernameRegistry();
   if(storedUsername) delete registry[storedUsername.toLowerCase()];
@@ -1346,7 +1397,7 @@ document.getElementById("saveButton").addEventListener("click",()=>{
 
   storedUsername=newUsername;
   localStorage.setItem("accountUsername",storedUsername);
-  localStorage.setItem("accountUsernameChangedAt",String(now));
+  localStorage.setItem("accountUsernameChangedAt",String(now)); // store change time
   usernameDisplay.textContent="@"+storedUsername;
  }
 
