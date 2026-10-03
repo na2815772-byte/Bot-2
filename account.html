@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ice:#dff8ff;--cyan:#62e8ff;--violet:#a477ff}
+html,body{min-height:100%}
+body{
+ min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:#fff;
+ display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden;
+ background:radial-gradient(circle at 20% 10%,rgba(98,232,255,.18),transparent 30%),
+ radial-gradient(circle at 85% 25%,rgba(164,119,255,.20),transparent 32%),
+ radial-gradient(circle at 50% 100%,rgba(95,140,255,.16),transparent 38%),
+ linear-gradient(145deg,#07101f,#0c1730 45%,#090d20)
+}
+body:before,body:after{content:"";position:fixed;width:280px;height:280px;border-radius:50%;
+ filter:blur(70px);opacity:.38;pointer-events:none;animation:orbMove 8s ease-in-out infinite alternate}
+body:before{background:#36dfff;top:-100px;left:-90px}
+body:after{background:#8d5cff;right:-100px;bottom:-100px;animation-delay:-4s}
+@keyframes orbMove{from{transform:translate(0,0) scale(1)}to{transform:translate(35px,25px) scale(1.18)}}
+.account-page{width:100%;max-width:520px;min-height:100vh;padding:38px 20px 34px;position:relative;z-index:1}
+.account-card{position:relative;width:100%;padding:30px 20px 28px;border:1px solid rgba(223,248,255,.24);
+ border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));
+ backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+ box-shadow:0 25px 70px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.16),0 0 35px rgba(98,232,255,.08);
+ overflow:hidden}
+.account-card:before{content:"";position:absolute;inset:-2px;border-radius:32px;
+ background:linear-gradient(120deg,transparent 20%,rgba(223,248,255,.12) 42%,rgba(98,232,255,.22) 50%,transparent 62%);
+ background-size:220% 100%;animation:cardShine 5s linear infinite;pointer-events:none}
+@keyframes cardShine{0%{background-position:220% 0}100%{background-position:-220% 0}}
+.profile-area{position:relative;text-align:center;z-index:2}
+.profile-icon{width:108px;height:108px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ font-size:54px;color:var(--ice);background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.32),transparent 25%),
+ linear-gradient(145deg,rgba(98,232,255,.30),rgba(164,119,255,.25));
+ border:1px solid rgba(223,248,255,.42);box-shadow:0 0 25px rgba(98,232,255,.24),inset 0 0 25px rgba(255,255,255,.08);
+ text-shadow:0 0 18px rgba(223,248,255,.8);animation:profileGlow 3s ease-in-out infinite alternate}
+@keyframes profileGlow{from{transform:translateY(0);box-shadow:0 0 22px rgba(98,232,255,.22),inset 0 0 22px rgba(255,255,255,.08)}
+to{transform:translateY(-3px);box-shadow:0 0 38px rgba(164,119,255,.35),inset 0 0 30px rgba(255,255,255,.12)}}
+.profile-title{font-size:24px;font-weight:700;letter-spacing:.4px;margin-bottom:25px}
+.field{position:relative;z-index:2;margin-top:15px}
+.field-label{display:block;text-align:left;font-size:12px;color:rgba(223,248,255,.70);margin:0 0 7px 5px;letter-spacing:.7px;text-transform:uppercase}
+.name-field,.age-select,.sensitive-field{width:100%;min-height:52px;border:1px solid rgba(223,248,255,.20);border-radius:16px;color:#fff;
+ background:rgba(255,255,255,.075);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.10)}
+.name-field{padding:0 16px;outline:none;font-size:16px}.name-field::placeholder{color:rgba(255,255,255,.55)}
+.age-select{padding:0 14px;outline:none;font-size:16px}.age-select option{color:#111;background:#fff}
+.sensitive-field{position:relative;display:flex;align-items:center;padding:0 16px;cursor:pointer;overflow:hidden;
+ transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.sensitive-field:hover{border-color:rgba(223,248,255,.42);box-shadow:0 0 20px rgba(98,232,255,.12),inset 0 0 18px rgba(223,248,255,.05)}
+.sensitive-field.reveal{animation:iceShake .58s ease}
+@keyframes iceShake{0%{transform:translateX(0)}18%{transform:translateX(-5px) rotate(-.5deg)}
+36%{transform:translateX(5px) rotate(.5deg)}54%{transform:translateX(-4px)}72%{transform:translateX(3px)}100%{transform:translateX(0)}}
+.masked-text{position:relative;z-index:3;width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:rgba(223,248,255,.95);
+ letter-spacing:1.5px;text-shadow:0 0 9px rgba(223,248,255,.45)}
+.ice-glow{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 5%,rgba(223,248,255,.04) 28%,
+ rgba(223,248,255,.26) 50%,rgba(223,248,255,.04) 72%,transparent 95%);background-size:230% 100%;animation:iceSweep 3.5s linear infinite}
+@keyframes iceSweep{0%{background-position:230% 0}100%{background-position:-230% 0}}
+.ice-particles{position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden}
+.ice-piece{position:absolute;top:-16px;width:5px;height:9px;border-radius:3px;background:rgba(235,252,255,.92);
+ box-shadow:0 0 8px rgba(223,248,255,.95);opacity:0}
+.sensitive-field.reveal .ice-piece{animation:iceFall .72s ease-out forwards}
+.ice-piece:nth-child(1){left:12%;animation-delay:.02s}.ice-piece:nth-child(2){left:24%;animation-delay:.08s}
+.ice-piece:nth-child(3){left:37%;animation-delay:.04s}.ice-piece:nth-child(4){left:51%;animation-delay:.12s}
+.ice-piece:nth-child(5){left:64%;animation-delay:.06s}.ice-piece:nth-child(6){left:77%;animation-delay:.14s}
+.ice-piece:nth-child(7){left:89%;animation-delay:.10s}
+@keyframes iceFall{0%{opacity:0;transform:translateY(-8px) rotate(0) scale(.7)}20%{opacity:1}
+100%{opacity:0;transform:translateY(70px) rotate(160deg) scale(.35)}}
+.revealed-value{display:none;position:relative;z-index:4;width:100%;color:#fff;font-weight:600;letter-spacing:.35px;
+ text-shadow:0 0 13px rgba(223,248,255,.75)}
+.sensitive-field.is-revealed .masked-text{display:none}.sensitive-field.is-revealed .revealed-value{display:block}
+.hint{text-align:center;margin-top:8px;font-size:11px;color:rgba(223,248,255,.48)}
+.back-button{position:relative;z-index:3;width:100%;min-height:54px;margin-top:27px;border:1px solid rgba(223,248,255,.26);
+ border-radius:17px;color:#fff;font-size:15px;font-weight:700;letter-spacing:.5px;cursor:pointer;
+ background:linear-gradient(110deg,rgba(98,232,255,.18),rgba(164,119,255,.22),rgba(98,232,255,.18));
+ background-size:200% 100%;box-shadow:0 0 22px rgba(98,232,255,.12),inset 0 1px 0 rgba(255,255,255,.12);
+ transition:transform .2s ease,box-shadow .2s ease;animation:buttonFlow 4s linear infinite}
+@keyframes buttonFlow{0%{background-position:0 0}100%{background-position:200% 0}}
+.back-button:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(98,232,255,.22),inset 0 1px 0 rgba(255,255,255,.18)}
+.back-button:active{transform:scale(.97)}
+.small-note{text-align:center;margin-top:15px;font-size:10px;color:rgba(255,255,255,.35)}
+button:focus,input:focus,select:focus{outline:none}
+
+
+.bio-display,.location-display{
+ width:100%;min-height:52px;padding:15px 16px;border:1px solid rgba(223,248,255,.20);
+ border-radius:16px;color:rgba(223,248,255,.94);background:rgba(255,255,255,.075);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.10);
+ line-height:1.5;word-break:break-word;
+}
+.bio-display{font-size:14px;color:rgba(223,248,255,.78)}
+.location-display{font-size:15px}
+.bio-display.empty,.location-display.empty{color:rgba(255,255,255,.38);font-style:italic}
+.bio-input{
+ width:100%;min-height:105px;padding:13px 14px;resize:vertical;border:1px solid rgba(223,248,255,.20);
+ border-radius:16px;color:#fff;background:rgba(255,255,255,.075);font-family:inherit;font-size:14px;
+ outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.07)
+}
+.bio-input:focus,.name-field:focus{border-color:rgba(98,232,255,.48);box-shadow:0 0 20px rgba(98,232,255,.10)}
+.char-count{text-align:right;margin-top:5px;font-size:10px;color:rgba(223,248,255,.45)}
+.location-picker{position:relative}
+.location-results{
+ position:absolute;left:0;right:0;top:58px;z-index:20;display:none;max-height:190px;overflow:auto;
+ padding:6px;border:1px solid rgba(223,248,255,.20);border-radius:14px;
+ background:rgba(7,16,31,.96);backdrop-filter:blur(18px);box-shadow:0 15px 35px rgba(0,0,0,.35)
+}
+.location-results.show{display:block}
+.location-option{
+ padding:11px 12px;border-radius:10px;cursor:pointer;color:rgba(223,248,255,.90);
+ transition:background .18s ease,transform .18s ease
+}
+.location-option:hover{background:rgba(98,232,255,.12);transform:translateX(2px)}
+.location-empty{padding:11px 12px;color:rgba(255,255,255,.42);font-size:12px}
+
+.edit-button,.save-button,.cancel-button{
+ width:100%;min-height:50px;border-radius:16px;cursor:pointer;font-weight:700;
+ color:#fff;border:1px solid rgba(223,248,255,.25);
+ transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease
+}
+.edit-button{
+ margin-top:22px;background:linear-gradient(110deg,rgba(98,232,255,.20),rgba(164,119,255,.24),rgba(98,232,255,.20));
+ background-size:200% 100%;animation:buttonFlow 4s linear infinite;
+ box-shadow:0 0 24px rgba(98,232,255,.13)
+}
+.edit-button:hover,.save-button:hover,.cancel-button:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(98,232,255,.20)}
+.edit-button:active,.save-button:active,.cancel-button:active{transform:scale(.97)}
+.edit-panel{
+ margin-top:15px;padding:17px;border:1px solid rgba(223,248,255,.16);border-radius:20px;
+ background:rgba(255,255,255,.055);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)
+}
+.edit-row{margin-top:12px}.edit-row:first-child{margin-top:0}
+.edit-row label{display:block;text-align:left;font-size:11px;color:rgba(223,248,255,.70);margin:0 0 6px 4px;text-transform:uppercase;letter-spacing:.6px}
+.username-status{min-height:18px;margin-top:6px;text-align:left;font-size:11px;color:rgba(223,248,255,.68)}
+.edit-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.save-button{background:linear-gradient(110deg,rgba(98,232,255,.25),rgba(95,140,255,.30))}
+.cancel-button{background:rgba(255,255,255,.07)}
+.edit-note{margin-top:12px;text-align:left;font-size:10px;line-height:1.55;color:rgba(255,255,255,.43)}
+input[type="date"]{color-scheme:dark}
+.sensitive-field.username-field{cursor:default}
+
+
+.bio-field-input{
+ width:100%;min-height:90px;padding:14px 16px;border:1px solid rgba(223,248,255,.20);
+ border-radius:16px;resize:none;outline:none;color:#fff;font:15px Arial,Helvetica,sans-serif;
+ line-height:1.5;background:rgba(255,255,255,.075);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.10)
+}
+.bio-field-input::placeholder{color:rgba(255,255,255,.48)}
+.bio-count{text-align:right;margin-top:5px;font-size:10px;color:rgba(223,248,255,.45)}
+.location-box{
+ position:relative;min-height:52px;width:100%;padding:0 45px 0 16px;display:flex;align-items:center;
+ border:1px solid rgba(223,248,255,.20);border-radius:16px;cursor:pointer;overflow:hidden;
+ color:rgba(223,248,255,.92);background:rgba(255,255,255,.075);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.10);
+ transition:.22s ease
+}
+.location-box:hover{border-color:rgba(223,248,255,.45);box-shadow:0 0 25px rgba(98,232,255,.15)}
+.location-box.selected{color:#fff;text-shadow:0 0 10px rgba(223,248,255,.5)}
+.location-arrow{position:absolute;right:16px;font-size:20px;color:rgba(223,248,255,.75)}
+.location-modal{
+ position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+ padding:20px;background:rgba(2,8,20,.68);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
+}
+.location-modal[hidden]{display:none}
+.location-modal-card{
+ width:min(470px,100%);max-height:80vh;padding:18px;border:1px solid rgba(223,248,255,.25);
+ border-radius:24px;background:linear-gradient(145deg,rgba(20,35,65,.96),rgba(8,18,38,.96));
+ box-shadow:0 25px 80px rgba(0,0,0,.55),0 0 35px rgba(98,232,255,.12)
+}
+.location-modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.location-modal-head strong{font-size:18px}
+.location-modal-head button{
+ width:36px;height:36px;border:1px solid rgba(223,248,255,.20);border-radius:50%;
+ color:#fff;background:rgba(255,255,255,.07);font-size:23px;cursor:pointer
+}
+.location-search{width:100%;margin-bottom:12px}
+.location-results{max-height:48vh;overflow:auto;display:flex;flex-direction:column;gap:7px}
+.location-result{
+ width:100%;padding:13px 14px;text-align:left;border:1px solid rgba(223,248,255,.12);
+ border-radius:13px;color:#fff;background:rgba(255,255,255,.055);cursor:pointer;
+ transition:.18s ease
+}
+.location-result:hover{transform:translateX(3px);border-color:rgba(98,232,255,.38);background:rgba(98,232,255,.10)}
+.location-result small{display:block;margin-top:3px;color:rgba(223,248,255,.48)}
+.location-empty{padding:15px;text-align:center;color:rgba(255,255,255,.45);font-size:12px}
+
+@media(max-width:420px){.account-page{padding:22px 13px 25px}.account-card{padding:26px 15px 23px;border-radius:25px}
+.profile-icon{width:96px;height:96px;font-size:47px}.profile-title{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="account-page">
+<section class="account-card">
+<div class="profile-area">
+<div class="profile-icon" aria-label="Account profile">♙</div>
+<div class="profile-title">Account</div>
+</div>
+
+<div class="field bio-field">
+<label class="field-label" for="userBio">Bio</label>
+<textarea id="userBio" class="bio-field-input" maxlength="50" placeholder="Write your bio (up to 50 words)" disabled></textarea>
+<div class="bio-count" id="bioCount">0 / 50 words</div>
+</div>
+
+<div class="field">
+<label class="field-label">Location</label>
+<div class="location-box" id="locationBox" tabindex="0" role="button">
+<div class="ice-glow"></div>
+<span id="locationDisplay">Select your location</span>
+<span class="location-arrow">⌄</span>
+</div>
+<div class="hint">Tap to search and select your location</div>
+</div>
+
+<div class="field">
+<label class="field-label">Bio</label>
+<div class="bio-display" id="bioDisplay">No bio added yet</div>
+</div>
+
+<div class="field">
+<label class="field-label" for="userName">Name</label>
+<input id="userName" class="name-field" type="text" placeholder="Enter your name" autocomplete="name" disabled>
+</div>
+
+<div class="field">
+<label class="field-label" for="userDob">Date of Birth</label>
+<input id="userDob" class="name-field" type="date" disabled>
+<div class="hint" id="dobLockHint"></div>
+</div>
+
+<div class="field">
+<label class="field-label" for="userUsername">Username</label>
+<div class="sensitive-field username-field" id="usernameBox" tabindex="0" role="button">
+<div class="ice-glow"></div>
+<div class="masked-text" id="usernameDisplay">@username</div>
+<div class="revealed-value" id="usernameValue"></div>
+</div>
+<div class="hint" id="usernameLockHint">Choose a unique username</div>
+</div>
+
+<div class="field">
+<label class="field-label">Location</label>
+<div class="location-display" id="locationDisplay">No location selected</div>
+<div class="hint">Tap Edit to choose your location</div>
+</div>
+
+<div class="field">
+<label class="field-label">Phone Number</label>
+<div class="sensitive-field" data-type="phone" tabindex="0" role="button">
+<div class="ice-glow"></div>
+<div class="masked-text" id="maskedPhone">01••••••••••</div>
+<div class="revealed-value" id="phoneValue"></div>
+<div class="ice-particles" aria-hidden="true">
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+</div>
+</div>
+<div class="hint">Phone number cannot be changed</div>
+</div>
+
+<div class="field">
+<label class="field-label">Email Address</label>
+<div class="sensitive-field" data-type="email" tabindex="0" role="button">
+<div class="ice-glow"></div>
+<div class="masked-text" id="maskedEmail">u••••••••@gmail.com</div>
+<div class="revealed-value" id="emailValue"></div>
+<div class="ice-particles" aria-hidden="true">
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+<span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span><span class="ice-piece"></span>
+</div>
+</div>
+<div class="hint">Email address cannot be changed</div>
+</div>
+
+<button class="edit-button" id="editButton" type="button">Edit</button>
+
+<div class="edit-panel" id="editPanel" hidden>
+
+<div class="edit-row">
+<label for="editBio">Bio</label>
+<textarea id="editBio" class="bio-input" maxlength="500" placeholder="Write your bio..."></textarea>
+<div class="char-count"><span id="bioCount">0</span>/500 characters</div>
+</div>
+
+<div class="edit-row">
+<label for="editName">Name</label>
+<input id="editName" class="name-field" type="text" autocomplete="name">
+</div>
+
+<div class="edit-row">
+<label for="editBio">Bio</label>
+<textarea id="editBio" class="bio-field-input" maxlength="50" placeholder="Write your bio (up to 50 words)"></textarea>
+<div class="bio-count" id="editBioCount">0 / 50 words</div>
+</div>
+
+<div class="edit-row">
+<label for="editDob">Date of Birth</label>
+<input id="editDob" class="name-field" type="date">
+</div>
+
+<div class="edit-row">
+<label for="editUsername">Username</label>
+<input id="editUsername" class="name-field" type="text" placeholder="YourName123" maxlength="30" autocomplete="username">
+<div class="username-status" id="usernameStatus"></div>
+</div>
+
+<div class="edit-row">
+<label for="editLocation">Location</label>
+<div class="location-picker">
+<input id="editLocation" class="name-field" type="text" placeholder="Search country or location..." autocomplete="off">
+<div class="location-results" id="locationResults"></div>
+</div>
+</div>
+
+<div class="edit-actions">
+<button class="save-button" id="saveButton" type="button">Save Changes</button>
+<button class="cancel-button" id="cancelButton" type="button">Cancel</button>
+</div>
+<div class="edit-note">
+Name and bio can be changed anytime. Date of birth can be changed again after 3 months.
+Username can be changed again after 70 days. Phone and email cannot be changed.
+</div>
+</div>
+
+
+<div class="location-modal" id="locationModal" hidden>
+<div class="location-modal-card">
+<div class="location-modal-head">
+<strong>Select Location</strong>
+<button type="button" id="closeLocation">×</button>
+</div>
+
+<input id="locationSearch" class="name-field location-search" type="search"
+placeholder="Search country, city or location..." autocomplete="off">
+
+<div class="location-results" id="locationResults"></div>
+</div>
+</div>
+
+<button class="back-button" id="backButton" type="button">Go to back</button>
+<div class="small-note">Account information</div>
+</section>
+</div>
+
+<script>
+/*
+  ACCOUNT DATA
+  Registration/login data is read from localStorage.
+  Bio, DOB, username and location are saved locally.
+*/
+const STORAGE_KEYS={
+ name:["userName","name","username","registeredName","accountName"],
+ phone:["phone","phoneNumber","userPhone","registeredPhone","accountPhone"],
+ email:["email","userEmail","registeredEmail","accountEmail","loginEmail"],
+ dob:["dateOfBirth","dob","userDob","accountDob"],
+ username:["accountUsername","userUsername","username"],
+ bio:["accountBio","bio","userBio"],
+ location:["accountLocation","location","userLocation"]
+};
+
+function readStoredValue(keys){
+ for(const key of keys){
+  const value=localStorage.getItem(key);
+  if(value!==null && String(value).trim()!=="") return String(value).trim();
+ }
+ return "";
+}
+
+const userName=document.getElementById("userName");
+const userDob=document.getElementById("userDob");
+const usernameDisplay=document.getElementById("usernameDisplay");
+const phoneValue=document.getElementById("phoneValue");
+const emailValue=document.getElementById("emailValue");
+const bioDisplay=document.getElementById("bioDisplay");
+const locationDisplay=document.getElementById("locationDisplay");
+
+let storedName=readStoredValue(STORAGE_KEYS.name);
+let storedPhone=readStoredValue(STORAGE_KEYS.phone);
+let storedEmail=readStoredValue(STORAGE_KEYS.email);
+let storedDob=readStoredValue(STORAGE_KEYS.dob);
+let storedUsername=readStoredValue(STORAGE_KEYS.username);
+let storedBio=readStoredValue(STORAGE_KEYS.bio);
+let storedLocation=readStoredValue(STORAGE_KEYS.location);
+
+if(storedName) userName.value=storedName;
+if(storedDob) userDob.value=storedDob;
+
+function maskPhone(phone){
+ const value=phone.trim();
+ if(!value) return "01••••••••••";
+ if(value.length<=4) return "••••"+value;
+ return value.slice(0,3)+"••••••"+value.slice(-2);
+}
+
+function maskEmail(email){
+ const value=email.trim();
+ if(!value) return "u••••••••@gmail.com";
+ const at=value.indexOf("@");
+ if(at<=0) return "••••••••";
+ const namePart=value.slice(0,at);
+ return namePart.slice(0,Math.min(2,namePart.length))+"••••••"+value.slice(at);
+}
+
+document.getElementById("maskedPhone").textContent=maskPhone(storedPhone);
+document.getElementById("maskedEmail").textContent=maskEmail(storedEmail);
+phoneValue.textContent=storedPhone||"Phone number not available";
+emailValue.textContent=storedEmail||"Email address not available";
+
+usernameDisplay.textContent=storedUsername ? "@"+storedUsername : "@username";
+
+function renderBio(){
+ bioDisplay.textContent=storedBio||"No bio added yet";
+ bioDisplay.classList.toggle("empty",!storedBio);
+}
+function renderLocation(){
+ locationDisplay.textContent=storedLocation||"No location selected";
+ locationDisplay.classList.toggle("empty",!storedLocation);
+}
+renderBio();
+renderLocation();
+
+/* Age/date and username lock timers */
+const DOB_LOCK_MS=90*24*60*60*1000;
+const USERNAME_LOCK_MS=70*24*60*60*1000;
+
+function formatRemaining(ms){
+ if(ms<=0) return "";
+ const days=Math.ceil(ms/(24*60*60*1000));
+ return days+" days remaining";
+}
+function getLockTime(key){
+ const value=Number(localStorage.getItem(key)||0);
+ return Number.isFinite(value)?value:0;
+}
+function updateLockHints(){
+ const dobLock=getLockTime("accountDobChangedAt");
+ const usernameLock=getLockTime("accountUsernameChangedAt");
+ const dobHint=document.getElementById("dobLockHint");
+ const usernameHint=document.getElementById("usernameLockHint");
+
+ dobHint.textContent=dobLock>Date.now()
+  ?"Change locked • "+formatRemaining(dobLock-Date.now())
+  :"Date of birth";
+
+ usernameHint.textContent=usernameLock>Date.now()
+  ?"Username change locked • "+formatRemaining(usernameLock-Date.now())
+  :"Username can be changed again after 70 days";
+}
+updateLockHints();
+setInterval(updateLockHints,60000);
+
+/* Username uniqueness on this browser/device */
+function validUsername(value){
+ return /^[A-Za-z][A-Za-z0-9_]{2,29}$/.test(value);
+}
+function usernameRegistry(){
+ try{return JSON.parse(localStorage.getItem("registeredUsernames")||"{}")}
+ catch(e){return {}}
+}
+function saveUsernameRegistry(registry){
+ localStorage.setItem("registeredUsernames",JSON.stringify(registry));
+}
+function isUsernameTaken(username,currentUsername=""){
+ const registry=usernameRegistry();
+ const key=username.toLowerCase();
+ if(key===currentUsername.toLowerCase()) return false;
+ return !!registry[key];
+}
+if(storedUsername){
+ const registry=usernameRegistry();
+ if(!registry[storedUsername.toLowerCase()]){
+  registry[storedUsername.toLowerCase()]=true;
+  saveUsernameRegistry(registry);
+ }
+}
+
+/* Edit panel */
+const editButton=document.getElementById("editButton");
+const editPanel=document.getElementById("editPanel");
+const editName=document.getElementById("editName");
+const editDob=document.getElementById("editDob");
+const editUsername=document.getElementById("editUsername");
+const editBio=document.getElementById("editBio");
+const editLocation=document.getElementById("editLocation");
+const usernameStatus=document.getElementById("usernameStatus");
+const bioCount=document.getElementById("bioCount");
+const locationResults=document.getElementById("locationResults");
+
+editButton.addEventListener("click",()=>{
+ editPanel.hidden=!editPanel.hidden;
+ if(!editPanel.hidden){
+  editName.value=storedName;
+  editDob.value=storedDob;
+  editUsername.value=storedUsername;
+  editBio.value=storedBio;
+  editLocation.value=storedLocation;
+  bioCount.textContent=editBio.value.length;
+
+  const dobLocked=getLockTime("accountDobChangedAt")>Date.now();
+  const usernameLocked=getLockTime("accountUsernameChangedAt")>Date.now();
+
+  editDob.disabled=dobLocked;
+  editUsername.disabled=usernameLocked;
+ }
+});
+
+editBio.addEventListener("input",()=>{
+ bioCount.textContent=editBio.value.length;
+});
+
+editUsername.addEventListener("input",()=>{
+ const value=editUsername.value.trim();
+ if(!value){usernameStatus.textContent="";return}
+ if(!validUsername(value)){
+  usernameStatus.textContent="Use 3–30 characters: letters, numbers and underscore. Start with a letter.";
+  usernameStatus.style.color="#ff9a9a";return;
+ }
+ if(isUsernameTaken(value,storedUsername)){
+  usernameStatus.textContent="This username is already taken.";
+  usernameStatus.style.color="#ff9a9a";
+ }else{
+  usernameStatus.textContent="Username is available ✓";
+  usernameStatus.style.color="#bdf7ff";
+ }
+});
+
+/*
+  Location search.
+  This list covers Bangladesh and a selection of world locations.
+  It is local so the account page works without an external API.
+*/
+const LOCATIONS=[
+"Bangladesh","Dhaka, Bangladesh","Chattogram, Bangladesh","Rajshahi, Bangladesh",
+"Khulna, Bangladesh","Sylhet, Bangladesh","Barishal, Bangladesh","Rangpur, Bangladesh",
+"Mymensingh, Bangladesh","Cox's Bazar, Bangladesh","United States","New York, United States",
+"California, United States","Los Angeles, United States","United Kingdom","London, United Kingdom",
+"Canada","Toronto, Canada","Australia","Sydney, Australia","Melbourne, Australia",
+"India","Kolkata, India","New Delhi, India","Mumbai, India","Pakistan","Karachi, Pakistan",
+"Nepal","Kathmandu, Nepal","United Arab Emirates","Dubai, UAE","Saudi Arabia","Riyadh, Saudi Arabia",
+"Qatar","Doha, Qatar","Japan","Tokyo, Japan","South Korea","Seoul, South Korea",
+"China","Beijing, China","Singapore","Singapore","Malaysia","Kuala Lumpur, Malaysia",
+"Thailand","Bangkok, Thailand","Germany","Berlin, Germany","France","Paris, France",
+"Italy","Rome, Italy","Spain","Madrid, Spain","Brazil","São Paulo, Brazil",
+"Mexico","Mexico City, Mexico","South Africa","Cape Town, South Africa"
+];
+
+function showLocationResults(query){
+ const q=query.trim().toLowerCase();
+ const matches=LOCATIONS.filter(item=>item.toLowerCase().includes(q)).slice(0,12);
+
+ locationResults.innerHTML="";
+
+ if(!matches.length){
+  locationResults.innerHTML='<div class="location-empty">No matching location found</div>';
+ }else{
+  matches.forEach(item=>{
+   const option=document.createElement("div");
+   option.className="location-option";
+   option.textContent=item;
+   option.addEventListener("click",()=>{
+    editLocation.value=item;
+    locationResults.classList.remove("show");
+   });
+   locationResults.appendChild(option);
+  });
+ }
+ locationResults.classList.add("show");
+}
+
+editLocation.addEventListener("focus",()=>showLocationResults(editLocation.value));
+editLocation.addEventListener("input",()=>showLocationResults(editLocation.value));
+
+document.addEventListener("click",event=>{
+ if(!event.target.closest(".location-picker")){
+  locationResults.classList.remove("show");
+ }
+});
+
+/* Save */
+document.getElementById("saveButton").addEventListener("click",()=>{
+ const newName=editName.value.trim();
+ const newDob=editDob.value;
+ const newUsername=editUsername.value.trim();
+ const newBio=editBio.value.trim();
+ const newLocation=editLocation.value.trim();
+
+ if(!newName){alert("Please enter your name.");return}
+ if(newBio.length>500){alert("Bio can contain up to 500 characters.");return}
+ if(!newUsername || !validUsername(newUsername)){
+  alert("Please enter a valid username.");return
+ }
+ if(isUsernameTaken(newUsername,storedUsername)){
+  alert("This username is already taken. Please choose another username.");return
+ }
+
+ const now=Date.now();
+
+ /* Name */
+ storedName=newName;
+ localStorage.setItem("userName",storedName);
+ userName.value=storedName;
+
+ /* Bio */
+ storedBio=newBio;
+ localStorage.setItem("accountBio",storedBio);
+ renderBio();
+
+ /* Location */
+ storedLocation=newLocation;
+ localStorage.setItem("accountLocation",storedLocation);
+ renderLocation();
+
+ /* DOB: 3-month lock */
+ if(newDob!==storedDob){
+  if(getLockTime("accountDobChangedAt")>now){
+   alert("Date of birth can be changed again after 3 months.");return
+  }
+  storedDob=newDob;
+  localStorage.setItem("dateOfBirth",storedDob);
+  localStorage.setItem("accountDobChangedAt",String(now));
+  userDob.value=storedDob;
+ }
+
+ /* Username: 70-day lock */
+ if(newUsername.toLowerCase()!==storedUsername.toLowerCase()){
+  if(getLockTime("accountUsernameChangedAt")>now){
+   alert("Username can be changed again after 70 days.");return
+  }
+
+  const registry=usernameRegistry();
+  if(storedUsername) delete registry[storedUsername.toLowerCase()];
+  registry[newUsername.toLowerCase()]=true;
+  saveUsernameRegistry(registry);
+
+  storedUsername=newUsername;
+  localStorage.setItem("accountUsername",storedUsername);
+  localStorage.setItem("accountUsernameChangedAt",String(now));
+  usernameDisplay.textContent="@"+storedUsername;
+ }
+
+ updateLockHints();
+ editPanel.hidden=true;
+});
+
+/* Cancel */
+document.getElementById("cancelButton").addEventListener("click",()=>{
+ editPanel.hidden=true;
+});
+
+/* Phone and email reveal */
+document.querySelectorAll(".sensitive-field[data-type]").forEach(field=>{
+ function reveal(){
+  field.classList.remove("reveal");
+  void field.offsetWidth;
+  field.classList.add("reveal");
+  setTimeout(()=>field.classList.add("is-revealed"),360);
+  clearTimeout(field.hideTimer);
+  field.hideTimer=setTimeout(()=>field.classList.remove("is-revealed"),4000);
+ }
+ field.addEventListener("click",reveal);
+ field.addEventListener("keydown",event=>{
+  if(event.key==="Enter"||event.key===" "){event.preventDefault();reveal()}
+ });
+});
+
+/* Back */
+document.getElementById("backButton").addEventListener("click",()=>{
+ window.location.href="record.html";
+});
+</script>
+</body>
+  </html>
