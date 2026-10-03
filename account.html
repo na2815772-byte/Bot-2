@@ -493,6 +493,7 @@ button:focus,input:focus,select:focus{outline:none}
 }
 
 .location-results.show{display:block}
+.location-picker .location-results:not(.show){display:none}
 
 .location-option{
  padding:11px 12px;
@@ -853,12 +854,6 @@ input[type="date"]{color-scheme:dark}
 <div class="edit-panel" id="editPanel" hidden>
 
 <div class="edit-row">
-<label for="editBio">Bio</label>
-<textarea id="editBio" class="bio-input" maxlength="500" placeholder="Write your bio..."></textarea>
-<div class="char-count"><span id="bioCount">0</span>/500 characters</div>
-</div>
-
-<div class="edit-row">
 <label for="editName">Name</label>
 <input id="editName" class="name-field" type="text" autocomplete="name">
 </div>
@@ -1056,6 +1051,7 @@ const editName=document.getElementById("editName");
 const editDob=document.getElementById("editDob");
 const editUsername=document.getElementById("editUsername");
 const editBio=document.getElementById("editBio");
+const editBioCount=document.getElementById("editBioCount");
 const editLocation=document.getElementById("editLocation");
 const usernameStatus=document.getElementById("usernameStatus");
 const bioCount=document.getElementById("bioCount");
@@ -1069,7 +1065,7 @@ editButton.addEventListener("click",()=>{
   editUsername.value=storedUsername;
   editBio.value=storedBio;
   editLocation.value=storedLocation;
-  bioCount.textContent=editBio.value.length;
+  editBioCount.textContent=editBio.value.length;
 
   const dobLocked=getLockTime("accountDobChangedAt")>Date.now();
   const usernameLocked=getLockTime("accountUsernameChangedAt")>Date.now();
@@ -1080,7 +1076,7 @@ editButton.addEventListener("click",()=>{
 });
 
 editBio.addEventListener("input",()=>{
- bioCount.textContent=editBio.value.length;
+ editBioCount.textContent=editBio.value.length;
 });
 
 editUsername.addEventListener("input",()=>{
@@ -1135,6 +1131,7 @@ function showLocationResults(query){
    option.addEventListener("click",()=>{
     editLocation.value=item;
     locationResults.classList.remove("show");
+    editLocation.blur();
    });
    locationResults.appendChild(option);
   });
