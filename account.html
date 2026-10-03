@@ -771,27 +771,7 @@ input[type="date"]{color-scheme:dark}
   <span class="active-status-text">Active Account</span>
   <span class="active-status-arrow">›</span>
 </button>
-</div>
-
-<div class="field bio-field">
-<label class="field-label" for="userBio">Bio</label>
-<textarea id="userBio" class="bio-field-input" maxlength="50" placeholder="Write your bio (up to 50 words)" disabled></textarea>
-<div class="bio-count" id="bioCount">0 / 50 words</div>
-</div>
-
-<div class="field">
-<label class="field-label">Location</label>
-<div class="location-box" id="locationBox" tabindex="0" role="button">
-<div class="ice-glow"></div>
-<span id="locationDisplay">Select your location</span>
-<span class="location-arrow">⌄</span>
-</div>
-<div class="hint">Tap to search and select your location</div>
-</div>
-
-<div class="field">
-<label class="field-label">Bio</label>
-<div class="bio-display" id="bioDisplay">No bio added yet</div>
+<div class="bio-display active-bio-display" id="bioDisplay">No bio added yet</div>
 </div>
 
 <div class="field">
@@ -889,7 +869,7 @@ input[type="date"]{color-scheme:dark}
 </div>
 <div class="edit-note">
 Name and bio can be changed anytime. Date of birth can be changed again after 3 months.
-Username can be changed again after 70 days. Phone and email cannot be changed.
+Username can be changed again after 14 days. Phone and email cannot be changed.
 </div>
 </div>
 
@@ -991,7 +971,7 @@ renderLocation();
 
 /* Age/date and username lock timers */
 const DOB_LOCK_MS=90*24*60*60*1000;
-const USERNAME_LOCK_MS=70*24*60*60*1000;
+const USERNAME_LOCK_MS=14*24*60*60*1000;
 
 function formatRemaining(ms){
  if(ms<=0) return "";
@@ -1014,7 +994,7 @@ function updateLockHints(){
 
  usernameHint.textContent=usernameLock>Date.now()
   ?"Username change locked • "+formatRemaining(usernameLock-Date.now())
-  :"Username can be changed again after 70 days";
+  :"Username can be changed again after 14 days";
 }
 updateLockHints();
 setInterval(updateLockHints,60000);
@@ -1054,7 +1034,6 @@ const editBio=document.getElementById("editBio");
 const editBioCount=document.getElementById("editBioCount");
 const editLocation=document.getElementById("editLocation");
 const usernameStatus=document.getElementById("usernameStatus");
-const bioCount=document.getElementById("bioCount");
 const locationResults=document.getElementById("locationResults");
 
 editButton.addEventListener("click",()=>{
@@ -1193,10 +1172,10 @@ document.getElementById("saveButton").addEventListener("click",()=>{
   userDob.value=storedDob;
  }
 
- /* Username: 70-day lock */
+ /* Username: 14-day lock */
  if(newUsername.toLowerCase()!==storedUsername.toLowerCase()){
   if(getLockTime("accountUsernameChangedAt")>now){
-   alert("Username can be changed again after 70 days.");return
+   alert("Username can be changed again after 14 days.");return
   }
 
   const registry=usernameRegistry();
