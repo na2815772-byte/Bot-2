@@ -837,6 +837,17 @@
 
 
 /* =========================================================
+   EXTRA BOTTOM SPACE - ADDED ONLY
+   Keeps the existing TEXT button/content fully visible
+   above the fixed navigation bar.
+========================================================= */
+
+.assistant-card {
+    padding-bottom: 125px;
+}
+
+
+/* =========================================================
    END BOTTOM NAVIGATION
 ========================================================= */
 
@@ -1400,7 +1411,23 @@
            Show after scrolling downward.
         */
 
-        if (currentScrollY > 120) {
+        const documentHeight =
+            document.documentElement.scrollHeight;
+
+        const viewportHeight =
+            window.innerHeight;
+
+        const distanceFromBottom =
+            documentHeight -
+            (currentScrollY + viewportHeight);
+
+
+        /*
+           Show only when the user is very near
+           the absolute bottom of the page.
+        */
+
+        if (distanceFromBottom <= 45) {
 
             bottomNav.classList.add(
                 "show"
