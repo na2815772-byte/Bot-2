@@ -411,6 +411,435 @@
 
 }
 
+
+/* =========================================================
+   BOTTOM NAVIGATION - ADDED ONLY
+========================================================= */
+
+.record-bottom-nav {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 12px;
+
+    transform: translate(-50%, 130%);
+
+    width: calc(100% - 24px);
+
+    max-width: 560px;
+
+    height: 72px;
+
+    padding: 7px 8px;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    align-items: center;
+
+    gap: 5px;
+
+    z-index: 9999;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    border: 1px solid rgba(0, 210, 255, 0.28);
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(5, 16, 35, 0.94),
+            rgba(0, 64, 100, 0.88),
+            rgba(25, 8, 65, 0.94)
+        );
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.48),
+        0 0 28px rgba(0, 190, 255, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+
+    overflow: hidden;
+
+}
+
+
+.record-bottom-nav::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -80%;
+
+    left: -35%;
+
+    width: 70%;
+
+    height: 260%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 220, 255, 0.10),
+            transparent
+        );
+
+    transform: rotate(18deg);
+
+    animation:
+        recordNavSweep 5s linear infinite;
+
+    pointer-events: none;
+
+}
+
+
+@keyframes recordNavSweep {
+
+    0% {
+        transform: translateX(-80%) rotate(18deg);
+    }
+
+    100% {
+        transform: translateX(220%) rotate(18deg);
+    }
+
+}
+
+
+.record-bottom-nav.show {
+
+    transform:
+        translate(-50%, 0);
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+}
+
+
+.record-nav-button {
+
+    position: relative;
+
+    height: 58px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    border: 0;
+
+    border-radius: 18px;
+
+    background: transparent;
+
+    color: rgba(255,255,255,0.76);
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+.record-nav-button::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 4px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 191, 255, 0.08),
+            rgba(123, 0, 255, 0.08)
+        );
+
+    opacity: 0;
+
+    transform: scale(0.72);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.record-nav-button::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: -100%;
+
+    bottom: 0;
+
+    width: 70%;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00d9ff,
+            transparent
+        );
+
+    animation:
+        recordNavLine 3.5s linear infinite;
+
+}
+
+
+@keyframes recordNavLine {
+
+    0% {
+        left: -100%;
+    }
+
+    55% {
+        left: 140%;
+    }
+
+    100% {
+        left: 140%;
+    }
+
+}
+
+
+.record-nav-button:hover {
+
+    transform: translateY(-3px);
+
+    color: #ffffff;
+
+}
+
+
+.record-nav-button:hover::before {
+
+    opacity: 1;
+
+    transform: scale(1);
+
+}
+
+
+.record-nav-button:active {
+
+    transform: scale(0.91);
+
+}
+
+
+.record-nav-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(0, 205, 255, 0.35)
+        );
+
+}
+
+
+.record-nav-label {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+}
+
+
+.record-home-icon {
+
+    color: #00c8ff;
+
+}
+
+
+.record-message-icon {
+
+    color: #229ed9;
+
+    font-size: 25px;
+
+    transform: rotate(-18deg);
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(34, 158, 217, 0.80)
+        );
+
+}
+
+
+.record-nav-button:hover
+.record-message-icon {
+
+    transform:
+        rotate(-18deg)
+        translateY(-2px)
+        scale(1.08);
+
+}
+
+
+.record-notification-icon {
+
+    color: #00d9ff;
+
+}
+
+
+.record-account-icon {
+
+    color: #b98cff;
+
+}
+
+
+.record-nav-button:hover
+.record-nav-icon {
+
+    filter:
+        drop-shadow(
+            0 0 11px currentColor
+        );
+
+}
+
+
+@media (max-width: 600px) {
+
+    .record-bottom-nav {
+
+        bottom: 9px;
+
+        width: calc(100% - 16px);
+
+        height: 68px;
+
+        padding: 6px;
+
+        border-radius: 21px;
+
+    }
+
+
+    .record-nav-button {
+
+        height: 56px;
+
+        border-radius: 16px;
+
+    }
+
+
+    .record-nav-icon {
+
+        width: 26px;
+
+        height: 26px;
+
+        font-size: 20px;
+
+    }
+
+
+    .record-message-icon {
+
+        font-size: 23px;
+
+    }
+
+
+    .record-nav-label {
+
+        font-size: 9px;
+
+        letter-spacing: 0.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END BOTTOM NAVIGATION
+========================================================= */
+
 </style>
 
 </head>
@@ -851,7 +1280,202 @@
 </main>
 
 
+<!-- =========================================================
+     BOTTOM NAVIGATION - ADDED ONLY
+========================================================= -->
+
+<nav
+    class="record-bottom-nav"
+    id="recordBottomNav"
+    aria-label="Bottom navigation"
+>
+
+    <a
+        href="record.html"
+        class="record-nav-button"
+        id="recordHomeButton"
+        aria-label="Home"
+        title="Home"
+    >
+
+        <span class="record-nav-icon record-home-icon">⌂</span>
+
+        <span class="record-nav-label">
+            Home
+        </span>
+
+    </a>
+
+
+    <a
+        href="Message.html"
+        class="record-nav-button"
+        aria-label="Message"
+        title="Message"
+    >
+
+        <span class="record-nav-icon record-message-icon">➤</span>
+
+        <span class="record-nav-label">
+            Message
+        </span>
+
+    </a>
+
+
+    <a
+        href="Notification.html"
+        class="record-nav-button"
+        aria-label="Notification"
+        title="Notification"
+    >
+
+        <span class="record-nav-icon record-notification-icon">♢</span>
+
+        <span class="record-nav-label">
+            Notification
+        </span>
+
+    </a>
+
+
+    <a
+        href="account.html"
+        class="record-nav-button"
+        aria-label="Account"
+        title="Account"
+    >
+
+        <span class="record-nav-icon record-account-icon">♙</span>
+
+        <span class="record-nav-label">
+            Account
+        </span>
+
+    </a>
+
+</nav>
+
+
 <script src="script.js"></script>
+
+
+<!-- =========================================================
+     BOTTOM NAVIGATION LOGIC - ADDED ONLY
+========================================================= -->
+
+<script>
+
+(function () {
+
+    const bottomNav =
+        document.getElementById(
+            "recordBottomNav"
+        );
+
+
+    const homeButton =
+        document.getElementById(
+            "recordHomeButton"
+        );
+
+
+    if (!bottomNav) {
+        return;
+    }
+
+
+    let lastScrollY =
+        window.scrollY || 0;
+
+
+    function updateBottomNavigation() {
+
+        const currentScrollY =
+            window.scrollY || 0;
+
+
+        /*
+           Hide while the user is at the top.
+           Show after scrolling downward.
+        */
+
+        if (currentScrollY > 120) {
+
+            bottomNav.classList.add(
+                "show"
+            );
+
+        } else {
+
+            bottomNav.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        lastScrollY =
+            currentScrollY;
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateBottomNavigation,
+        { passive: true }
+    );
+
+
+    window.addEventListener(
+        "load",
+        updateBottomNavigation
+    );
+
+
+    /*
+       Home always returns to record.html
+       and then moves to the very top.
+    */
+
+    if (homeButton) {
+
+        homeButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                if (
+                    window.location.pathname
+                        .toLowerCase()
+                        .endsWith("record.html")
+                    ||
+                    window.location.pathname
+                        .endsWith("/")
+                ) {
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                } else {
+
+                    window.location.href =
+                        "record.html";
+
+                }
+
+            }
+        );
+
+    }
+
+})();
+
+</script>
 
 
 <!-- =========================================================
