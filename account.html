@@ -48,32 +48,25 @@ body:before,
 body:after{
  content:"";
  position:fixed;
- width:300px;
- height:300px;
+ width:260px;
+ height:260px;
  border-radius:50%;
- filter:blur(85px);
- opacity:.34;
  pointer-events:none;
  z-index:0;
- animation:orbMove 10s ease-in-out infinite alternate;
+ filter:blur(90px);
+ opacity:.14;
 }
 
 body:before{
- background:#574cff;
- top:-110px;
- left:-100px;
+ background:#5d4dff;
+ top:-120px;
+ left:-110px;
 }
 
 body:after{
- background:#00bfff;
+ background:#159cff;
  right:-120px;
- bottom:-110px;
- animation-delay:-5s;
-}
-
-@keyframes orbMove{
- from{transform:translate(0,0) scale(1)}
- to{transform:translate(35px,28px) scale(1.2)}
+ bottom:-120px;
 }
 
 .account-page{
@@ -107,39 +100,13 @@ body:after{
 .account-card:before{
  content:"";
  position:absolute;
- inset:-2px;
- border-radius:32px;
- background:
-   linear-gradient(120deg,transparent 15%,rgba(74,142,255,.04) 35%,
-   rgba(62,213,255,.17) 50%,rgba(120,82,255,.08) 57%,transparent 72%);
- background-size:240% 100%;
- animation:cardShine 7s linear infinite;
+ inset:0;
+ border-radius:30px;
+ border:1px solid rgba(83,157,255,.055);
  pointer-events:none;
 }
 
-.account-card:after{
- content:"";
- position:absolute;
- width:260px;
- height:260px;
- right:-145px;
- top:110px;
- border-radius:50%;
- background:rgba(0,174,255,.10);
- filter:blur(55px);
- pointer-events:none;
- animation:ambientPulse 5s ease-in-out infinite alternate;
-}
-
-@keyframes cardShine{
- 0%{background-position:240% 0}
- 100%{background-position:-240% 0}
-}
-
-@keyframes ambientPulse{
- from{opacity:.45;transform:scale(.9)}
- to{opacity:1;transform:scale(1.18)}
-}
+.account-card:after{display:none;}
 
 .profile-area{
  position:relative;
@@ -155,30 +122,39 @@ body:after{
  display:flex;
  align-items:center;
  justify-content:center;
- font-size:54px;
- color:#e8f5ff;
+ font-size:0;
+ color:transparent;
  background:
-   radial-gradient(circle at 35% 25%,rgba(255,255,255,.18),transparent 24%),
-   radial-gradient(circle at 50% 55%,rgba(37,164,255,.34),transparent 54%),
-   linear-gradient(145deg,rgba(99,75,255,.42),rgba(0,151,255,.28));
- border:1px solid rgba(111,202,255,.34);
+   radial-gradient(circle at 50% 50%,rgba(15,18,47,.98) 0 62%,rgba(22,20,58,.96) 63% 100%);
+ border:2px solid rgba(165,119,255,.92);
  box-shadow:
-   0 0 28px rgba(35,150,255,.20),
-   0 0 70px rgba(89,68,255,.11),
-   inset 0 0 28px rgba(91,205,255,.10);
- text-shadow:0 0 18px rgba(175,232,255,.75);
- animation:profileGlow 4s ease-in-out infinite alternate;
+   0 0 12px rgba(142,91,255,.55),
+   0 0 34px rgba(103,75,255,.22),
+   inset 0 0 26px rgba(86,73,190,.10);
+ position:relative;
+ animation:none;
 }
 
-@keyframes profileGlow{
- from{
-  transform:translateY(0);
-  box-shadow:0 0 24px rgba(35,150,255,.18),0 0 55px rgba(89,68,255,.08),inset 0 0 24px rgba(255,255,255,.06)
- }
- to{
-  transform:translateY(-4px);
-  box-shadow:0 0 38px rgba(35,170,255,.34),0 0 75px rgba(89,68,255,.16),inset 0 0 30px rgba(255,255,255,.10)
- }
+.profile-icon:before{
+ content:"";
+ width:31px;
+ height:31px;
+ position:absolute;
+ left:50%;
+ top:50%;
+ transform:translate(-50%,-50%) rotate(45deg);
+ background:linear-gradient(145deg,#ead9ff,#b887ff);
+ border-radius:7px 7px 12px 7px;
+ box-shadow:0 0 15px rgba(190,137,255,.48);
+ clip-path:polygon(50% 0%,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0% 50%,38% 38%);
+}
+
+.profile-icon:after{
+ content:"";
+ position:absolute;
+ inset:9px;
+ border-radius:50%;
+ border:1px solid rgba(165,119,255,.16);
 }
 
 .profile-title{
@@ -187,6 +163,62 @@ body:after{
  letter-spacing:.4px;
  margin-bottom:25px;
  text-shadow:0 0 24px rgba(91,174,255,.12);
+}
+
+.active-status-button{
+ position:relative;
+ width:174px;
+ min-height:38px;
+ margin:-11px auto 8px;
+ padding:0 13px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:9px;
+ border:1px solid rgba(45,169,255,.28);
+ border-radius:12px;
+ color:#dcecff;
+ background:linear-gradient(110deg,rgba(8,55,126,.72),rgba(8,88,161,.58));
+ box-shadow:0 0 20px rgba(0,139,255,.12),inset 0 1px 0 rgba(255,255,255,.07);
+ cursor:pointer;
+ font:700 11px Arial,Helvetica,sans-serif;
+ letter-spacing:.75px;
+ text-transform:uppercase;
+ transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+}
+.active-status-button:hover{
+ transform:translateY(-2px);
+ border-color:rgba(68,194,255,.48);
+ box-shadow:0 0 26px rgba(0,153,255,.20),inset 0 1px 0 rgba(255,255,255,.10);
+}
+.active-status-button:active{transform:scale(.97)}
+.active-status-dot{
+ width:8px;
+ height:8px;
+ flex:0 0 8px;
+ border-radius:50%;
+ background:#18d8a1;
+ box-shadow:0 0 9px rgba(24,216,161,.90);
+}
+.active-status-arrow{
+ margin-left:auto;
+ font-size:17px;
+ line-height:1;
+ color:rgba(175,213,255,.68);
+}
+.active-status-button.off{
+ border-color:rgba(125,145,177,.20);
+ background:rgba(15,26,48,.58);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+ color:rgba(169,184,211,.62);
+}
+.active-status-button.off .active-status-dot{
+ background:#65738e;
+ box-shadow:none;
+}
+.active-status-button.off .active-status-arrow{
+ transform:rotate(90deg);
+ color:rgba(139,154,181,.52);
 }
 
 .field{
@@ -733,6 +765,11 @@ input[type="date"]{color-scheme:dark}
 <div class="profile-area">
 <div class="profile-icon" aria-label="Account profile">♙</div>
 <div class="profile-title">Account</div>
+<button class="active-status-button" id="activeStatusButton" type="button" aria-pressed="true">
+  <span class="active-status-dot"></span>
+  <span class="active-status-text">Active Account</span>
+  <span class="active-status-arrow">›</span>
+</button>
 </div>
 
 <div class="field bio-field">
@@ -1199,6 +1236,26 @@ document.querySelectorAll(".sensitive-field[data-type]").forEach(field=>{
  field.addEventListener("keydown",event=>{
   if(event.key==="Enter"||event.key===" "){event.preventDefault();reveal()}
  });
+});
+
+/* Active account status: ON by default, user can turn it OFF */
+const activeStatusButton=document.getElementById("activeStatusButton");
+const activeStatusText=activeStatusButton.querySelector(".active-status-text");
+const ACTIVE_STATUS_KEY="accountActiveStatus";
+
+function renderActiveStatus(){
+ const active=localStorage.getItem(ACTIVE_STATUS_KEY)!=="off";
+ activeStatusButton.classList.toggle("off",!active);
+ activeStatusButton.setAttribute("aria-pressed",String(active));
+ activeStatusText.textContent=active ? "Active Account" : "Active Status Off";
+}
+
+renderActiveStatus();
+
+activeStatusButton.addEventListener("click",()=>{
+ const active=localStorage.getItem(ACTIVE_STATUS_KEY)!=="off";
+ localStorage.setItem(ACTIVE_STATUS_KEY,active ? "off" : "on");
+ renderActiveStatus();
 });
 
 /* Back */
