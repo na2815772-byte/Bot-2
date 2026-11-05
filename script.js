@@ -13,7 +13,7 @@ const FALLBACK_ANSWER =
 const DEFAULT_LANGUAGE = "en-US";
 const BANGLA_LANGUAGE = "bn-BD";
 
-const SPEECH_RATE = 1.2;
+const SPEECH_RATE = 1.0;
 
 let questionDatabase = [];
 
@@ -378,10 +378,167 @@ if (isMale && !isFemale) {
 
 
 /*
+   =====================================================
+   NEW:
+   Extra detection for more browser / Windows / Android
+   / Apple voice names that were not covered above.
+   =====================================================
+*/
+
+const extraGender =
+    detectVoiceGenderExtra(
+        combined
+    );
+
+if (extraGender) {
+    return extraGender;
+}
+
+
+/*
    Unknown.
 */
 
 return "unknown";
+
+}
+
+
+/* =========================================================
+NEW: EXTRA VOICE GENDER KEYWORDS
+========================================================= */
+
+/*
+   Additional female / male voice names used by
+   Microsoft Edge, Windows, Apple, Android and
+   Bangla voices. Returns "female", "male" or null.
+
+   Word-boundary matching is used so short names
+   like "man" do not accidentally match "german".
+*/
+
+function detectVoiceGenderExtra(combined) {
+
+const extraFemale = [
+
+    "heera",
+    "catherine",
+    "natasha",
+    "libby",
+    "sonia",
+    "neerja",
+    "swara",
+    "tessa",
+    "veena",
+    "kalpana",
+    "priya",
+    "nabanita",
+    "tanishaa",
+    "ananya",
+    "kendra",
+    "kimberly",
+    "salli",
+    "joanna",
+    "ivy",
+    "emily",
+    "nicole",
+    "amy",
+    "kathy",
+    "vicki",
+    "jessa",
+    "michelle",
+    "monica",
+    "paulina",
+    "ellen",
+    "ioana",
+    "milena",
+    "kyoko",
+    "yuna",
+    "tian-tian",
+    "ting-ting",
+    "mei-jia",
+    "serena",
+    "kate",
+    "stephanie",
+    "melina",
+    "lekha",
+    "anna",
+    "satu",
+    "joana",
+    "luciana",
+    "laura"
+
+];
+
+const extraMale = [
+
+    "pradeep",
+    "bashkar",
+    "bhaskar",
+    "ravi",
+    "hemant",
+    "rishi",
+    "guy",
+    "ryan",
+    "liam",
+    "eric",
+    "christopher",
+    "roger",
+    "steffan",
+    "davis",
+    "jason",
+    "tony",
+    "matthew",
+    "joey",
+    "justin",
+    "kevin",
+    "russell",
+    "geraint",
+    "oliver",
+    "lee",
+    "nathan",
+    "aaron",
+    "rishi",
+    "jorge",
+    "diego",
+    "carlos",
+    "luca",
+    "yuri",
+    "kenny"
+
+];
+
+const hasWord =
+    (list) =>
+        list.some(
+            keyword => {
+
+                const escaped =
+                    keyword.replace(
+                        /[.*+?^${}()|[\]\\]/g,
+                        "\\$&"
+                    );
+
+                return new RegExp(
+                    "(^|[^a-z])" +
+                    escaped +
+                    "([^a-z]|$)"
+                ).test(combined);
+            }
+        );
+
+const f = hasWord(extraFemale);
+const m = hasWord(extraMale);
+
+if (f && !m) {
+    return "female";
+}
+
+if (m && !f) {
+    return "male";
+}
+
+return null;
 
 }
 
@@ -496,12 +653,114 @@ if (
 
 
 /*
+   =====================================================
+   NEW:
+   The browser does not tell us the gender of any voice.
+   Make Female and Male pick DIFFERENT voices so the
+   user can hear a real difference:
+
+   - Female → first available voice of the language
+   - Male   → last available voice of the language
+
+   Voices whose gender is known to be the OPPOSITE of
+   the target are skipped.
+   =====================================================
+*/
+
+const oppositeGender =
+    targetGender === "male"
+        ? "female"
+        : "male";
+
+const neutralVoices =
+    languageVoices.filter(
+        voice =>
+            detectVoiceGender(
+                voice
+            ) !== oppositeGender
+    );
+
+if (neutralVoices.length > 1) {
+
+    return targetGender === "male"
+        ? neutralVoices[
+            neutralVoices.length - 1
+        ]
+        : neutralVoices[0];
+
+}
+
+if (neutralVoices.length === 1) {
+
+    return neutralVoices[0];
+
+}
+
+
+/*
    No gender information available.
 
    Return a language voice as final fallback.
 */
 
 return languageVoices[0] || null;
+
+}
+
+
+/* =========================================================
+NEW: GENDER TONE (PITCH) FALLBACK
+========================================================= */
+
+/*
+   Many phones / browsers only provide ONE voice.
+   In that case the voice itself cannot change, so the
+   pitch is changed to make the sound clearly:
+
+   - Male   → deeper, heavier voice
+   - Female → higher, lighter voice
+
+   If the chosen voice is already confirmed to be of the
+   selected gender, the pitch is kept natural.
+*/
+
+function applyGenderTone(utterance, voice) {
+
+if (!utterance) {
+    return;
+}
+
+const target =
+    selectedVoiceGender === "male"
+        ? "male"
+        : "female";
+
+const detected =
+    voice
+        ? detectVoiceGender(voice)
+        : "unknown";
+
+if (detected === target) {
+
+    /* Real matching voice found: keep natural tone. */
+
+    utterance.pitch = 1;
+
+    return;
+}
+
+if (target === "male") {
+
+    /* Deeper voice. */
+
+    utterance.pitch = 0.55;
+
+} else {
+
+    /* Higher voice. */
+
+    utterance.pitch = 1.3;
+}
 
 }
 
@@ -878,6 +1137,48 @@ if (
 
 
 /*
+   =====================================================
+   NEW:
+   Always read the latest saved gender selection
+   right before speaking, so every answer uses the
+   voice the user selected (Male / Female).
+   =====================================================
+*/
+
+const savedGender =
+    localStorage.getItem(
+        "neloy_voice_gender"
+    );
+
+if (
+    savedGender === "male" ||
+    savedGender === "female"
+) {
+    selectedVoiceGender =
+        savedGender;
+}
+
+const maleRadio =
+    document.getElementById(
+        "maleVoice"
+    );
+
+const femaleRadio =
+    document.getElementById(
+        "femaleVoice"
+    );
+
+if (maleRadio && maleRadio.checked) {
+    selectedVoiceGender = "male";
+} else if (
+    femaleRadio &&
+    femaleRadio.checked
+) {
+    selectedVoiceGender = "female";
+}
+
+
+/*
    Stop previous speech.
 */
 
@@ -972,6 +1273,19 @@ const speakNow =
 
         utterance.volume =
             1;
+
+
+        /*
+           NEW:
+           Apply male / female tone so the answer
+           sounds like a man or a woman even when
+           the browser has only one voice.
+        */
+
+        applyGenderTone(
+            utterance,
+            selectedVoice
+        );
 
 
         /*
@@ -1731,6 +2045,7 @@ if (loading) {
 
 /*
    Always speak the selected answer.
+   (Spoken with the selected Male / Female voice.)
 */
 
 speak(
