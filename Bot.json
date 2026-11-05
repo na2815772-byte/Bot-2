@@ -18,15 +18,20 @@
       "তুমি এখন কী করছো?",
       "তোমার কী খবর?",
       "আজকের দিন কেমন যাচ্ছে?",
-      "তুমি কোন বিষয় নিয়ে কথা বলতে চাও?",
-      "আপনাকে কি এ বিষয়ে আরও কোনো সাহায্য করতে পারি?",
+      "তুমি কোন বিষয় নিয়ে কথা বলতে চাও?",
+      "আপনাকে কি এ বিষয়ে আরও কোনো সাহায্য করতে পারি?",
       "আপনাকে কি অন্য কোনো বিশেষ সাহায্য করতে পারি?",
-      "চাইলে আমরা এ বিষয়ে আরও কথা বলতে পারি।",
-      "এই বিষয়ে আপনার আর কোনো মত আছে?",
+      "চাইলে আমরা এ বিষয়ে আরও কথা বলতে পারি।",
+      "এই বিষয়ে আপনার আর কোনো মত আছে?",
       "Is there anything else I can help you with?",
       "Would you like any further help?",
       "Would you like to talk about something else?"
     ]
+  },
+  "multi_answer_policy": {
+    "description": "Entries that contain an 'answers' array have several different replies. When the same question is asked again, rotate to the next reply so the user does not hear the same answer every time. The 'answer' field always holds the first reply for engines that read only a single answer.",
+    "answer_mode": "rotate",
+    "language_rule": "If the question is in Bangla, reply in Bangla. If the question is in English, reply in English."
   },
   "questions": [
     {
@@ -87,122 +92,122 @@
     {
       "category": "casual_conversation",
       "question": "কী খবর?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "কি খবর?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "তোমার কী খবর?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "তোমার কি খবর?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "কী খবর তোমার?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "কী অবস্থা?",
-      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
     },
     {
       "category": "casual_conversation",
       "question": "কী চলছে?",
-      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
     },
     {
       "category": "casual_conversation",
       "question": "কি চলছে?",
-      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
     },
     {
       "category": "casual_conversation",
       "question": "এখন কী চলছে?",
-      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
     },
     {
       "category": "casual_conversation",
       "question": "কী হচ্ছে?",
-      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
     },
     {
       "category": "casual_conversation",
       "question": "কি হচ্ছে?",
-      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
     },
     {
       "category": "casual_conversation",
       "question": "ব্যস্ত আছো?",
-      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "তুমি কি ব্যস্ত?",
-      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "এখন ব্যস্ত?",
-      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "ফ্রি আছো?",
-      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "তুমি কি ফ্রি আছো?",
-      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আড্ডা দেবে?",
-      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার সাথে আড্ডা দেবে?",
-      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "চলো আড্ডা দিই",
-      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আড্ডা দিতে চাও?",
-      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার সাথে কথা বলবে?",
-      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার সাথে কথা বলো",
-      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "একটু কথা বলো",
-      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "কথা বলবে?",
-      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
@@ -227,22 +232,22 @@
     {
       "category": "casual_conversation",
       "question": "কিছু বলো",
-      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
     },
     {
       "category": "casual_conversation",
       "question": "আমাকে কিছু বলো",
-      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
     },
     {
       "category": "casual_conversation",
       "question": "একটা কথা বলো",
-      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
     },
     {
       "category": "casual_conversation",
       "question": "কথা বলো",
-      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
     },
     {
       "category": "casual_conversation",
@@ -267,72 +272,72 @@
     {
       "category": "casual_conversation",
       "question": "আজ মন খারাপ",
-      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার মন খারাপ",
-      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "মনটা ভালো নেই",
-      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আজ ভালো লাগছে না",
-      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "একা লাগছে",
-      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার একা লাগছে",
-      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "একাকী লাগছে",
-      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমার সাথে গল্প করবে?",
-      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "গল্প করবে?",
-      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "একটা গল্প বলো",
-      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "চলো গল্প করি",
-      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "তুমি কি বিরক্ত?",
-      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "তোমাকে বিরক্ত করছি?",
-      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "আমি কি বিরক্ত করছি?",
-      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
@@ -572,37 +577,37 @@
     {
       "category": "greeting",
       "question": "শুভ সকাল",
-      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "greeting",
       "question": "সুপ্রভাত",
-      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "greeting",
       "question": "Good morning",
-      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "greeting",
       "question": "শুভ বিকাল",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "greeting",
       "question": "শুভ সন্ধ্যা",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "greeting",
       "question": "Good afternoon",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "greeting",
       "question": "Good evening",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "greeting",
@@ -617,27 +622,27 @@
     {
       "category": "identity",
       "question": "তুমি কে?",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
     },
     {
       "category": "identity",
       "question": "তুমি কে",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
-    },
-    {
-      "category": "identity",
-      "question": "তোমার পরিচয় কী?",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
     },
     {
       "category": "identity",
       "question": "তোমার পরিচয় কী?",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তোমার পরিচয় কী?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
     },
     {
       "category": "identity",
       "question": "তুমি আসলে কে?",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
     },
     {
       "category": "identity",
@@ -661,7 +666,7 @@
     },
     {
       "category": "identity",
-      "question": "তোমাকে কে বানিয়েছে?",
+      "question": "তোমাকে কে বানিয়েছে?",
       "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
     },
     {
@@ -687,22 +692,22 @@
     {
       "category": "help",
       "question": "আমাকে সাহায্য করবে?",
-      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
     },
     {
       "category": "help",
       "question": "একটু সাহায্য করবে?",
-      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
     },
     {
       "category": "help",
       "question": "আমাকে সাহায্য করো",
-      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
     },
     {
       "category": "help",
       "question": "সাহায্য করতে পারবে?",
-      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
     },
     {
       "category": "help",
@@ -727,192 +732,192 @@
     {
       "category": "thanks",
       "question": "ধন্যবাদ",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "thanks",
       "question": "অনেক ধন্যবাদ",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "thanks",
       "question": "থ্যাংক ইউ",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "thanks",
       "question": "Thanks",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "thanks",
       "question": "Thank you",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "thanks",
       "question": "Thanks a lot",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "apology",
       "question": "সরি",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "apology",
       "question": "দুঃখিত",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "apology",
       "question": "Sorry",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "apology",
       "question": "I am sorry",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
     },
     {
       "category": "weather",
-      "question": "আজ আবহাওয়া কেমন?",
-      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+      "question": "আজ আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
     },
     {
       "category": "weather",
-      "question": "আজকের আবহাওয়া কেমন?",
-      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+      "question": "আজকের আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
     },
     {
       "category": "weather",
-      "question": "আবহাওয়া কেমন?",
-      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+      "question": "আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
     },
     {
       "category": "weather",
       "question": "How is the weather?",
-      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
     },
     {
       "category": "time",
-      "question": "এখন কয়টা বাজে?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "question": "এখন কয়টা বাজে?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
     },
     {
       "category": "time",
       "question": "এখন কত বাজে?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
     },
     {
       "category": "time",
       "question": "What time is it?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
     },
     {
       "category": "time",
       "question": "What's the time?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
     },
     {
       "category": "food",
       "question": "খাবার কী?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
     },
     {
       "category": "food",
       "question": "কি খাব?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
     },
     {
       "category": "food",
       "question": "আজ কী খাব?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
     },
     {
       "category": "food",
       "question": "What should I eat?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
     },
     {
       "category": "food",
       "question": "What can I eat?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
     },
     {
       "category": "study",
-      "question": "পড়াশোনা কীভাবে করব?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "question": "পড়াশোনা কীভাবে করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
     },
     {
       "category": "study",
-      "question": "কীভাবে পড়াশোনা করব?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "question": "কীভাবে পড়াশোনা করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
     },
     {
       "category": "study",
       "question": "How should I study?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
     },
     {
       "category": "study",
       "question": "How can I study better?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
     },
     {
       "category": "technology",
       "question": "কম্পিউটার কী?",
-      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
     },
     {
       "category": "technology",
       "question": "What is a computer?",
-      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
     },
     {
       "category": "technology",
       "question": "কম্পিউটার কীভাবে কাজ করে?",
-      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
     },
     {
       "category": "technology",
       "question": "ইন্টারনেট কী?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
     },
     {
       "category": "technology",
       "question": "Internet কী?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
     },
     {
       "category": "technology",
       "question": "What is the internet?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
     },
     {
       "category": "technology",
       "question": "How does the internet work?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
     },
     {
       "category": "programming",
       "question": "প্রোগ্রামিং কী?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
     },
     {
       "category": "programming",
       "question": "কোডিং কী?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
     },
     {
       "category": "programming",
       "question": "What is programming?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
     },
     {
       "category": "programming",
       "question": "What is coding?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
     },
     {
       "category": "general_knowledge",
@@ -927,87 +932,87 @@
     {
       "category": "conversation_followup",
       "question": "এটা ভালো",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "ঠিক আছে",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "আচ্ছা",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "বুঝেছি",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "ঠিক বলেছো",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "ঠিক আছে বুঝেছি",
-      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
     },
     {
       "category": "conversation_followup",
       "question": "তারপর?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "conversation_followup",
       "question": "এরপর কী?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "conversation_followup",
       "question": "আর বলো",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "conversation_followup",
       "question": "আর কিছু বলো",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "conversation_followup",
       "question": "Then what?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "conversation_followup",
       "question": "What else?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
     },
     {
       "category": "farewell",
-      "question": "বিদায়",
-      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+      "question": "বিদায়",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
     },
     {
       "category": "farewell",
       "question": "পরে কথা হবে",
-      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
     },
     {
       "category": "farewell",
       "question": "আবার কথা হবে",
-      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
     },
     {
       "category": "farewell",
       "question": "যাই",
-      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
     },
     {
       "category": "farewell",
       "question": "আমি যাচ্ছি",
-      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
     },
     {
       "category": "farewell",
@@ -1041,8 +1046,8 @@
     },
     {
       "category": "casual_conversation",
-      "question": "তুমি কী নিয়ে ব্যস্ত?",
-      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
+      "question": "তুমি কী নিয়ে ব্যস্ত?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
     },
     {
       "category": "casual_conversation",
@@ -1061,8 +1066,8 @@
     },
     {
       "category": "casual_conversation",
-      "question": "কী নিয়ে কথা বলব?",
-      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
+      "question": "কী নিয়ে কথা বলব?",
+      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
     },
     {
       "category": "casual_conversation",
@@ -1072,12 +1077,399 @@
     {
       "category": "casual_conversation",
       "question": "তুমি কি কথা বলতে পারো?",
-      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
+      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
     },
     {
       "category": "casual_conversation",
       "question": "তুমি কি আমাকে বুঝতে পারো?",
       "answer": "হ্যাঁ, তোমার প্রশ্ন যতটা পরিষ্কার হবে, বুঝতে তত সহজ হবে। তুমি কী বলতে চাও?"
-    }
-  ]
-    }
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What all can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your abilities?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your skills?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What kind of work can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are you capable of?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What services do you provide?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "How can you help me?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your features?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "Tell me what you are able to do.",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী কী কাজ করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কি কি করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার কাজ কী?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি আমাকে কীভাবে সাহায্য করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার ক্ষমতা কী কী?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী ধরনের কাজ করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার কী কী ফিচার আছে?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কোন কোন বিষয়ে সাহায্য করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী কী সার্ভিস দাও?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি আমার জন্য কী করতে পারবে?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you log into my account?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you submit a form for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you do tasks on my behalf?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "What can't you do?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "What are your limitations?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you sign in to websites for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you fill out and send forms for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Are there things you cannot do?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make t
