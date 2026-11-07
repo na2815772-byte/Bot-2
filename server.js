@@ -48,7 +48,7 @@ app.post("/api/chat", async (req, res) => {
         }
 
         const url =
-            "https://generativelanguage.googleapis.com/v1beta/models/" +
+            "https://generativelanguage.googleapis.com/v1/models/" +
             GEMINI_MODEL +
             ":generateContent";
 
