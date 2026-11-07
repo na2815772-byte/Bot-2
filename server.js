@@ -25,7 +25,7 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 // API configuration
 const API_VERSION = "v1beta";
 const PREFERRED_MODEL =
-    process.env.GEMINI_MODEL || "gemini-2.5-flash";
+    process.env.GEMINI_MODEL || "gemini-1.5-flash";
 
 app.use(express.json({ limit: "1mb" }));
 
