@@ -2,12 +2,6 @@
    NELOY AI - RENDER BACKEND (FIXED)
    File: server.js
 
-   Fixes:
-   - gemini-2.5-flash is no longer available to new users
-   - Default model is now gemini-3.8-flash
-   - Automatic fallback to other models on 404 / retired model
-   - Working model is cached (no discovery on every request)
-
    Node.js 18+
    Render Start Command: node server.js
 ========================================================= */
@@ -23,15 +17,13 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const API_VERSION = "v1beta";
 const BASE_URL = "https://generativelanguage.googleapis.com";
 
-// Models to try first (in order). Env var GEMINI_MODEL goes first.
-// NOTE: if you set GEMINI_MODEL=gemini-2.5-flash on Render, delete it
-// or change it to gemini-3.8-flash.
+// সরাসরি পরীক্ষিত ও রিলিজ হওয়া মডেল ব্যবহার করা হলো
 const PREFERRED_MODELS = [
     process.env.GEMINI_MODEL,
-    "gemini-3.8-flash"
+    "gemini-1.5-flash",
+    "gemini-1.5-pro"
 ].filter(Boolean);
 
-// Cache of the model that worked last
 let workingModel = null;
 
 app.use(express.json({ limit: "1mb" }));
@@ -57,7 +49,6 @@ app.use(express.static(path.join(__dirname)));
    HELPERS
 ========================================================= */
 
-// List models that support generateContent (newest flash first)
 async function discoverModels() {
     const response = await fetch(
         `${BASE_URL}/${API_VERSION}/models?pageSize=100`,
@@ -75,13 +66,12 @@ async function discoverModels() {
             (m.supportedGenerationMethods || []).includes("generateContent")
         )
         .map(m => m.name.replace(/^models\//, ""))
-        .filter(name => name.toLowerCase().includes("flash"))
+        .filter(name => name.toLowerCase().includes("flash") || name.toLowerCase().includes("pro"))
         .filter(name => !/(image|tts|live|audio|embedding|thinking-exp)/i.test(name))
         .sort()
-        .reverse(); // higher version numbers first
+        .reverse();
 }
 
-// Build the ordered list of models to try
 async function getCandidateModels() {
     const list = [];
 
@@ -95,11 +85,9 @@ async function getCandidateModels() {
         console.error("Discovery warning:", err.message);
     }
 
-    // Remove duplicates, keep order
     return [...new Set(list)];
 }
 
-// Is this a "model not available" type of error?
 function isModelUnavailable(status, data) {
     const msg = (data?.error?.message || "").toLowerCase();
     return (
@@ -111,7 +99,6 @@ function isModelUnavailable(status, data) {
     );
 }
 
-// Call one model
 async function callGemini(model, prompt, language) {
     const url = `${BASE_URL}/${API_VERSION}/models/${model}:generateContent`;
 
@@ -177,7 +164,6 @@ app.post("/api/chat", async (req, res) => {
 
             const result = await callGemini(model, prompt, language);
 
-            // Model unavailable -> try the next one
             if (!result.ok && isModelUnavailable(result.status, result.data)) {
                 console.warn(`Model ${model} unavailable, trying next...`);
                 if (workingModel === model) workingModel = null;
@@ -185,7 +171,6 @@ app.post("/api/chat", async (req, res) => {
                 continue;
             }
 
-            // Other API error (quota, bad key, etc.) -> stop
             if (!result.ok) {
                 console.error("Gemini API Error:", JSON.stringify(result.data));
                 return res.status(502).json({
@@ -195,7 +180,6 @@ app.post("/api/chat", async (req, res) => {
                 });
             }
 
-            // Extract answer
             const answer = result.data.candidates?.[0]?.content?.parts
                 ?.map(part => part.text || "")
                 .join("")
@@ -204,7 +188,7 @@ app.post("/api/chat", async (req, res) => {
             if (!answer) {
                 console.error("Gemini returned no answer:", JSON.stringify(result.data));
                 lastError = result.data;
-                continue; // try next model
+                continue;
             }
 
             if (workingModel !== model) {
@@ -219,7 +203,6 @@ app.post("/api/chat", async (req, res) => {
             });
         }
 
-        // Nothing worked
         console.error("All models failed:", JSON.stringify(lastError));
         return res.status(502).json({
             error: "No available Gemini model worked.",
