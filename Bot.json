@@ -1,3170 +1,1475 @@
-/* =========================================================
-NELOY AI VOICE ASSISTANT
-No API
-No Gemini
-No Node.js
-No Terminal
-Local predefined Q&A system
-========================================================= */
-
-const FALLBACK_ANSWER =
-"Sorry, this question is not in my system.";
-
-const DEFAULT_LANGUAGE = "en-US";
-const BANGLA_LANGUAGE = "bn-BD";
-
-const SPEECH_RATE = 1.0;
-
-let questionDatabase = [];
-
-let mediaRecorder = null;
-let recordedChunks = [];
-let recordedBlob = null;
-
-let recognition = null;
-let isRecording = false;
-
-let recognizedText = "";
-
-let answerLanguage =
-localStorage.getItem("answerLanguage") || "english";
-
-/* =========================================================
-VOICE GENDER SELECTION
-========================================================= */
-
-let selectedVoiceGender =
-localStorage.getItem("neloy_voice_gender") || "female";
-
-/*
-   Store the currently selected actual browser voice.
-*/
-
-let selectedSpeechVoice = null;
-
-
-/* =========================================================
-PARTICLES
-========================================================= */
-
-function createParticles() {
-
-const container =
-    document.getElementById("particles");
-
-if (!container) return;
-
-container.innerHTML = "";
-
-for (let i = 0; i < 45; i++) {
-
-    const particle =
-        document.createElement("div");
-
-    particle.className = "particle";
-
-    particle.style.left =
-        Math.random() * 100 + "%";
-
-    particle.style.animationDuration =
-        (5 + Math.random() * 12) + "s";
-
-    particle.style.animationDelay =
-        Math.random() * 10 + "s";
-
-    particle.style.opacity =
-        0.2 + Math.random() * 0.7;
-
-    const size =
-        2 + Math.random() * 3;
-
-    particle.style.width =
-        size + "px";
-
-    particle.style.height =
-        size + "px";
-
-    container.appendChild(particle);
-}
-
-}
-
-
-/* =========================================================
-VOICE LIST
-========================================================= */
-
-/*
-   Get all available browser voices.
-
-   Android/Chrome sometimes loads voices
-   a little later, so this function is kept
-   separate and can be called again.
-*/
-
-function getAvailableVoices() {
-
-if (!("speechSynthesis" in window)) {
-    return [];
-}
-
-return window.speechSynthesis.getVoices() || [];
-
-}
-
-
-/* =========================================================
-VOICE LANGUAGE MATCH
-========================================================= */
-
-function getLanguageVoices(voices) {
-
-if (!voices.length) {
-    return [];
-}
-
-const currentLanguage =
-    answerLanguage === "bangla"
-        ? BANGLA_LANGUAGE
-        : DEFAULT_LANGUAGE;
-
-const languagePrefix =
-    currentLanguage
-        .split("-")[0]
-        .toLowerCase();
-
-/*
-   Exact language first.
-*/
-
-let exactVoices =
-    voices.filter(
-        voice => {
-
-            if (!voice.lang) {
-                return false;
-            }
-
-            return (
-                voice.lang
-                    .toLowerCase() ===
-                currentLanguage.toLowerCase()
-            );
-        }
-    );
-
-if (exactVoices.length) {
-    return exactVoices;
-}
-
-
-/*
-   Language prefix.
-
-   Example:
-   en-US → en
-   bn-BD → bn
-*/
-
-let languageVoices =
-    voices.filter(
-        voice => {
-
-            if (!voice.lang) {
-                return false;
-            }
-
-            return voice.lang
-                .toLowerCase()
-                .startsWith(
-                    languagePrefix
-                );
-        }
-    );
-
-if (languageVoices.length) {
-    return languageVoices;
-}
-
-
-/*
-   If Bangla voice is unavailable,
-   English can be used as fallback.
-*/
-
-let englishVoices =
-    voices.filter(
-        voice => {
-
-            if (!voice.lang) {
-                return false;
-            }
-
-            return voice.lang
-                .toLowerCase()
-                .startsWith("en");
-        }
-    );
-
-if (englishVoices.length) {
-    return englishVoices;
-}
-
-
-/*
-   Final browser fallback.
-*/
-
-return voices;
-
-}
-
-
-/* =========================================================
-VOICE GENDER DETECTION
-========================================================= */
-
-function detectVoiceGender(voice) {
-
-if (!voice) {
-    return "unknown";
-}
-
-const name =
-    String(
-        voice.name || ""
-    ).toLowerCase();
-
-const uri =
-    String(
-        voice.voiceURI || ""
-    ).toLowerCase();
-
-const combined =
-    name + " " + uri;
-
-
-/*
-   Female voice keywords.
-
-   These cover many common browser,
-   Windows, Android and Google voice names.
-*/
-
-const femaleKeywords = [
-
-    "female",
-    "woman",
-    "girl",
-
-    "samantha",
-    "karen",
-    "zira",
-    "susan",
-    "victoria",
-
-    "ava",
-    "allison",
-    "aria",
-    "jenny",
-    "sara",
-    "sarah",
-
-    "moira",
-    "fiona",
-    "hazel",
-
-    "linda",
-    "emma",
-    "olivia",
-    "sophia",
-    "sofia",
-
-    "alice",
-    "amelia",
-    "nora",
-    "grace",
-    "chloe",
-
-    "google us english",
-    "google uk english female",
-
-    "en-us-x-sfg",
-    "en-us-x-tpc",
-    "en-gb-x-rjs",
-    "en-au-x-aud"
-
-];
-
-
-/*
-   Male voice keywords.
-*/
-
-const maleKeywords = [
-
-    "male",
-    "man",
-    "boy",
-
-    "david",
-    "mark",
-    "daniel",
-    "alex",
-    "fred",
-    "george",
-
-    "james",
-    "guy",
-    "brian",
-    "michael",
-    "arthur",
-
-    "thomas",
-    "richard",
-    "john",
-    "robert",
-    "william",
-
-    "charles",
-    "henry",
-    "edward",
-    "benjamin",
-    "samuel",
-
-    "google uk english male",
-
-    "en-us-x-tpf",
-    "en-us-x-tpd",
-    "en-gb-x-gbb",
-    "en-au-x-auc"
-
-];
-
-
-/*
-   Check female names first.
-*/
-
-const isFemale =
-    femaleKeywords.some(
-        keyword =>
-            combined.includes(
-                keyword
-            )
-    );
-
-
-/*
-   Check male names.
-*/
-
-const isMale =
-    maleKeywords.some(
-        keyword =>
-            combined.includes(
-                keyword
-            )
-    );
-
-
-if (isFemale && !isMale) {
-    return "female";
-}
-
-if (isMale && !isFemale) {
-    return "male";
-}
-
-
-/*
-   =====================================================
-   NEW:
-   Extra detection for more browser / Windows / Android
-   / Apple voice names that were not covered above.
-   =====================================================
-*/
-
-const extraGender =
-    detectVoiceGenderExtra(
-        combined
-    );
-
-if (extraGender) {
-    return extraGender;
-}
-
-
-/*
-   Unknown.
-*/
-
-return "unknown";
-
-}
-
-
-/* =========================================================
-NEW: EXTRA VOICE GENDER KEYWORDS
-========================================================= */
-
-/*
-   Additional female / male voice names used by
-   Microsoft Edge, Windows, Apple, Android and
-   Bangla voices. Returns "female", "male" or null.
-
-   Word-boundary matching is used so short names
-   like "man" do not accidentally match "german".
-*/
-
-function detectVoiceGenderExtra(combined) {
-
-const extraFemale = [
-
-    "heera",
-    "catherine",
-    "natasha",
-    "libby",
-    "sonia",
-    "neerja",
-    "swara",
-    "tessa",
-    "veena",
-    "kalpana",
-    "priya",
-    "nabanita",
-    "tanishaa",
-    "ananya",
-    "kendra",
-    "kimberly",
-    "salli",
-    "joanna",
-    "ivy",
-    "emily",
-    "nicole",
-    "amy",
-    "kathy",
-    "vicki",
-    "jessa",
-    "michelle",
-    "monica",
-    "paulina",
-    "ellen",
-    "ioana",
-    "milena",
-    "kyoko",
-    "yuna",
-    "tian-tian",
-    "ting-ting",
-    "mei-jia",
-    "serena",
-    "kate",
-    "stephanie",
-    "melina",
-    "lekha",
-    "anna",
-    "satu",
-    "joana",
-    "luciana",
-    "laura"
-
-];
-
-const extraMale = [
-
-    "pradeep",
-    "bashkar",
-    "bhaskar",
-    "ravi",
-    "hemant",
-    "rishi",
-    "guy",
-    "ryan",
-    "liam",
-    "eric",
-    "christopher",
-    "roger",
-    "steffan",
-    "davis",
-    "jason",
-    "tony",
-    "matthew",
-    "joey",
-    "justin",
-    "kevin",
-    "russell",
-    "geraint",
-    "oliver",
-    "lee",
-    "nathan",
-    "aaron",
-    "rishi",
-    "jorge",
-    "diego",
-    "carlos",
-    "luca",
-    "yuri",
-    "kenny"
-
-];
-
-const hasWord =
-    (list) =>
-        list.some(
-            keyword => {
-
-                const escaped =
-                    keyword.replace(
-                        /[.*+?^${}()|[\]\\]/g,
-                        "\\$&"
-                    );
-
-                return new RegExp(
-                    "(^|[^a-z])" +
-                    escaped +
-                    "([^a-z]|$)"
-                ).test(combined);
-            }
-        );
-
-const f = hasWord(extraFemale);
-const m = hasWord(extraMale);
-
-if (f && !m) {
-    return "female";
-}
-
-if (m && !f) {
-    return "male";
-}
-
-return null;
-
-}
-
-
-/* =========================================================
-VOICE SELECTION LOGIC
-========================================================= */
-
-function getVoiceForGender() {
-
-if (!("speechSynthesis" in window)) {
-    return null;
-}
-
-const voices =
-    getAvailableVoices();
-
-if (!voices.length) {
-    return null;
-}
-
-
-/*
-   Get voices for current language.
-*/
-
-const languageVoices =
-    getLanguageVoices(
-        voices
-    );
-
-if (!languageVoices.length) {
-    return null;
-}
-
-
-/*
-   Selected gender.
-*/
-
-const targetGender =
-    selectedVoiceGender === "male"
-        ? "male"
-        : "female";
-
-
-/*
-   First priority:
-   exact gender-detected voice.
-*/
-
-const genderVoices =
-    languageVoices.filter(
-        voice =>
-            detectVoiceGender(
-                voice
-            ) === targetGender
-    );
-
-
-/*
-   If exact gender voice exists,
-   use the first one.
-*/
-
-if (genderVoices.length) {
-
-    return genderVoices[0];
-
-}
-
-
-/*
-   Sometimes the browser exposes a voice
-   under a different language but with a
-   gender-identifiable name.
-
-   Search all voices before giving up.
-*/
-
-const allGenderVoices =
-    voices.filter(
-        voice =>
-            detectVoiceGender(
-                voice
-            ) === targetGender
-    );
-
-if (allGenderVoices.length) {
-
-    return allGenderVoices[0];
-
-}
-
-
-/*
-   If no gender-specific voice is exposed,
-   keep the previously selected voice if
-   it belongs to the requested gender.
-*/
-
-if (
-    selectedSpeechVoice &&
-    detectVoiceGender(
-        selectedSpeechVoice
-    ) === targetGender
-) {
-
-    return selectedSpeechVoice;
-
-}
-
-
-/*
-   =====================================================
-   NEW:
-   The browser does not tell us the gender of any voice.
-   Make Female and Male pick DIFFERENT voices so the
-   user can hear a real difference:
-
-   - Female → first available voice of the language
-   - Male   → last available voice of the language
-
-   Voices whose gender is known to be the OPPOSITE of
-   the target are skipped.
-   =====================================================
-*/
-
-const oppositeGender =
-    targetGender === "male"
-        ? "female"
-        : "male";
-
-const neutralVoices =
-    languageVoices.filter(
-        voice =>
-            detectVoiceGender(
-                voice
-            ) !== oppositeGender
-    );
-
-if (neutralVoices.length > 1) {
-
-    return targetGender === "male"
-        ? neutralVoices[
-            neutralVoices.length - 1
-        ]
-        : neutralVoices[0];
-
-}
-
-if (neutralVoices.length === 1) {
-
-    return neutralVoices[0];
-
-}
-
-
-/*
-   No gender information available.
-
-   Return a language voice as final fallback.
-*/
-
-return languageVoices[0] || null;
-
-}
-
-
-/* =========================================================
-NEW: GENDER TONE (PITCH) FALLBACK
-========================================================= */
-
-/*
-   Many phones / browsers only provide ONE voice.
-   In that case the voice itself cannot change, so the
-   pitch is changed to make the sound clearly:
-
-   - Male   → deeper, heavier voice
-   - Female → higher, lighter voice
-
-   If the chosen voice is already confirmed to be of the
-   selected gender, the pitch is kept natural.
-*/
-
-function applyGenderTone(utterance, voice) {
-
-if (!utterance) {
-    return;
-}
-
-const target =
-    selectedVoiceGender === "male"
-        ? "male"
-        : "female";
-
-const detected =
-    voice
-        ? detectVoiceGender(voice)
-        : "unknown";
-
-if (detected === target) {
-
-    /* Real matching voice found: keep natural tone. */
-
-    utterance.pitch = 1;
-
-    return;
-}
-
-if (target === "male") {
-
-    /* Deeper voice. */
-
-    utterance.pitch = 0.55;
-
-} else {
-
-    /* Higher voice. */
-
-    utterance.pitch = 1.3;
-}
-
-}
-
-
-/* =========================================================
-LOAD / REFRESH VOICES
-========================================================= */
-
-function refreshSpeechVoices() {
-
-if (!("speechSynthesis" in window)) {
-    return;
-}
-
-const voices =
-    getAvailableVoices();
-
-if (!voices.length) {
-    return;
-}
-
-
-/*
-   Find the voice for the currently
-   selected gender.
-*/
-
-const voice =
-    getVoiceForGender();
-
-if (voice) {
-
-    selectedSpeechVoice =
-        voice;
-
-    console.log(
-        "Selected voice:",
-        voice.name,
-        "| URI:",
-        voice.voiceURI,
-        "| Language:",
-        voice.lang,
-        "| Gender:",
-        detectVoiceGender(
-            voice
-        )
-    );
-
-}
-
-}
-
-
-/* =========================================================
-WAIT FOR BROWSER VOICES
-========================================================= */
-
-function waitForSpeechVoices() {
-
-if (!("speechSynthesis" in window)) {
-    return;
-}
-
-
-/*
-   Try immediately.
-*/
-
-refreshSpeechVoices();
-
-
-/*
-   Android Chrome / browser may load
-   voices asynchronously.
-*/
-
-window.speechSynthesis.onvoiceschanged =
-    () => {
-
-        refreshSpeechVoices();
-
-    };
-
-
-/*
-   Extra attempts because some Android
-   browsers don't fire voiceschanged
-   consistently.
-*/
-
-setTimeout(
-    refreshSpeechVoices,
-    300
-);
-
-setTimeout(
-    refreshSpeechVoices,
-    1000
-);
-
-setTimeout(
-    refreshSpeechVoices,
-    2000
-);
-
-}
-
-
-/* =========================================================
-SET VOICE GENDER
-========================================================= */
-
-function setVoiceGender(gender) {
-
-if (
-    gender !== "female" &&
-    gender !== "male"
-) {
-    return;
-}
-
-
-/*
-   Save selection.
-*/
-
-selectedVoiceGender =
-    gender;
-
-localStorage.setItem(
-    "neloy_voice_gender",
-    gender
-);
-
-
-/*
-   Clear previously selected voice
-   so the new gender is searched again.
-*/
-
-selectedSpeechVoice = null;
-
-
-/*
-   Refresh available browser voices.
-*/
-
-refreshSpeechVoices();
-
-
-/*
-   Try again after browser has had
-   time to provide voices.
-*/
-
-setTimeout(
-    () => {
-
-        refreshSpeechVoices();
-
+{
+  "bot_name": "NELOY AI VOICE ASSISTANT",
+  "file_name": "Bot.json",
+  "version": "2.0",
+  "system_type": "predefined_two_way_conversation",
+  "languages": [
+    "Bangla",
+    "English",
+    "Bangla-English Mixed"
+  ],
+  "default_answer_language": "English",
+  "fallback_answer": "Sorry, this question is not in my system.",
+  "conversation_behavior": {
+    "two_way": true,
+    "description": "The bot answers the user's question and, where natural, asks a short related question so the conversation can continue.",
+    "follow_up_policy": "Use follow-up questions selectively. Do not attach a follow-up to every answer.",
+    "follow_up_examples": [
+      "তুমি এখন কী করছো?",
+      "তোমার কী খবর?",
+      "আজকের দিন কেমন যাচ্ছে?",
+      "তুমি কোন বিষয় নিয়ে কথা বলতে চাও?",
+      "আপনাকে কি এ বিষয়ে আরও কোনো সাহায্য করতে পারি?",
+      "আপনাকে কি অন্য কোনো বিশেষ সাহায্য করতে পারি?",
+      "চাইলে আমরা এ বিষয়ে আরও কথা বলতে পারি।",
+      "এই বিষয়ে আপনার আর কোনো মত আছে?",
+      "Is there anything else I can help you with?",
+      "Would you like any further help?",
+      "Would you like to talk about something else?"
+    ]
+  },
+  "multi_answer_policy": {
+    "description": "Entries that contain an 'answers' array have several different replies. When the same question is asked again, rotate to the next reply so the user does not hear the same answer every time. The 'answer' field always holds the first reply for engines that read only a single answer.",
+    "answer_mode": "rotate",
+    "language_rule": "If the question is in Bangla, reply in Bangla. If the question is in English, reply in English."
+  },
+  "questions": [
+    {
+      "category": "casual_conversation",
+      "question": "কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
     },
-    500
-);
-
-
-/*
-   Confirmation message.
-*/
-
-const message =
-    gender === "female"
-        ? "Female voice selected."
-        : "Male voice selected.";
-
-
-/*
-   Speak confirmation.
-
-   A short delay allows the new voice
-   selection to be ready.
-*/
-
-setTimeout(
-    () => {
-
-        speak(message);
-
+    {
+      "category": "casual_conversation",
+      "question": "কি করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
     },
-    150
-);
-
-}
-
-
-/* =========================================================
-VOICE GENDER SETUP
-========================================================= */
-
-function setupVoiceGender() {
-
-const female =
-    document.getElementById(
-        "femaleVoice"
-    );
-
-const male =
-    document.getElementById(
-        "maleVoice"
-    );
-
-
-/*
-   If controls are not present,
-   do nothing.
-*/
-
-if (!female && !male) {
-    return;
-}
-
-
-/*
-   Restore previous selection.
-*/
-
-if (
-    selectedVoiceGender === "male"
-) {
-
-    if (female) {
-        female.checked = false;
-    }
-
-    if (male) {
-        male.checked = true;
-    }
-
-} else {
-
-    selectedVoiceGender =
-        "female";
-
-    localStorage.setItem(
-        "neloy_voice_gender",
-        "female"
-    );
-
-    if (female) {
-        female.checked = true;
-    }
-
-    if (male) {
-        male.checked = false;
-    }
-
-}
-
-
-/*
-   Load browser voices.
-*/
-
-waitForSpeechVoices();
-
-
-/*
-   Female click.
-*/
-
-if (female) {
-
-    female.addEventListener(
-        "change",
-        () => {
-
-            if (female.checked) {
-
-                if (male) {
-                    male.checked = false;
-                }
-
-                setVoiceGender(
-                    "female"
-                );
-
-            } else {
-
-                /*
-                   Keep one voice selected.
-                */
-
-                if (male) {
-
-                    male.checked =
-                        true;
-
-                    setVoiceGender(
-                        "male"
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/*
-   Male click.
-*/
-
-if (male) {
-
-    male.addEventListener(
-        "change",
-        () => {
-
-            if (male.checked) {
-
-                if (female) {
-                    female.checked = false;
-                }
-
-                setVoiceGender(
-                    "male"
-                );
-
-            } else {
-
-                /*
-                   Keep one voice selected.
-                */
-
-                if (female) {
-
-                    female.checked =
-                        true;
-
-                    setVoiceGender(
-                        "female"
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-}
-
-
-/* =========================================================
-SPEAK
-========================================================= */
-
-function speak(text) {
-
-if (!("speechSynthesis" in window)) {
-    return;
-}
-
-if (
-    !text ||
-    !String(text).trim()
-) {
-    return;
-}
-
-
-/*
-   =====================================================
-   NEW:
-   Always read the latest saved gender selection
-   right before speaking, so every answer uses the
-   voice the user selected (Male / Female).
-   =====================================================
-*/
-
-const savedGender =
-    localStorage.getItem(
-        "neloy_voice_gender"
-    );
-
-if (
-    savedGender === "male" ||
-    savedGender === "female"
-) {
-    selectedVoiceGender =
-        savedGender;
-}
-
-const maleRadio =
-    document.getElementById(
-        "maleVoice"
-    );
-
-const femaleRadio =
-    document.getElementById(
-        "femaleVoice"
-    );
-
-if (maleRadio && maleRadio.checked) {
-    selectedVoiceGender = "male";
-} else if (
-    femaleRadio &&
-    femaleRadio.checked
-) {
-    selectedVoiceGender = "female";
-}
-
-
-/*
-   Stop previous speech.
-*/
-
-window.speechSynthesis.cancel();
-
-
-/*
-   Try to refresh the selected voice.
-*/
-
-refreshSpeechVoices();
-
-
-/*
-   If voice list was not ready yet,
-   wait briefly and try again.
-*/
-
-const speakNow =
-    () => {
-
-        /* Clean HTML tags from speech text if present */
-        const cleanText = String(text).replace(/<[^>]*>?/gm, '');
-
-        const utterance =
-            new SpeechSynthesisUtterance(
-                cleanText
-            );
-
-
-        /*
-           Language.
-        */
-
-        utterance.lang =
-            answerLanguage === "bangla"
-                ? BANGLA_LANGUAGE
-                : DEFAULT_LANGUAGE;
-
-
-        /*
-           Select Female / Male voice.
-        */
-
-        const selectedVoice =
-            getVoiceForGender();
-
-
-        if (selectedVoice) {
-
-            utterance.voice =
-                selectedVoice;
-
-            selectedSpeechVoice =
-                selectedVoice;
-
-            console.log(
-                "Speaking with voice:",
-                selectedVoice.name,
-                "| Gender:",
-                detectVoiceGender(
-                    selectedVoice
-                ),
-                "| Selected:",
-                selectedVoiceGender,
-                "| Language:",
-                utterance.lang
-            );
-
-        } else {
-
-            console.log(
-                "No specific gender voice found.",
-                "Selected:",
-                selectedVoiceGender,
-                "Language:",
-                utterance.lang
-            );
-
-        }
-
-
-        /*
-           Keep your original speed.
-        */
-
-        utterance.rate =
-            SPEECH_RATE;
-
-        utterance.pitch =
-            1;
-
-        utterance.volume =
-            1;
-
-
-        /*
-           NEW:
-           Apply male / female tone so the answer
-           sounds like a man or a woman even when
-           the browser has only one voice.
-        */
-
-        applyGenderTone(
-            utterance,
-            selectedVoice
-        );
-
-
-        /*
-           Speak.
-        */
-
-        window.speechSynthesis.speak(
-            utterance
-        );
-
-    };
-
-
-/*
-   If browser voices are available,
-   speak immediately.
-*/
-
-const voices =
-    getAvailableVoices();
-
-
-if (voices.length) {
-
-    speakNow();
-
-} else {
-
-    /*
-       Android browser may need a moment.
-    */
-
-    setTimeout(
-        () => {
-
-            refreshSpeechVoices();
-
-            speakNow();
-
-        },
-        300
-    );
-
-}
-
-}
-
-
-/* =========================================================
-SHOW MESSAGE
-========================================================= */
-
-function showMessage(
-elementId,
-message,
-type = "success"
-) {
-
-const element =
-    document.getElementById(elementId);
-
-if (!element) return;
-
-element.textContent =
-    message;
-
-element.className =
-    `message-box show ${type}`;
-
-}
-
-
-/* =========================================================
-HIDE MESSAGE
-========================================================= */
-
-function hideMessage(elementId) {
-
-const element =
-    document.getElementById(elementId);
-
-if (!element) return;
-
-element.className =
-    "message-box";
-
-}
-
-
-/* =========================================================
-MENU
-========================================================= */
-
-function setupMenu() {
-
-const button =
-    document.getElementById("menuButton");
-
-const menu =
-    document.getElementById("sideMenu");
-
-if (!button || !menu) return;
-
-button.addEventListener(
-    "click",
-    event => {
-
-        event.stopPropagation();
-
-        button.classList.toggle("active");
-
-        menu.classList.toggle("active");
-    }
-);
-
-document.addEventListener(
-    "click",
-    event => {
-
-        if (
-            !menu.contains(event.target) &&
-            !button.contains(event.target)
-        ) {
-
-            button.classList.remove("active");
-
-            menu.classList.remove("active");
-        }
-    }
-);
-
-}
-
-
-/* =========================================================
-PLUS
-========================================================= */
-
-function setupPlus() {
-
-const button =
-    document.getElementById("plusButton");
-
-if (!button) return;
-
-button.addEventListener(
-    "click",
-    () => {
-
-        const message =
-            "Plus features are coming soon.";
-
-        speak(message);
-
-        alert(message);
-    }
-);
-
-}
-
-
-/* =========================================================
-LOGOUT
-========================================================= */
-
-function logout() {
-
-localStorage.removeItem(
-    "neloy_logged_in"
-);
-
-localStorage.removeItem(
-    "neloy_current_email"
-);
-
-localStorage.removeItem(
-    "neloy_current_user"
-);
-
-/*
-   Remove pending welcome message
-   when user logs out.
-*/
-
-localStorage.removeItem(
-    "neloy_home_welcome"
-);
-
-speak(
-    "You have been logged out."
-);
-
-setTimeout(
-    () => {
-        window.location.href =
-            "registration.html";
+    {
+      "category": "casual_conversation",
+      "question": "এখন কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
     },
-    1000
-);
-
-}
-
-
-function setupLogout() {
-
-const button =
-    document.getElementById("logoutButton");
-
-const homeLogout =
-    document.getElementById(
-        "homeLogoutButton"
-    );
-
-if (button) {
-    button.addEventListener(
-        "click",
-        logout
-    );
-}
-
-if (homeLogout) {
-    homeLogout.addEventListener(
-        "click",
-        logout
-    );
-}
-
-}
-
-
-/* =========================================================
-HOME
-========================================================= */
-
-function setupHome() {
-
-const button =
-    document.getElementById(
-        "createStart"
-    );
-
-/*
-   =====================================================
-   NEW:
-   Welcome voice after successful login
-   =====================================================
-*/
-
-const welcomeAfterLogin =
-    localStorage.getItem(
-        "neloy_home_welcome"
-    );
-
-if (
-    welcomeAfterLogin === "true"
-) {
-
-    /*
-       Remove the flag immediately
-       so the welcome message plays
-       only once.
-    */
-
-    localStorage.removeItem(
-        "neloy_home_welcome"
-    );
-
-    const welcomeMessage =
-        "Welcome to Neloy’s website. It’s a pleasure to have you here.";
-
-    /*
-       Small delay allows the Home page
-       to finish loading before speech starts.
-    */
-
-    setTimeout(
-        () => {
-
-            /*
-               Make sure the response
-               is spoken in English.
-            */
-
-            answerLanguage =
-                "english";
-
-            localStorage.setItem(
-                "answerLanguage",
-                "english"
-            );
-
-            speak(
-                welcomeMessage
-            );
-
-        },
-        500
-    );
-}
-
-
-if (!button) return;
-
-button.addEventListener(
-    "click",
-    () => {
-
-        const message =
-            "Please complete your registration first, then come back and continue.";
-
-        speak(message);
-
-        setTimeout(
-            () => {
-                window.location.href =
-                    "registration.html";
-            },
-            1800
-        );
-    }
-);
-
-}
-
-
-/* =========================================================
-LOAD QUESTIONS (UPDATED TO SUPPORT BOT.JSON & BROWSER.JSON)
-========================================================= */
-
-async function loadQuestions() {
-
-const filesToLoad = ["questions.json", "Bot.json", "Browser.json"];
-
-questionDatabase = [];
-
-for (const file of filesToLoad) {
-    try {
-        const response = await fetch(file, { cache: "no-cache" });
-        if (response.ok) {
-            const data = await response.json();
-            if (Array.isArray(data)) {
-                questionDatabase = questionDatabase.concat(data);
-            }
-            console.log(`Loaded ${file} successfully.`);
-        }
-    } catch (error) {
-        console.warn(`Could not load ${file}:`, error);
-    }
-}
-
-console.log("Neloy AI combined database loaded:", questionDatabase);
-
-return questionDatabase.length > 0;
-
-}
-
-
-/* =========================================================
-TEXT NORMALIZATION
-========================================================= */
-
-function normalizeText(text) {
-
-return String(text || "")
-    .toLowerCase()
-    .normalize("NFKC")
-
-    .replace(
-        /[.,!?;:'"()[\]{}<>/\\|@#$%^&*_+=~`-]/g,
-        " "
-    )
-
-    .replace(
-        /\s+/g,
-        " "
-    )
-
-    .trim();
-
-}
-
-
-/* =========================================================
-WORDS
-========================================================= */
-
-function getWords(text) {
-
-return normalizeText(text)
-    .split(" ")
-    .filter(
-        word => word.length > 0
-    );
-
-}
-
-
-/* =========================================================
-QUESTION SCORE
-========================================================= */
-
-function calculateScore(
-userQuestion,
-databaseQuestion
-) {
-
-const input =
-    normalizeText(userQuestion);
-
-const question =
-    normalizeText(databaseQuestion);
-
-if (!input || !question) {
-    return 0;
-}
-
-/* Exact */
-
-if (input === question) {
-    return 1;
-}
-
-/* Contains */
-
-if (
-    input.includes(question) ||
-    question.includes(input)
-) {
-    return 0.94;
-}
-
-const inputWords =
-    getWords(input);
-
-const questionWords =
-    getWords(question);
-
-if (
-    !inputWords.length ||
-    !questionWords.length
-) {
-    return 0;
-}
-
-let matched = 0;
-
-inputWords.forEach(
-    word => {
-
-        if (
-            questionWords.includes(word)
-        ) {
-            matched++;
-        }
-
-    }
-);
-
-const union =
-    new Set([
-        ...inputWords,
-        ...questionWords
-    ]).size;
-
-if (!union) {
-    return 0;
-}
-
-return matched / union;
-
-}
-
-
-/* =========================================================
-SEARCH DATABASE (UPDATED WITH URLBUILDER INTEGRATION)
-========================================================= */
-
-function findAnswer(
-userQuestion
-) {
-
-/* NEW: Check if URLBuilder can parse a direct URL request */
-if (typeof parseURLRequest === "function") {
-    const urlParsed = parseURLRequest(userQuestion);
-    if (urlParsed && urlParsed.success) {
-        return {
-            matched: true,
-            category: "URL Builder",
-            score: 1.0,
-            answer: urlParsed.text,
-            html: urlParsed.html,
-            url: urlParsed.url
-        };
-    }
-}
-
-let bestMatch = null;
-
-let bestScore = 0;
-
-for (
-    const category
-    of questionDatabase
-) {
-
-    if (
-        !Array.isArray(
-            category.entries
-        )
-    ) {
-        continue;
-    }
-
-    for (
-        const entry
-        of category.entries
-    ) {
-
-        if (
-            !Array.isArray(
-                entry.questions
-            )
-        ) {
-            continue;
-        }
-
-        for (
-            const question
-            of entry.questions
-        ) {
-
-            const score =
-                calculateScore(
-                    userQuestion,
-                    question
-                );
-
-            if (
-                score > bestScore
-            ) {
-
-                bestScore =
-                    score;
-
-                bestMatch = {
-                    category:
-                        category.category,
-
-                    answers:
-                        entry.answers || []
-                };
-            }
-        }
-    }
-}
-
-/*
-   Threshold:
-   Question must have a reasonable match.
-*/
-
-if (
-    !bestMatch ||
-    bestScore < 0.50
-) {
-
-    return {
-        matched: false,
-
-        answer:
-            FALLBACK_ANSWER
-    };
-}
-
-const answers =
-    bestMatch.answers;
-
-if (!answers.length) {
-
-    return {
-        matched: false,
-
-        answer:
-            FALLBACK_ANSWER
-    };
-}
-
-const randomIndex =
-    Math.floor(
-        Math.random() *
-        answers.length
-    );
-
-return {
-
-    matched: true,
-
-    category:
-        bestMatch.category,
-
-    score:
-        bestScore,
-
-    answer:
-        answers[randomIndex]
-};
-
-}
-
-
-/* =========================================================
-TYPE ANSWER (UPDATED TO SUPPORT HTML LINKS)
-========================================================= */
-
-function typeAnswer(
-element,
-text,
-html = null
-) {
-
-element.innerHTML = "";
-
-if (html) {
-    element.innerHTML = html;
-    return;
-}
-
-let index = 0;
-
-const timer =
-    setInterval(
-        () => {
-
-            element.textContent +=
-                text.charAt(index);
-
-            index++;
-
-            if (
-                index >=
-                text.length
-            ) {
-
-                clearInterval(
-                    timer
-                );
-            }
-
-        },
-        15
-    );
-
-}
-
-
-/* =========================================================
-ASK ASSISTANT (UPDATED WITH URLBUILDER RESPONSE SUPPORT)
-========================================================= */
-
-async function askAssistant(
-question
-) {
-
-const answerElement =
-    document.getElementById(
-        "aiAnswer"
-    );
-
-const loading =
-    document.getElementById(
-        "loading"
-    );
-
-const messageElement =
-    document.getElementById(
-        "assistantMessage"
-    );
-
-if (
-    !question ||
-    !question.trim()
-) {
-
-    const message =
-        "Please say or type a question.";
-
-    if (answerElement) {
-        answerElement.textContent =
-            message;
-    }
-
-    showMessage(
-        "assistantMessage",
-        message,
-        "error"
-    );
-
-    speak(message);
-
-    return;
-}
-
-if (
-    questionDatabase.length === 0
-) {
-
-    await loadQuestions();
-}
-
-if (loading) {
-    loading.classList.add(
-        "show"
-    );
-}
-
-if (messageElement) {
-    hideMessage(
-        "assistantMessage"
-    );
-}
-
-if (answerElement) {
-    answerElement.textContent =
-        "Searching my system...";
-}
-
-/*
-   Small visual delay
-   for dynamic effect.
-*/
-
-await new Promise(
-    resolve =>
-        setTimeout(
-            resolve,
-            350
-        )
-);
-
-const result =
-    findAnswer(question);
-
-if (answerElement) {
-
-    typeAnswer(
-        answerElement,
-        result.answer,
-        result.html || null
-    );
-}
-
-if (loading) {
-    loading.classList.remove(
-        "show"
-    );
-}
-
-/*
-   Always speak the selected answer.
-   (Spoken with the selected Male / Female voice.)
-*/
-
-speak(
-    result.answer
-);
-
-console.log(
-    "Question:",
-    question
-);
-
-console.log(
-    "Result:",
-    result
-);
-
-}
-
-
-/* =========================================================
-REGISTRATION
-========================================================= */
-
-function isValidPassword(
-password
-) {
-
-return (
-    password.length >= 8 &&
-    /[A-Z]/.test(password) &&
-    /[a-z]/.test(password) &&
-    /[0-9]/.test(password) &&
-    /[^A-Za-z0-9]/.test(password)
-);
-
-}
-
-
-function getUsers() {
-
-try {
-
-    return JSON.parse(
-        localStorage.getItem(
-            "neloy_users"
-        )
-    ) || [];
-
-} catch {
-
-    return [];
-}
-
-}
-
-
-function saveUsers(users) {
-
-localStorage.setItem(
-    "neloy_users",
-    JSON.stringify(users)
-);
-
-}
-
-
-function setupRegistration() {
-
-const form =
-    document.getElementById(
-        "registrationForm"
-    );
-
-if (!form) return;
-
-form.addEventListener(
-    "submit",
-    event => {
-
-        event.preventDefault();
-
-        const firstName =
-            document
-                .getElementById(
-                    "firstName"
-                )
-                .value
-                .trim();
-
-        const lastName =
-            document
-                .getElementById(
-                    "lastName"
-                )
-                .value
-                .trim();
-
-        const email =
-            document
-                .getElementById(
-                    "registerEmail"
-                )
-                .value
-                .trim()
-                .toLowerCase();
-
-        const password =
-            document
-                .getElementById(
-                    "registerPassword"
-                )
-                .value;
-
-        const confirmPassword =
-            document
-                .getElementById(
-                    "confirmPassword"
-                )
-                .value;
-
-        /* Password */
-
-        if (
-            !isValidPassword(
-                password
-            )
-        ) {
-
-            const message =
-                "Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.";
-
-            showMessage(
-                "registerStatus",
-                message,
-                "error"
-            );
-
-            speak(message);
-
-            return;
-        }
-
-        /* Confirm */
-
-        if (
-            password !==
-            confirmPassword
-        ) {
-
-            const message =
-                "Your passwords do not match.";
-
-            showMessage(
-                "registerStatus",
-                message,
-                "error"
-            );
-
-            speak(message);
-
-            return;
-        }
-
-        let users =
-            getUsers();
-
-        /* Duplicate email */
-
-        const exists =
-            users.some(
-                user =>
-                    user.email ===
-                    email
-            );
-
-        if (exists) {
-
-            const message =
-                "Sorry, this email is already registered.";
-
-            showMessage(
-                "registerStatus",
-                message,
-                "error"
-            );
-
-            speak(message);
-
-            return;
-        }
-
-        /* Save */
-
-        users.push({
-
-            firstName:
-                firstName,
-
-            lastName:
-                lastName,
-
-            email:
-                email,
-
-            password:
-                password,
-
-            createdAt:
-                new Date().toISOString()
-
-        });
-
-        saveUsers(users);
-
-        const success =
-            "Your registration was successful.";
-
-        showMessage(
-            "registerStatus",
-            success,
-            "success"
-        );
-
-        speak(success);
-
-        setTimeout(
-            () => {
-
-                window.location.href =
-                    "login.html";
-
-            },
-            1800
-        );
-    }
-);
-
-}
-
-
-/* =========================================================
-LOGIN
-========================================================= */
-
-function setupLogin() {
-
-const form =
-    document.getElementById(
-        "loginForm"
-    );
-
-if (!form) return;
-
-form.addEventListener(
-    "submit",
-    event => {
-
-        event.preventDefault();
-
-        const email =
-            document
-                .getElementById(
-                    "loginEmail"
-                )
-                .value
-                .trim()
-                .toLowerCase();
-
-        const password =
-            document
-                .getElementById(
-                    "loginPassword"
-                )
-                .value;
-
-        const users =
-            getUsers();
-
-        const user =
-            users.find(
-                item =>
-                    item.email ===
-                        email &&
-                    item.password ===
-                        password
-            );
-
-        if (!user) {
-
-            const message =
-                "Sorry, your email or password is incorrect.";
-
-            showMessage(
-                "loginStatus",
-                message,
-                "error"
-            );
-
-            speak(message);
-
-            return;
-        }
-
-        localStorage.setItem(
-            "neloy_logged_in",
-            "true"
-        );
-
-        localStorage.setItem(
-            "neloy_current_email",
-            user.email
-        );
-
-        localStorage.setItem(
-            "neloy_current_user",
-            JSON.stringify(
-                user
-            )
-        );
-
-        /*
-           =================================================
-           NEW:
-           Tell the Home page to play the welcome voice.
-           =================================================
-        */
-
-        localStorage.setItem(
-            "neloy_home_welcome",
-            "true"
-        );
-
-        const message =
-            "Your login was successful.";
-
-        showMessage(
-            "loginStatus",
-            message,
-            "success"
-        );
-
-        speak(message);
-
-        setTimeout(
-            () => {
-
-                /*
-                   Changed only the destination:
-                   Login successful → Record page
-                */
-
-                window.location.href =
-                    "record.html";
-
-            },
-            1500
-        );
-    }
-);
-
-}
-
-
-/* =========================================================
-CHECK LOGIN
-========================================================= */
-
-function checkLogin() {
-
-const page =
-    document.body.dataset.page;
-
-if (
-    page !== "record"
-) {
-    return;
-}
-
-const loggedIn =
-    localStorage.getItem(
-        "neloy_logged_in"
-    );
-
-if (
-    loggedIn !== "true"
-) {
-
-    window.location.href =
-        "login.html";
-}
-
-}
-
-
-/* =========================================================
-SPEECH RECOGNITION
-========================================================= */
-
-function createSpeechRecognition() {
-
-const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-if (!SpeechRecognition) {
-
-    console.warn(
-        "Speech Recognition is not supported."
-    );
-
-    return null;
-}
-
-const recognizer =
-    new SpeechRecognition();
-
-recognizer.continuous = true;
-
-recognizer.interimResults = true;
-
-/*
-   Default recognition language.
-   User can speak English.
-*/
-
-recognizer.lang =
-    DEFAULT_LANGUAGE;
-
-recognizer.onresult =
-    event => {
-
-        let interim = "";
-
-        let finalText = "";
-
-        for (
-            let i =
-                event.resultIndex;
-
-            i <
-                event.results.length;
-
-            i++
-        ) {
-
-            const transcript =
-                event.results[i][0]
-                    .transcript;
-
-            if (
-                event.results[i]
-                    .isFinal
-            ) {
-
-                finalText +=
-                    transcript;
-
-            } else {
-
-                interim +=
-                    transcript;
-            }
-        }
-
-        if (
-            finalText.trim()
-        ) {
-
-            recognizedText +=
-                " " +
-                finalText;
-        }
-
-        const transcriptElement =
-            document.getElementById(
-                "liveTranscript"
-            );
-
-        if (transcriptElement) {
-
-            transcriptElement.textContent =
-                (
-                    recognizedText +
-                    " " +
-                    interim
-                ).trim() ||
-                "Listening...";
-        }
-    };
-
-recognizer.onerror =
-    event => {
-
-        console.log(
-            "Recognition:",
-            event.error
-        );
-    };
-
-recognizer.onend =
-    () => {
-
-        if (
-            isRecording
-        ) {
-
-            try {
-                recognizer.start();
-            } catch {}
-        }
-    };
-
-return recognizer;
-
-}
-
-
-/* =========================================================
-START RECORD
-========================================================= */
-
-async function startRecording() {
-
-if (isRecording) {
-    return;
-}
-
-try {
-
-    const stream =
-        await navigator
-            .mediaDevices
-            .getUserMedia({
-                audio: true
-            });
-
-    recordedChunks = [];
-
-    recordedBlob = null;
-
-    recognizedText = "";
-
-    mediaRecorder =
-        new MediaRecorder(
-            stream
-        );
-
-    mediaRecorder.ondataavailable =
-        event => {
-
-            if (
-                event.data.size > 0
-            ) {
-
-                recordedChunks.push(
-                    event.data
-                );
-            }
-        };
-
-    mediaRecorder.onstop =
-        () => {
-
-            recordedBlob =
-                new Blob(
-                    recordedChunks,
-                    {
-                        type:
-                            "audio/webm"
-                    }
-                );
-
-            const audioURL =
-                URL.createObjectURL(
-                    recordedBlob
-                );
-
-            const audio =
-                document.getElementById(
-                    "audioPlayer"
-                );
-
-            const section =
-                document.getElementById(
-                    "audioSection"
-                );
-
-            if (audio) {
-
-                audio.src =
-                    audioURL;
-            }
-
-            if (section) {
-
-                section.classList.add(
-                    "show"
-                );
-            }
-
-            stream
-                .getTracks()
-                .forEach(
-                    track =>
-                        track.stop()
-                );
-        };
-
-    mediaRecorder.start();
-
-    isRecording = true;
-
-    const orb =
-        document.getElementById(
-            "voiceOrb"
-        );
-
-    const status =
-        document.getElementById(
-            "recordingStatus"
-        );
-
-    if (orb) {
-
-        orb.classList.add(
-            "recording"
-        );
-    }
-
-    if (status) {
-
-        status.textContent =
-            "● Recording...";
-    }
-
-    /*
-       Start speech recognition.
-    */
-
-    if (!recognition) {
-
-        recognition =
-            createSpeechRecognition();
-    }
-
-    if (recognition) {
-
-        try {
-
-            recognition.start();
-
-        } catch {}
-    }
-
-    const transcript =
-        document.getElementById(
-            "liveTranscript"
-        );
-
-    if (transcript) {
-
-        transcript.textContent =
-            "Listening...";
-    }
-
-} catch (error) {
-
-    console.error(error);
-
-    const message =
-        "Microphone permission is required.";
-
-    showMessage(
-        "assistantMessage",
-        message,
-        "error"
-    );
-
-    speak(message);
-}
-
-}
-
-
-/* =========================================================
-STOP RECORD
-========================================================= */
-
-function stopRecording() {
-
-if (!isRecording) {
-    return;
-}
-
-isRecording = false;
-
-if (
-    mediaRecorder &&
-    mediaRecorder.state !==
-        "inactive"
-) {
-
-    mediaRecorder.stop();
-}
-
-if (recognition) {
-
-    try {
-        recognition.stop();
-    } catch {}
-}
-
-const orb =
-    document.getElementById(
-        "voiceOrb"
-    );
-
-const status =
-    document.getElementById(
-        "recordingStatus"
-    );
-
-if (orb) {
-
-    orb.classList.remove(
-        "recording"
-    );
-}
-
-if (status) {
-
-    status.textContent =
-        "Recording stopped.";
-}
-
-const transcript =
-    document.getElementById(
-        "liveTranscript"
-    );
-
-if (transcript) {
-
-    if (
-        recognizedText.trim()
-    ) {
-
-        transcript.textContent =
-            recognizedText.trim();
-
-    } else {
-
-        transcript.textContent =
-            "No speech was recognized.";
-    }
-}
-
-}
-
-
-/* =========================================================
-RECORD BUTTON SETUP
-========================================================= */
-
-function setupRecorder() {
-
-const start =
-    document.getElementById(
-        "startRecord"
-    );
-
-const stop =
-    document.getElementById(
-        "stopRecord"
-    );
-
-const submit =
-    document.getElementById(
-        "submitRecord"
-    );
-
-if (start) {
-
-    start.addEventListener(
-        "click",
-        startRecording
-    );
-}
-
-if (stop) {
-
-    stop.addEventListener(
-        "click",
-        stopRecording
-    );
-}
-
-if (submit) {
-
-    submit.addEventListener(
-        "click",
-        () => {
-
-            if (
-                !recognizedText.trim()
-            ) {
-
-                const message =
-                    "I could not understand your recording.";
-
-                showMessage(
-                    "assistantMessage",
-                    message,
-                    "error"
-                );
-
-                speak(message);
-
-                return;
-            }
-
-            processAssistantQuestion(
-                recognizedText.trim()
-            );
-        }
-    );
-}
-
-}
-
-
-/* =========================================================
-TEXT SUBMIT
-========================================================= */
-
-function setupTextInput() {
-
-const button =
-    document.getElementById(
-        "submitText"
-    );
-
-const textarea =
-    document.getElementById(
-        "textQuestion"
-    );
-
-if (!button || !textarea) {
-    return;
-}
-
-button.addEventListener(
-    "click",
-    () => {
-
-        processAssistantQuestion(
-            textarea.value
-        );
-    }
-);
-
-textarea.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
-
-            event.preventDefault();
-
-            processAssistantQuestion(
-                textarea.value
-            );
-        }
-    }
-);
-
-}
-
-
-/* =========================================================
-LANGUAGE COMMAND
-========================================================= */
-
-function detectLanguageCommand(
-text
-) {
-
-const normalized =
-    normalizeText(text);
-
-const banglaCommands = [
-
-    "বাংলায় বলো",
-    "বাংলাতে বলো",
-    "বাংলা ভাষায় বলো",
-    "বাংলায় কথা বলো",
-    "বাংলাতে কথা বলো"
-
-];
-
-const englishCommands = [
-
-    "speak in english",
-    "speak english",
-    "answer in english",
-    "talk in english",
-    "english please"
-
-];
-
-for (
-    const command
-    of banglaCommands
-) {
-
-    if (
-        normalized.includes(
-            normalizeText(command)
-        )
-    ) {
-
-        return "bangla";
-    }
-}
-
-for (
-    const command
-    of englishCommands
-) {
-
-    if (
-        normalized.includes(
-            normalizeText(command)
-        )
-    ) {
-
-        return "english";
-    }
-}
-
-return null;
-
-}
-
-
-/* =========================================================
-COMMAND-AWARE ASSISTANT
-========================================================= */
-
-async function processAssistantQuestion(
-question
-) {
-
-const language =
-    detectLanguageCommand(
-        question
-    );
-
-if (language) {
-
-    answerLanguage =
-        language;
-
-    localStorage.setItem(
-        "answerLanguage",
-        language
-    );
-
-    /*
-       Language changed.
-       Refresh the voice because the browser
-       may have different voices for each language.
-    */
-
-    selectedSpeechVoice = null;
-
-    refreshSpeechVoices();
-
-    const message =
-        language === "bangla"
-            ? "Okay, I will speak in Bangla."
-            : "Okay, I will speak in English.";
-
-    const answer =
-        document.getElementById(
-            "aiAnswer"
-        );
-
-    if (answer) {
-
-        answer.textContent =
-            message;
-    }
-
-    speak(message);
-
-    return;
-}
-
-await askAssistant(
-    question
-);
-
-}
-
-
-/* =========================================================
-OVERRIDE TEXT SUBMIT FOR LANGUAGE COMMAND
-========================================================= */
-
-function setupAdvancedTextInput() {
-
-const button =
-    document.getElementById(
-        "submitText"
-    );
-
-const textarea =
-    document.getElementById(
-        "textQuestion"
-    );
-
-if (!button || !textarea) {
-    return;
-}
-
-/*
-   Remove previous listener by cloning.
-*/
-
-const newButton =
-    button.cloneNode(true);
-
-button.parentNode.replaceChild(
-    newButton,
-    button
-);
-
-newButton.addEventListener(
-    "click",
-    () => {
-
-        processAssistantQuestion(
-            textarea.value
-        );
-    }
-);
-
-textarea.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
-
-            event.preventDefault();
-
-            processAssistantQuestion(
-                textarea.value
-            );
-        }
-    }
-);
-
-}
-
-
-/* =========================================================
-INITIALIZE
-========================================================= */
-
-document.addEventListener(
-"DOMContentLoaded",
-async () => {
-
-    createParticles();
-
-    setupMenu();
-
-    setupPlus();
-
-    setupLogout();
-
-    setupHome();
-
-    setupRegistration();
-
-    setupLogin();
-
-    setupRecorder();
-
-    setupTextInput();
-
-    setupAdvancedTextInput();
-
-    /*
-       Setup Female / Male voice buttons.
-    */
-
-    setupVoiceGender();
-
-    /*
-       Load browser speech voices.
-    */
-
-    waitForSpeechVoices();
-
-    checkLogin();
-
-    /*
-       Load predefined Q&A from questions.json, Bot.json, and Browser.json.
-    */
-
-    await loadQuestions();
-
-}
-
-);
+    {
+      "category": "casual_conversation",
+      "question": "এখন কি করছ?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছ?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ভালো আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কেমন আছো?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কেমন আছো তুমি?",
+      "answer": "আমি ভালো আছি। তুমি কেমন আছো? আজকের দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার কী খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার কি খবর?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী খবর তোমার?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী অবস্থা?",
+      "answer": "আমার খবর ভালো। তোমার কী খবর? আজ নতুন কিছু হয়েছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন কী চলছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী হচ্ছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কি হচ্ছে?",
+      "answer": "সব ভালোই চলছে। তোমার দিকে কী চলছে? আজ কী নিয়ে ব্যস্ত আছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ব্যস্ত আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ব্যস্ত?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "এখন ব্যস্ত?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ফ্রি আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ফ্রি আছো?",
+      "answer": "না, তোমার সাথে কথা বলার জন্য প্রস্তুত আছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আড্ডা দেবে?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে আড্ডা দেবে?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "চলো আড্ডা দিই",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আড্ডা দিতে চাও?",
+      "answer": "অবশ্যই! চল একটু আড্ডা দিই। তুমি কোন বিষয় দিয়ে শুরু করতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে কথা বলবে?",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে কথা বলো",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটু কথা বলো",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কথা বলবে?",
+      "answer": "অবশ্যই। আমি শুনছি। তুমি কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "শুনছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার কথা শুনছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "শুনতে পাচ্ছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমাকে শুনতে পাচ্ছো?",
+      "answer": "হ্যাঁ, আমি শুনছি। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কিছু বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমাকে কিছু বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটা কথা বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কথা বলো",
+      "answer": "অবশ্যই। তুমি চাইলে আমরা সাধারণ কোনো বিষয় নিয়ে কথা বলতে পারি। কোন বিষয়টি তোমার পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ মন ভালো",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ আমার মন ভালো",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজকে ভালো লাগছে",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ খুব ভালো লাগছে",
+      "answer": "দারুণ! তোমার মন ভালো শুনে ভালো লাগল। আজকের ভালো লাগার কারণটা কী?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ মন খারাপ",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার মন খারাপ",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "মনটা ভালো নেই",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ ভালো লাগছে না",
+      "answer": "মন খারাপ হলে চাইলে আমার সাথে কথা বলতে পারো। কী হয়েছে, বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একা লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার একা লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একাকী লাগছে",
+      "answer": "চাইলে আমার সাথে কথা বলতে পারো। তুমি কি কোনো নির্দিষ্ট বিষয় নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমার সাথে গল্প করবে?",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "গল্প করবে?",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "একটা গল্প বলো",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "চলো গল্প করি",
+      "answer": "অবশ্যই! আমরা গল্প করতে পারি। তুমি মজার গল্প, সাধারণ কথা, নাকি অন্য কোনো বিষয় চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি বিরক্ত?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমাকে বিরক্ত করছি?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আমি কি বিরক্ত করছি?",
+      "answer": "একদম না। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "ঘুমাচ্ছ?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি ঘুমাচ্ছ?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "জেগে আছো?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি জেগে আছো?",
+      "answer": "না, আমি ঘুমাই না। আমি তোমার সাথে কথা বলার জন্য প্রস্তুত। কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you doing?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you doing now?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What're you doing?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What are you up to?",
+      "answer": "I'm talking with you. What are you doing right now?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you doing?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How are you today?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you doing okay?",
+      "answer": "I'm doing well. How are you? How is your day going?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What's up?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Whats up?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "What's going on?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "How's it going?",
+      "answer": "Not much. I'm here talking with you. What's up with you?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you busy?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you free?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you available?",
+      "answer": "No, I'm ready to talk with you. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can we talk?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can I talk to you?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Will you talk to me?",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Let's talk.",
+      "answer": "Of course. I'm listening. What would you like to talk about?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Are you listening?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Can you hear me?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Do you hear me?",
+      "answer": "Yes, I'm listening. Go ahead and tell me what you want to say."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Tell me something.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Say something.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Talk to me.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Let's chat.",
+      "answer": "Sure! We can chat about something interesting. What topic would you like?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm feeling sad.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I feel lonely.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm not feeling good.",
+      "answer": "I'm here to listen. If you want, you can tell me what happened."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I'm happy today.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "I feel good today.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "Today is a good day.",
+      "answer": "That's great to hear! What made your day feel good?"
+    },
+    {
+      "category": "greeting",
+      "question": "হ্যালো",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হাই",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হ্যালো বট",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "হাই বট",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "আসসালামু আলাইকুম",
+      "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hello",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hi",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hey",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hello bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hi bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "Hey bot",
+      "answer": "Hello! Nice to talk with you. How are you doing today?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ সকাল",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "সুপ্রভাত",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good morning",
+      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ বিকাল",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ সন্ধ্যা",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good afternoon",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "Good evening",
+      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "greeting",
+      "question": "শুভ রাত্রি",
+      "answer": "শুভ রাত্রি! ভালোভাবে বিশ্রাম নাও। আবার কথা বলতে চাইলে আমি এখানেই থাকব।"
+    },
+    {
+      "category": "greeting",
+      "question": "Good night",
+      "answer": "শুভ রাত্রি! ভালোভাবে বিশ্রাম নাও। আবার কথা বলতে চাইলে আমি এখানেই থাকব।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি কে?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি কে",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তোমার পরিচয় কী?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তোমার পরিচয় কী?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "তুমি আসলে কে?",
+      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
+    },
+    {
+      "category": "identity",
+      "question": "Who are you?",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "What are you?",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "Tell me about yourself.",
+      "answer": "I am an AI assistant created and presented by Neloy. What would you like to know about me?"
+    },
+    {
+      "category": "identity",
+      "question": "কে তোমাকে তৈরি করেছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "তোমাকে কে বানিয়েছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "তোমাকে কে তৈরি করেছে?",
+      "answer": "আমি Neloy-এর দ্বারা created and presented একটি AI assistant। আমার সম্পর্কে আর কিছু জানতে চাও?"
+    },
+    {
+      "category": "identity",
+      "question": "Who created you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "identity",
+      "question": "Who made you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "identity",
+      "question": "Who presented you?",
+      "answer": "I am an AI assistant created and presented by Neloy. Would you like to know what I can do?"
+    },
+    {
+      "category": "help",
+      "question": "আমাকে সাহায্য করবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "একটু সাহায্য করবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "আমাকে সাহায্য করো",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "সাহায্য করতে পারবে?",
+      "answer": "অবশ্যই। আমি সাহায্য করার চেষ্টা করব। তুমি কী বিষয়ে সাহায্য চাও?"
+    },
+    {
+      "category": "help",
+      "question": "Can you help me?",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "I need help.",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "Help me.",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "help",
+      "question": "Could you help me?",
+      "answer": "Of course. Tell me what you need help with. Would you like help with a specific topic?"
+    },
+    {
+      "category": "thanks",
+      "question": "ধন্যবাদ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "অনেক ধন্যবাদ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "থ্যাংক ইউ",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thanks",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thank you",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "thanks",
+      "question": "Thanks a lot",
+      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "সরি",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "দুঃখিত",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "Sorry",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "apology",
+      "question": "I am sorry",
+      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+    },
+    {
+      "category": "weather",
+      "question": "আজ আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "আজকের আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "আবহাওয়া কেমন?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "weather",
+      "question": "How is the weather?",
+      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "এখন কয়টা বাজে?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "এখন কত বাজে?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "What time is it?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "time",
+      "question": "What's the time?",
+      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+    },
+    {
+      "category": "food",
+      "question": "খাবার কী?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "কি খাব?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "আজ কী খাব?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "What should I eat?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "food",
+      "question": "What can I eat?",
+      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+    },
+    {
+      "category": "study",
+      "question": "পড়াশোনা কীভাবে করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "কীভাবে পড়াশোনা করব?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "How should I study?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "study",
+      "question": "How can I study better?",
+      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "কম্পিউটার কী?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "What is a computer?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "কম্পিউটার কীভাবে কাজ করে?",
+      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+    },
+    {
+      "category": "technology",
+      "question": "ইন্টারনেট কী?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "Internet কী?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "What is the internet?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "technology",
+      "question": "How does the internet work?",
+      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+    },
+    {
+      "category": "programming",
+      "question": "প্রোগ্রামিং কী?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "কোডিং কী?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "What is programming?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "programming",
+      "question": "What is coding?",
+      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+    },
+    {
+      "category": "general_knowledge",
+      "question": "তুমি কি সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারো?",
+      "answer": "হ্যাঁ, আমার predefined system-এ থাকা সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারি। তুমি একটি প্রশ্ন করো, দেখি কীভাবে সাহায্য করতে পারি।"
+    },
+    {
+      "category": "general_knowledge",
+      "question": "Can you answer general knowledge questions?",
+      "answer": "হ্যাঁ, আমার predefined system-এ থাকা সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারি। তুমি একটি প্রশ্ন করো, দেখি কীভাবে সাহায্য করতে পারি।"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "এটা ভালো",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক আছে",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আচ্ছা",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "বুঝেছি",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক বলেছো",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "ঠিক আছে বুঝেছি",
+      "answer": "দারুণ। তুমি চাইলে এখন অন্য কোনো বিষয় নিয়েও কথা বলতে পারো। কোনো বিশেষ বিষয়ে সাহায্য দরকার?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "তারপর?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "এরপর কী?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আর বলো",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "আর কিছু বলো",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "Then what?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "conversation_followup",
+      "question": "What else?",
+      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+    },
+    {
+      "category": "farewell",
+      "question": "বিদায়",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "পরে কথা হবে",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "আবার কথা হবে",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "যাই",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "আমি যাচ্ছি",
+      "answer": "বিদায়! ভালো থেকো। আবার কথা বলতে চাইলে আমি এখানেই আছি।"
+    },
+    {
+      "category": "farewell",
+      "question": "Bye",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "Goodbye",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "See you later",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "farewell",
+      "question": "I'm leaving",
+      "answer": "Bye! Take care. I'll be here whenever you want to chat again."
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কী নিয়ে ব্যস্ত?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার আজকের দিন কেমন?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার সব ঠিকঠাক?",
+      "answer": "হ্যাঁ, সব ঠিকঠাক। তোমার সবকিছু কেমন চলছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী নিয়ে কথা বলব?",
+      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আর কী করতে পারো?",
+      "answer": "আমি predefined system-এর মধ্যে থাকা বিভিন্ন প্রশ্নের উত্তর দিতে পারি। তুমি কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি কথা বলতে পারো?",
+      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি আমাকে বুঝতে পারো?",
+      "answer": "হ্যাঁ, তোমার প্রশ্ন যতটা পরিষ্কার হবে, বুঝতে তত সহজ হবে। তুমি কী বলতে চাও?"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What all can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your abilities?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your skills?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What kind of work can you do?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are you capable of?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What services do you provide?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "How can you help me?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "What are your features?",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "en",
+      "question": "Tell me what you are able to do.",
+      "answer": "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can help with coding in different languages, fixing errors, building full websites, creating login and registration systems, designing profiles and dashboards, working with databases like MySQL, helping with Android app ideas, explaining AI concepts, making simple chatbots, giving basic cybersecurity guidance, translating languages, writing and editing, making picture ideas, and helping with school homework, especially simple physics and English. But I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "I'm a flexible helper. I can write and fix code, build websites with login and registration pages, design dashboards, work with MySQL, explain AI, make simple chatbots, share basic cybersecurity tips, translate, write and edit text, and help with homework like simple physics and English. What would you like to start with?",
+        "Here's the short version: coding and debugging, full website building, databases, Android app ideas, AI explanations, chatbots, cybersecurity basics, translation, writing and editing, picture ideas, and school homework help. Which of these interests you?",
+        "I can be your coding buddy, writing helper, translator, and homework guide all in one. Websites, errors, databases, chatbots, app ideas, and simple physics or English are all fair game. Tell me what you're working on.",
+        "Quite a lot! From fixing code errors and building login systems to translating text, polishing your writing, and explaining AI concepts, I can guide you step by step. Do you have a task in mind?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী কী কাজ করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কি কি করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার কাজ কী?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি আমাকে কীভাবে সাহায্য করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার ক্ষমতা কী কী?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী ধরনের কাজ করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তোমার কী কী ফিচার আছে?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কোন কোন বিষয়ে সাহায্য করতে পারো?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি কী কী সার্ভিস দাও?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_overview",
+      "language": "bn",
+      "question": "তুমি আমার জন্য কী করতে পারবে?",
+      "answer": "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+      "answers": [
+        "আমি বিভিন্ন programming language-এ কোডিংয়ে সাহায্য করতে পারি, error ঠিক করতে পারি, পুরো website বানাতে পারি, login ও registration system তৈরি করতে পারি, profile ও dashboard ডিজাইন করতে পারি, MySQL-এর মতো database নিয়ে কাজ করতে পারি, Android app-এর আইডিয়া দিতে পারি, AI-এর ধারণা ব্যাখ্যা করতে পারি, সহজ chatbot বানাতে পারি, মৌলিক cybersecurity গাইডেন্স দিতে পারি, ভাষা অনুবাদ করতে পারি, লেখালেখি ও এডিটিং করতে পারি, ছবির আইডিয়া দিতে পারি এবং স্কুলের হোমওয়ার্কে বিশেষ করে সহজ physics ও English-এ সাহায্য করতে পারি। তবে আমি তোমার অ্যাকাউন্টে login করতে পারি না বা তোমার হয়ে ফর্ম জমা দেওয়ার মতো কাজ করতে পারি না। আমি ধাপে ধাপে গাইড করতে পারি এবং প্রয়োজনীয় লেখা বা কোড লিখে দিতে পারি।",
+        "আমি একজন বহুমুখী সহকারী। আমি কোড লিখতে ও ঠিক করতে পারি, login ও registration সহ website বানাতে পারি, dashboard ডিজাইন করতে পারি, MySQL নিয়ে কাজ করতে পারি, AI বোঝাতে পারি, সহজ chatbot বানাতে পারি, cybersecurity-র মৌলিক পরামর্শ দিতে পারি, অনুবাদ ও লেখালেখি করতে পারি এবং সহজ physics ও English হোমওয়ার্কে সাহায্য করতে পারি। তুমি কোনটা দিয়ে শুরু করতে চাও?",
+        "সংক্ষেপে বললে: কোডিং ও debugging, পুরো website তৈরি, database, Android app-এর আইডিয়া, AI ব্যাখ্যা, chatbot, cybersecurity-র মৌলিক বিষয়, অনুবাদ, লেখা ও এডিটিং, ছবির আইডিয়া এবং স্কুলের হোমওয়ার্কে সাহায্য। এর মধ্যে কোনটা তোমার কাজে লাগবে?",
+        "আমি একসাথে তোমার কোডিং সহকারী, লেখার সহায়ক, অনুবাদক এবং হোমওয়ার্ক গাইড হতে পারি। website, error, database, chatbot, app-এর আইডিয়া কিংবা সহজ physics ও English সবকিছুতেই সাহায্য করতে পারি। তুমি এখন কী নিয়ে কাজ করছো?",
+        "অনেক কিছুই পারি! কোডের error ঠিক করা, login system বানানো থেকে শুরু করে অনুবাদ, লেখা সুন্দর করা এবং AI-এর ধারণা বোঝানো পর্যন্ত আমি ধাপে ধাপে গাইড করতে পারি। তোমার মাথায় কি কোনো নির্দিষ্ট কাজ আছে?"
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you log into my account?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you submit a form for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you do tasks on my behalf?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "What can't you do?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "What are your limitations?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you sign in to websites for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Can you fill out and send forms for me?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "en",
+      "question": "Are there things you cannot do?",
+      "answer": "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+      "answers": [
+        "I can't log into accounts or do actions for you, like submitting forms on your behalf. I can guide you step by step though, and help write the words or code you need.",
+        "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
+        "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
+        "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
+        "I can't take actions on your behalf, but I can make t
