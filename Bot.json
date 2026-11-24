@@ -1,7 +1,7 @@
 {
   "bot_name": "NELOY AI VOICE ASSISTANT",
   "file_name": "Bot.json",
-  "version": "2.0",
+  "version": "2.1",
   "system_type": "predefined_two_way_conversation",
   "languages": [
     "Bangla",
@@ -62,6 +62,16 @@
     {
       "category": "casual_conversation",
       "question": "কি করতেছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করছো?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি এখন কী করতেছো?",
       "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
     },
     {
@@ -520,6 +530,46 @@
       "answer": "That's great to hear! What made your day feel good?"
     },
     {
+      "category": "casual_conversation",
+      "question": "তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার দিন কেমন যাচ্ছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আজ তোমার দিন কেমন?",
+      "answer": "আমার দিন ভালোই চলছে। তোমার আজকের দিন কেমন?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কী নিয়ে ব্যস্ত?",
+      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তোমার সব ঠিকঠাক?",
+      "answer": "হ্যাঁ, সব ঠিকঠাক। তোমার সবকিছু কেমন চলছে?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "কী নিয়ে কথা বলব?",
+      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "আর কী করতে পারো?",
+      "answer": "আমি predefined system-এর মধ্যে থাকা বিভিন্ন প্রশ্নের উত্তর দিতে পারি। তুমি কী জানতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি কথা বলতে পারো?",
+      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
+    },
+    {
+      "category": "casual_conversation",
+      "question": "তুমি কি আমাকে বুঝতে পারো?",
+      "answer": "হ্যাঁ, তোমার প্রশ্ন যতটা পরিষ্কার হবে, বুঝতে তত সহজ হবে। তুমি কী বলতে চাও?"
+    },
+    {
       "category": "greeting",
       "question": "হ্যালো",
       "answer": "হ্যালো! তোমার সাথে কথা বলতে ভালো লাগছে। কেমন আছো?"
@@ -587,7 +637,7 @@
     {
       "category": "greeting",
       "question": "Good morning",
-      "answer": "শুভ সকাল! আশা করি তোমার দিনটি সুন্দর হবে। আজ কী নিয়ে কথা বলতে চাও?"
+      "answer": "Good morning! I hope you have a wonderful day. What would you like to talk about today?"
     },
     {
       "category": "greeting",
@@ -602,12 +652,12 @@
     {
       "category": "greeting",
       "question": "Good afternoon",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "Good to see you! How is your day going? Can I help you with anything?"
     },
     {
       "category": "greeting",
       "question": "Good evening",
-      "answer": "শুভেচ্ছা! তোমার দিন কেমন যাচ্ছে? কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "Good to see you! How is your day going? Can I help you with anything?"
     },
     {
       "category": "greeting",
@@ -617,7 +667,7 @@
     {
       "category": "greeting",
       "question": "Good night",
-      "answer": "শুভ রাত্রি! ভালোভাবে বিশ্রাম নাও। আবার কথা বলতে চাইলে আমি এখানেই থাকব।"
+      "answer": "Good night! Get some good rest. I'll be here whenever you want to talk again."
     },
     {
       "category": "identity",
@@ -627,11 +677,6 @@
     {
       "category": "identity",
       "question": "তুমি কে",
-      "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
-    },
-    {
-      "category": "identity",
-      "question": "তোমার পরিচয় কী?",
       "answer": "আমি একটি AI assistant created and presented by Neloy। তুমি চাইলে আমাকে বিভিন্ন বিষয়ে প্রশ্ন করতে পারো।"
     },
     {
@@ -747,17 +792,17 @@
     {
       "category": "thanks",
       "question": "Thanks",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "You're welcome! Is there anything else I can help you with?"
     },
     {
       "category": "thanks",
       "question": "Thank you",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "You're welcome! Is there anything else I can help you with?"
     },
     {
       "category": "thanks",
       "question": "Thanks a lot",
-      "answer": "তোমাকে স্বাগতম! আর কোনো বিষয়ে সাহায্য করতে পারি?"
+      "answer": "You're welcome! Is there anything else I can help you with?"
     },
     {
       "category": "apology",
@@ -772,12 +817,12 @@
     {
       "category": "apology",
       "question": "Sorry",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "No problem at all. You can talk freely. What can I help you with now?"
     },
     {
       "category": "apology",
       "question": "I am sorry",
-      "answer": "কোনো সমস্যা নেই। তুমি নিশ্চিন্তে কথা বলতে পারো। এখন কী নিয়ে সাহায্য করতে পারি?"
+      "answer": "No problem at all. You can talk freely. What can I help you with now?"
     },
     {
       "category": "weather",
@@ -797,7 +842,7 @@
     {
       "category": "weather",
       "question": "How is the weather?",
-      "answer": "আবহাওয়া সম্পর্কে নির্দিষ্ট তথ্য জানতে হলে বর্তমান আবহাওয়ার তথ্য প্রয়োজন। তুমি কি কোনো নির্দিষ্ট জায়গার আবহাওয়া জানতে চাও?"
+      "answer": "For specific weather details I would need current weather data. Which place's weather would you like to know about?"
     },
     {
       "category": "time",
@@ -812,12 +857,12 @@
     {
       "category": "time",
       "question": "What time is it?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "answer": "To tell the time I may need your current location or time zone. Which place's time would you like to know?"
     },
     {
       "category": "time",
       "question": "What's the time?",
-      "answer": "সময় জানতে হলে তোমার বর্তমান লোকেশন বা সময় অঞ্চল জানা দরকার হতে পারে। তুমি কোন জায়গার সময় জানতে চাও?"
+      "answer": "To tell the time I may need your current location or time zone. Which place's time would you like to know?"
     },
     {
       "category": "food",
@@ -837,12 +882,12 @@
     {
       "category": "food",
       "question": "What should I eat?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "It depends on what you feel like eating. I can give you some food ideas. Do you prefer spicy, sweet, or light food?"
     },
     {
       "category": "food",
       "question": "What can I eat?",
-      "answer": "তুমি কী খেতে চাও তার ওপর অনেক কিছু নির্ভর করে। চাইলে আমি খাবারের আইডিয়া দিতে পারি। তুমি ঝাল, মিষ্টি নাকি হালকা খাবার পছন্দ করো?"
+      "answer": "It depends on what you feel like eating. I can give you some food ideas. Do you prefer spicy, sweet, or light food?"
     },
     {
       "category": "study",
@@ -857,12 +902,12 @@
     {
       "category": "study",
       "question": "How should I study?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "answer": "Studying regularly, setting small goals, and revising often all help. Which subject are you studying? We can talk about it if you like."
     },
     {
       "category": "study",
       "question": "How can I study better?",
-      "answer": "পড়াশোনায় নিয়মিত সময় দেওয়া, ছোট লক্ষ্য তৈরি করা এবং পুনরাবৃত্তি করা কাজে লাগে। তুমি কোন বিষয় পড়ছো? চাইলে সেই বিষয় নিয়ে কথা বলতে পারি।"
+      "answer": "Studying regularly, setting small goals, and revising often all help. Which subject are you studying? We can talk about it if you like."
     },
     {
       "category": "technology",
@@ -871,13 +916,13 @@
     },
     {
       "category": "technology",
-      "question": "What is a computer?",
+      "question": "কম্পিউটার কীভাবে কাজ করে?",
       "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
     },
     {
       "category": "technology",
-      "question": "কম্পিউটার কীভাবে কাজ করে?",
-      "answer": "কম্পিউটার তথ্য গ্রহণ, প্রক্রিয়াকরণ ও ফলাফল দেখানোর জন্য ব্যবহৃত একটি electronic device। তুমি চাইলে computer-এর hardware বা software নিয়েও জানতে পারো।"
+      "question": "What is a computer?",
+      "answer": "A computer is an electronic device that takes in information, processes it, and shows results. Would you like to learn about computer hardware or software?"
     },
     {
       "category": "technology",
@@ -892,12 +937,12 @@
     {
       "category": "technology",
       "question": "What is the internet?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "The internet is a huge worldwide system of connected networks. Would you like me to explain how it works in a simple way?"
     },
     {
       "category": "technology",
       "question": "How does the internet work?",
-      "answer": "ইন্টারনেট হলো বিশ্বজুড়ে সংযুক্ত network-এর একটি বিশাল ব্যবস্থা। চাইলে আমি Internet কীভাবে কাজ করে সেটাও সহজভাবে ব্যাখ্যা করতে পারি।"
+      "answer": "The internet is a huge worldwide system of connected networks. Would you like me to explain how it works in a simple way?"
     },
     {
       "category": "programming",
@@ -912,12 +957,12 @@
     {
       "category": "programming",
       "question": "What is programming?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming means writing instructions that tell a computer to do specific tasks. Would you like to learn about Python, JavaScript, or another language?"
     },
     {
       "category": "programming",
       "question": "What is coding?",
-      "answer": "Programming হলো computer-কে নির্দিষ্ট কাজ করানোর জন্য instructions লেখা। তুমি চাইলে Python, JavaScript বা অন্য কোনো programming language নিয়ে জানতে পারো।"
+      "answer": "Programming means writing instructions that tell a computer to do specific tasks. Would you like to learn about Python, JavaScript, or another language?"
     },
     {
       "category": "general_knowledge",
@@ -927,7 +972,7 @@
     {
       "category": "general_knowledge",
       "question": "Can you answer general knowledge questions?",
-      "answer": "হ্যাঁ, আমার predefined system-এ থাকা সাধারণ জ্ঞানের প্রশ্নের উত্তর দিতে পারি। তুমি একটি প্রশ্ন করো, দেখি কীভাবে সাহায্য করতে পারি।"
+      "answer": "Yes, I can answer the general knowledge questions in my predefined system. Ask me one and let's see how I can help."
     },
     {
       "category": "conversation_followup",
@@ -982,12 +1027,12 @@
     {
       "category": "conversation_followup",
       "question": "Then what?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "Sure. We can take this further. Which part would you like to know more about?"
     },
     {
       "category": "conversation_followup",
       "question": "What else?",
-      "answer": "অবশ্যই। আমরা বিষয়টা আরও এগিয়ে নিতে পারি। তুমি কোন দিকটা জানতে চাও?"
+      "answer": "Sure. We can take this further. Which part would you like to know more about?"
     },
     {
       "category": "farewell",
@@ -1033,56 +1078,6 @@
       "category": "farewell",
       "question": "I'm leaving",
       "answer": "Bye! Take care. I'll be here whenever you want to chat again."
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তুমি এখন কী করছো?",
-      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তুমি এখন কী করতেছো?",
-      "answer": "তোমার সাথে কথা বলছি। তুমি এখন কী করছো?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তুমি কী নিয়ে ব্যস্ত?",
-      "answer": "তোমার সাথে কথা বলছি। তুমি কী নিয়ে ব্যস্ত?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তোমার দিন কেমন?",
-      "answer": "আমার দিন ভালোই চলছে। তোমার দিন কেমন যাচ্ছে?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "আজ তোমার দিন কেমন?",
-      "answer": "আমার দিন ভালোই চলছে। তোমার আজকের দিন কেমন?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তোমার সব ঠিকঠাক?",
-      "answer": "হ্যাঁ, সব ঠিকঠাক। তোমার সবকিছু কেমন চলছে?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "কী নিয়ে কথা বলব?",
-      "answer": "তুমি চাইলে সাধারণ কথা, পড়াশোনা, প্রযুক্তি বা অন্য কোনো predefined বিষয় নিয়ে কথা বলতে পারো। কোনটা পছন্দ?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "আর কী করতে পারো?",
-      "answer": "আমি predefined system-এর মধ্যে থাকা বিভিন্ন প্রশ্নের উত্তর দিতে পারি। তুমি কী জানতে চাও?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তুমি কি কথা বলতে পারো?",
-      "answer": "হ্যাঁ, আমি তোমার সাথে কথোপকথন করতে পারি। কী নিয়ে কথা বলতে চাও?"
-    },
-    {
-      "category": "casual_conversation",
-      "question": "তুমি কি আমাকে বুঝতে পারো?",
-      "answer": "হ্যাঁ, তোমার প্রশ্ন যতটা পরিষ্কার হবে, বুঝতে তত সহজ হবে। তুমি কী বলতে চাও?"
     },
     {
       "category": "capabilities_overview",
@@ -1472,4 +1467,11 @@
         "No, I can't sign in to your accounts or act for you online. What I can do is walk you through each step and write the text or code you need. Want to try that?",
         "Submitting forms or logging in is something you'll need to do yourself. I'm happy to explain every step and draft whatever you need to type or paste.",
         "That's outside what I can do. I don't have access to your accounts, but I can prepare the exact words or code and guide you through the process. What are you trying to finish?",
-        "I can't take actions on your behalf, but I can make t
+        "I can't take actions on your behalf, but I can make them easy for you. Tell me the task and I'll give you clear steps and ready-to-use content."
+      ],
+      "answer_mode": "rotate"
+    },
+    {
+      "category": "capabilities_limitations",
+      "language": "bn",
+  
