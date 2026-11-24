@@ -1,29 +1,14 @@
 /* =========================================================
 NELOY AI VOICE ASSISTANT
-Gemini AI (via Render backend) - answers any question
+No API
+No Gemini
+No Node.js
+No Terminal
+Local predefined Q&A system
 ========================================================= */
 
 const FALLBACK_ANSWER =
 "Sorry, this question is not in my system.";
-
-/* =========================================================
-NEW: GEMINI BACKEND SETTINGS
----------------------------------------------------------
-The Gemini API key is NOT stored here.
-It lives in your Render Environment Variables
-(GEMINI_API_KEY) and is used only by server.js.
-
-If your website and server.js run on the SAME Render
-service, keep "/api/chat".
-If the website is hosted somewhere else (e.g. GitHub
-Pages), put the full Render URL, for example:
-"https://your-app-name.onrender.com/api/chat"
-========================================================= */
-
-const GEMINI_API_URL = "/api/chat";
-
-const GEMINI_ERROR_ANSWER =
-"Sorry, I could not connect to the AI right now. Please try again.";
 
 const DEFAULT_LANGUAGE = "en-US";
 const BANGLA_LANGUAGE = "bn-BD";
@@ -1215,10 +1200,8 @@ refreshSpeechVoices();
 const speakNow =
     () => {
 
-        /* Clean HTML tags and markdown symbols from speech text if present */
-        const cleanText = String(text)
-            .replace(/<[^>]*>?/gm, '')
-            .replace(/[*#`_]+/g, '');
+        /* Clean HTML tags from speech text if present */
+        const cleanText = String(text).replace(/<[^>]*>?/gm, '');
 
         const utterance =
             new SpeechSynthesisUtterance(
@@ -1630,7 +1613,6 @@ button.addEventListener(
 
 /* =========================================================
 LOAD QUESTIONS (UPDATED TO SUPPORT BOT.JSON & BROWSER.JSON)
-(Kept as it was. Gemini is now used for answers.)
 ========================================================= */
 
 async function loadQuestions() {
@@ -1779,8 +1761,6 @@ return matched / union;
 
 /* =========================================================
 SEARCH DATABASE (UPDATED WITH URLBUILDER INTEGRATION)
-(Old local search. Kept in the file, but askAssistant
-no longer uses it for answers - Gemini answers instead.)
 ========================================================= */
 
 function findAnswer(
@@ -1917,108 +1897,6 @@ return {
 
 
 /* =========================================================
-NEW: CLEAN GEMINI TEXT
----------------------------------------------------------
-Gemini often returns markdown symbols like ** or *.
-The chat box shows plain text, so they are cleaned.
-========================================================= */
-
-function cleanGeminiText(text) {
-
-return String(text || "")
-    .replace(/\*\*(.*?)\*\*/g, "$1")
-    .replace(/^\s*[*-]\s+/gm, "• ")
-    .replace(/^#{1,6}\s*/gm, "")
-    .replace(/`/g, "")
-    .trim();
-
-}
-
-
-/* =========================================================
-NEW: ASK GEMINI (through the Render backend)
----------------------------------------------------------
-The browser sends the user's text to your Render server
-(server.js). The server adds the secret API key from the
-Render Environment Variables, calls the Google Gemini
-endpoint, and sends the reply back here.
-========================================================= */
-
-async function askGemini(question) {
-
-try {
-
-    const response =
-        await fetch(
-            GEMINI_API_URL,
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    prompt: question,
-                    language: answerLanguage
-                })
-            }
-        );
-
-    if (!response.ok) {
-
-        console.error(
-            "Gemini backend error:",
-            response.status
-        );
-
-        return {
-            matched: false,
-            answer: GEMINI_ERROR_ANSWER
-        };
-    }
-
-    const data =
-        await response.json();
-
-    const answer =
-        cleanGeminiText(
-            data.answer
-        );
-
-    if (!answer) {
-
-        return {
-            matched: false,
-            answer: GEMINI_ERROR_ANSWER
-        };
-    }
-
-    return {
-        matched: true,
-        category: "Gemini AI",
-        score: 1,
-        answer: answer
-    };
-
-} catch (error) {
-
-    console.error(
-        "Gemini request failed:",
-        error
-    );
-
-    return {
-        matched: false,
-        answer: GEMINI_ERROR_ANSWER
-    };
-}
-
-}
-
-
-/* =========================================================
 TYPE ANSWER (UPDATED TO SUPPORT HTML LINKS)
 ========================================================= */
 
@@ -2064,7 +1942,7 @@ const timer =
 
 
 /* =========================================================
-ASK ASSISTANT (UPDATED: GEMINI REPLACES LOCAL ANSWERS)
+ASK ASSISTANT (UPDATED WITH URLBUILDER RESPONSE SUPPORT)
 ========================================================= */
 
 async function askAssistant(
@@ -2110,6 +1988,13 @@ if (
     return;
 }
 
+if (
+    questionDatabase.length === 0
+) {
+
+    await loadQuestions();
+}
+
 if (loading) {
     loading.classList.add(
         "show"
@@ -2124,46 +2009,24 @@ if (messageElement) {
 
 if (answerElement) {
     answerElement.textContent =
-        "Thinking...";
+        "Searching my system...";
 }
 
 /*
-   NEW:
-   First keep the URL Builder feature working
-   (direct "open website" style requests).
-   Everything else goes to Gemini.
+   Small visual delay
+   for dynamic effect.
 */
 
-let result = null;
+await new Promise(
+    resolve =>
+        setTimeout(
+            resolve,
+            350
+        )
+);
 
-if (typeof parseURLRequest === "function") {
-
-    const urlParsed =
-        parseURLRequest(question);
-
-    if (urlParsed && urlParsed.success) {
-
-        result = {
-            matched: true,
-            category: "URL Builder",
-            score: 1.0,
-            answer: urlParsed.text,
-            html: urlParsed.html,
-            url: urlParsed.url
-        };
-    }
-}
-
-if (!result) {
-
-    /*
-       NEW:
-       Send the user's question to Gemini.
-    */
-
-    result =
-        await askGemini(question);
-}
+const result =
+    findAnswer(question);
 
 if (answerElement) {
 
@@ -2181,7 +2044,7 @@ if (loading) {
 }
 
 /*
-   Always speak the answer.
+   Always speak the selected answer.
    (Spoken with the selected Male / Female voice.)
 */
 
@@ -3297,8 +3160,7 @@ async () => {
     checkLogin();
 
     /*
-       Load Q&A files (kept for compatibility).
-       Answers now come from Gemini.
+       Load predefined Q&A from questions.json, Bot.json, and Browser.json.
     */
 
     await loadQuestions();
